@@ -24,7 +24,6 @@ export { default as AccordionActions } from './AccordionActions';
 export { default as AccordionDetails } from './AccordionDetails';
 export { default as AccordionSummary } from './AccordionSummary';
 export { default as AyxAppWrapper } from './AyxAppWrapper';
-export { default as dataUICMaker } from './utils';
 export { default as CssBaseline } from './CssBaseline';
 export { default as withWidth } from './withWidth';
 export { default as Breadcrumbs } from './Breadcrumbs';
