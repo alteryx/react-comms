@@ -4,8 +4,12 @@ export const messageTypes = [
   'UPDATE_THEME',
   'UPDATE_LOCALE',
   'UPDATE_MODEL'
-]
+];
 
-export const validateMessageType = type => {
-  return messageTypes.find(t => t === type)
-}
+export const isValidMessageType = type => {
+  return messageTypes.find(t => t === type);
+};
+
+export const postMessage = (parentWindow, data) => {
+  parentWindow.postMessage(data);
+};

@@ -1,57 +1,45 @@
-import React, { Children, cloneElement, isValidElement } from 'react';
-import { FormattedMessage } from 'react-intl';
-import { AyxAppWrapper, Button, Typography, Grid, Card } from '@ayx/ui-core'
-import { validateMessageType } from '../Utils/Communication'
+import React, { useEffect } from 'react';
+import { AyxAppWrapper } from '@ayx/ui-core';
+import UiSdkContext from '../Context';
+import { isValidMessageType } from '../Utils/communication'
 
-export default class Provider extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      dateEnvelope: {},
+
+const Provider = props => {
+  const [dataEnvelope, updateDataEnvelope] = useState(window.dataEnvelope);
+  const [hasEventListener, setHasEventListener] = useState(false);
+
+  const receiveMessageEnvelope = ({ data }) => {
+    if (isValidMessageType(data.type)) {
+      updateDataEnvelope(data.payload);
+    }
+  };
+
+  useEffect(() => {
+    if (!hasEventListener) {
+      window.addEventListener('message', receiveMessageEnvelope);
+      setHasEventListener(true);
+    }
+
+    return function removeEventListener() {
+      window.removeEventListener('message', receiveMessageEnvelope);
+      setHasEventListener(false);
     };
-  }
+  });
 
-  postMessageToParent = (data) => {
-    if (validateMessageType(data.type)) {
-      window.parent.postMessage(data)
-    }
-  }
+  const { darkMode, productTheme, locale, model } = dataEnvelope;
+  const { messages } = props
+  return (
+    <AyxAppWrapper
+      locale={locale}
+      messages={messages}
+      paletteType={darkMode ? 'dark' : 'light'}
+      productTheme={productTheme}
+    >
+      <UiSdkContext.provider model={model}>
+        {props.children}
+      </UiSdkContext.provider>
+    </AyxAppWrapper>
+  );
+};
 
-  receiveMessageEnvelope = ({ data }) => {
-    if (validateMessageType(data.type)) {
-      this.setState({
-        ...data.payload
-      })
-    }
-  }
-
-  componentDidMount() {
-    const dataEnvelope = window.dataEnvelope
-    this.setState({ ...dataEnvelope })
-    window.addEventListener('message', this.receiveMessageEnvelope)
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('message', this.receiveMessageEnvelope)
-  }
-
-  render() {
-    const { dataEnvelope } = this.state
-    const { locale, messages, productTheme, darkMode, model } = dataEnvelope
-
-    const childrenWithProps = Children.map(this.props.children, child => {
-      // Checking isValidElement is the safe way and avoids a TS error too.
-      if (isValidElement(child)) {
-        return cloneElement(child, { ...child.props, model, onMessage: this.postMessageToParent })
-      }
-
-      return child;
-    });
-
-    return (
-      <AyxAppWrapper locale={locale} messages={messages} theme={productTheme} paletteType={darkMode ? 'dark' : 'light'}>
-         {childrenWithProps}
-      </AyxAppWrapper>
-    );
-  }
-}
+export default Provider;
