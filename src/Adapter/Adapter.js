@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
-import { Container } from '@ayx/ui-core';
-import { withStyles } from '@ayx/ui-core/styles';
 import Frame from 'react-frame-component';
-
 import { getTemplate } from '../Utils/pageBuilder';
 import { validateMessageType } from '../Utils/communication';
 

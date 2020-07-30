@@ -5,6 +5,7 @@
   "main": "index.js",
   "dependencies": {
     "@ayx/ui-core": "^4.7.3",
+    "prop-types": "^15.7.2",
     "react-frame-component": "^4.1.2"
   },
   "devDependencies": {
@@ -31,7 +32,7 @@
     "start": "ayx-scripts start",
     "init": "ayx-scripts init",
     "build": "ayx-scripts build",
-    "test": "jest",
+    "test": "jest -u",
     "apidocs": "ayx-scripts doc",
     "docs": "styleguidist server",
     "docs:build": "styleguidist build",
