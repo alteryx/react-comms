@@ -1,58 +1,35 @@
-import React, { Component } from 'react';
-import Frame from 'react-frame-component';
-import { getTemplate } from '../Utils/pageBuilder';
-import { validateMessageType } from '../Utils/communication';
+import JsEvent from '../Utils/callback';
 
-export default class Adapter extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      initialContent: '',
-      darkMode: false,
-      model: { },
-      productTheme: {},
-      locale: 'en'
+class MessageBroker {
+  constructor() {
+    this.context = window.Alteryx;
+    this.model = {};
+    this.subscriptions = new Map();
+    this.context.Gui.SetConfiguration = currentToolConfiguration => {
+      if (this.subscriptions.has('SetConfiguration')) {
+        this.subscriptions.get('SetConfiguration')(currentToolConfiguration);
+      }
+    };
+    this.context.Gui.GetConfiguration = () => {
+      JsEvent(this.context, 'GetConfiguration', this.model);
     };
   }
 
-  handleRef = ref => {
-    this.contentWindow = ref ? ref.node.contentWindow : null;
+  sendMessage = (type, payload) => {
+    JsEvent(this.context, type, payload);
   };
 
-  receiveMessageEnvelope = ({ data }) => {
-    if (validateMessageType(data.type)) {
-      this.setState({
-        ...data.payload
-      });
-    }
+  subscribe = (messageType, cb) => {
+    this.subscriptions.set(messageType, cb);
   };
 
-  componentDidUpdate(prevProps, prevState) {
-    if (prevState !== this.state || prevProps !== this.props) {
-      this.contentWindow.postMessage({ type: 'UPDATE_DATA_ENVELOPE', payload: { ...this.state } });
-    }
+  get languageCode() {
+    return this.context.AlteryxLanguageCode;
   }
 
-  componentDidMount() {
-    const { productTheme, model, darkMode, locale } = this.state
-    this.setState({
-      initialContent: getTemplate({ productTheme, model, darkMode, locale }, 'public/path/vendor', 'public/path/main')
-    });
-    window.addEventListener('message', this.receiveMessageEnvelope);
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('message', this.receiveMessageEnvelope);
-  }
-
-  render() {
-    return (
-      <Frame
-        initialContent={this.state.initialContent}
-        ref={this.handleRef}
-        style={{ border: 0, height: '100%', width: '100%' }}
-        sandbox
-      />
-    );
+  set model(toolConfiguration) {
+    this.model = toolConfiguration;
   }
 }
+
+export default MessageBroker;

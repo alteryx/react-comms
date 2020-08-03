@@ -28,13 +28,14 @@ describe('Provider', () => {
       id: 'app-wrapper',
       messages: {}
     });
+    wrapper.unmount();
   });
 
-  it('should update its dataEnvelope when a message is posted to it and thus props on App Wrapper', () => {
+  it('should update AyxAppWrapper props when it receives a data envelope', async () => {
     const wrapper = mount(<Provider />);
-    window.postMessage({ type: 'UPDATE_DATA_ENVELOPE', payload: { darkMode: true } }, window.origin);
-
-    expect(wrapper.find('#app-wrapper').props()).toEqual({
+    await window.postMessage({ type: 'UPDATE_DATA_ENVELOPE', payload: { darkMode: true } }, '*');
+    wrapper.update();
+    expect(wrapper.find('#app-wrapper').at(0).props()).toEqual({
       paletteType: 'dark',
       productTheme: {},
       locale: 'en',
