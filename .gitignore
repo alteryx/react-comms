@@ -1,4 +1,5 @@
 node_modules
-
 # Ignore test-related files
-coverage
+/coverage
+# Ignore snapshots
+/**/__snapshots__
