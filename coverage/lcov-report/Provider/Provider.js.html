@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">76.19% </span>
+                <span class="strong">84.21% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>16/21</span>
+                <span class='fraction'>16/19</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">66.67% </span>
+                <span class="strong">57.14% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>6/9</span>
+                <span class='fraction'>4/7</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">40% </span>
+                <span class="strong">60% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>2/5</span>
+                <span class='fraction'>3/5</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">80% </span>
+                <span class="strong">88.89% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>16/20</span>
+                <span class='fraction'>16/18</span>
             </div>
         
             
@@ -55,7 +55,7 @@
             Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
         </p>
     </div>
-    <div class='status-line medium'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -117,9 +117,7 @@
 <a name='L58'></a><a href='#L58'>58</a>
 <a name='L59'></a><a href='#L59'>59</a>
 <a name='L60'></a><a href='#L60'>60</a>
-<a name='L61'></a><a href='#L61'>61</a>
-<a name='L62'></a><a href='#L62'>62</a>
-<a name='L63'></a><a href='#L63'>63</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L61'></a><a href='#L61'>61</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -129,31 +127,29 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -195,9 +191,9 @@ const Provider = props =&gt; {
   const [dataEnvelope, updateDataEnvelope] = useState({});
   const [model, updateModel] = useState(messageBroker._model);
 &nbsp;
-  const setModel = <span class="fstat-no" title="function not covered" >ne</span>wModel =&gt; {
-<span class="cstat-no" title="statement not covered" >    updateModel(newModel);</span>
-<span class="cstat-no" title="statement not covered" >    messageBroker._model = newModel;</span>
+  const handleUpdateModel = newModel =&gt; {
+    updateModel(newModel);
+    messageBroker._model = newModel;
   };
 &nbsp;
   useEffect(() =&gt; {
@@ -205,18 +201,16 @@ const Provider = props =&gt; {
 <span class="cstat-no" title="statement not covered" >      if (isValidMessageType(data.type)) <span class="cstat-no" title="statement not covered" >updateDataEnvelope({ ...data.payload });</span></span>
     };
     const receiveToolConfiguration = <span class="fstat-no" title="function not covered" >da</span>ta =&gt; {
-<span class="cstat-no" title="statement not covered" >      updateModel({ ...data });</span>
+<span class="cstat-no" title="statement not covered" >      handleUpdateModel({ ...data });</span>
     };
     messageBroker.subscribe('SetConfiguration', receiveToolConfiguration);
     messageBroker.subscribe('onReady', receiveDataEnvelope);
   }, []);
 &nbsp;
   const { darkMode = false, productTheme = {}, locale = 'en' } = dataEnvelope;
-  if (!model.data) {
-    return null;
-  }
+&nbsp;
   return (
-    &lt;UiSdkContext.Provider model={model} setModel={setModel}&gt;
+    &lt;UiSdkContext.Provider id="sdk-provider" value={[model, handleUpdateModel]}&gt;
       &lt;AyxAppWrapper
         id="app-wrapper"
         locale={locale}
@@ -250,7 +244,7 @@ export default Provider;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Tue Aug 04 2020 08:54:35 GMT-0600 (Mountain Daylight Time)
+                at Tue Aug 04 2020 11:26:53 GMT-0600 (Mountain Daylight Time)
             </div>
         </div>
         <script src="../prettify.js"></script>

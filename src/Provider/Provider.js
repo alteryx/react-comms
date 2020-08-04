@@ -12,7 +12,7 @@ const Provider = props => {
   const [dataEnvelope, updateDataEnvelope] = useState({});
   const [model, updateModel] = useState(messageBroker._model);
 
-  const setModel = newModel => {
+  const handleUpdateModel = newModel => {
     updateModel(newModel);
     messageBroker._model = newModel;
   };
@@ -22,18 +22,16 @@ const Provider = props => {
       if (isValidMessageType(data.type)) updateDataEnvelope({ ...data.payload });
     };
     const receiveToolConfiguration = data => {
-      updateModel({ ...data });
+      handleUpdateModel({ ...data });
     };
     messageBroker.subscribe('SetConfiguration', receiveToolConfiguration);
     messageBroker.subscribe('onReady', receiveDataEnvelope);
   }, []);
 
   const { darkMode = false, productTheme = {}, locale = 'en' } = dataEnvelope;
-  if (!model.data) {
-    return null;
-  }
+
   return (
-    <UiSdkContext.Provider model={model} setModel={setModel}>
+    <UiSdkContext.Provider id="sdk-provider" value={[model, handleUpdateModel]}>
       <AyxAppWrapper
         id="app-wrapper"
         locale={locale}

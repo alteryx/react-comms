@@ -1,9 +1,9 @@
 /* eslint-disable no-underscore-dangle */
-import JsEvent from '../Utils/callback';
+import * as callback from '../Utils/callback';
 
-class MessageBroker {
-  constructor() {
-    this.context = window.Alteryx;
+class DesignerMessageApi {
+  constructor(ctx) {
+    this.context = ctx;
     this._model = {};
     this.subscriptions = new Map();
     this.context.Gui.SetConfiguration = currentToolConfiguration => {
@@ -12,12 +12,12 @@ class MessageBroker {
       }
     };
     this.context.Gui.GetConfiguration = () => {
-      JsEvent(this.context, 'GetConfiguration', this._model);
+      callback.JsEvent(this.context, 'GetConfiguration', this._model);
     };
   }
 
   sendMessage = (type, payload) => {
-    JsEvent(this.context, type, payload);
+    callback.JsEvent(this.context, type, payload);
   };
 
   subscribe = (messageType, cb) => {
@@ -33,4 +33,4 @@ class MessageBroker {
   }
 }
 
-export default MessageBroker;
+export default DesignerMessageApi;
