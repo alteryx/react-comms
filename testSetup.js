@@ -6,7 +6,7 @@ configure({ adapter: new EnzymeAdapter() });
 /**
  * Defines JsEvent on the window object.
  */
-declare let window: any;
+let window;
 
 window.Alteryx = {};
 window.Alteryx.JsEvent = () => {};

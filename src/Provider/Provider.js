@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
-import isValidMessageType from '../Utils/communication';
+import isValidMessageType from '../Utils/Communication';
 import AyxAppWrapper from '../Core/AyxAppWrapper';
 import UiSdkContext from '../Context';
 
