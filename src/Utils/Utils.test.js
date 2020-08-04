@@ -1,5 +1,5 @@
 import { getTemplate } from './pageBuilder';
-import { isValidMessageType, postMessageToWindow } from './communication';
+import { isValidMessageType } from './communication';
 
 describe('pageBuilder', () => {
   it('should return an HTML template when passed valid parameters', () => {
@@ -71,15 +71,5 @@ describe('isValidMessageType', () => {
     const data = { type: 'NOT_REAL' };
     const result = isValidMessageType(data.type);
     expect(result).toBeFalsy();
-  });
-});
-
-describe('postMessage', () => {
-  it('should call postMessage on the window provided as a parameter', () => {
-    const data = { type: 'UPDATE_MODEL', payload: { model: { count: 1 } } };
-    window.postMessage = jest.fn();
-    postMessageToWindow(window, data);
-
-    expect(window.postMessage).toHaveBeenCalled();
   });
 });

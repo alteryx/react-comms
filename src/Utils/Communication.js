@@ -3,7 +3,3 @@ const messageTypes = ['UPDATE_PALETTE_TYPE', 'UPDATE_DATA_ENVELOPE', 'UPDATE_THE
 export const isValidMessageType = type => {
   return messageTypes.find(t => t === type);
 };
-
-export const postMessageToWindow = (parentWindow, data) => {
-  parentWindow.postMessage(data, parentWindow.origin);
-};

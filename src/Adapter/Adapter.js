@@ -1,9 +1,10 @@
+/* eslint-disable no-underscore-dangle */
 import JsEvent from '../Utils/callback';
 
 class MessageBroker {
   constructor() {
     this.context = window.Alteryx;
-    this.model = {};
+    this._model = {};
     this.subscriptions = new Map();
     this.context.Gui.SetConfiguration = currentToolConfiguration => {
       if (this.subscriptions.has('SetConfiguration')) {
@@ -11,7 +12,7 @@ class MessageBroker {
       }
     };
     this.context.Gui.GetConfiguration = () => {
-      JsEvent(this.context, 'GetConfiguration', this.model);
+      JsEvent(this.context, 'GetConfiguration', this._model);
     };
   }
 
@@ -28,7 +29,7 @@ class MessageBroker {
   }
 
   set model(toolConfiguration) {
-    this.model = toolConfiguration;
+    this._model = toolConfiguration;
   }
 }
 
