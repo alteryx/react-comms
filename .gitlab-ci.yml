@@ -4,7 +4,7 @@ stages:
   - test-coverage
   - build
 
-test-coverage:
+test-coverage-sdk:
   stage: test-coverage
   tags:
     - linux-docker
@@ -17,9 +17,6 @@ test-coverage:
     paths:
       - coverage
       - src/*
-  only:
-    - develop
-    - master
 
 build-ui-sdk:
   stage: build
