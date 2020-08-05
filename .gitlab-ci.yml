@@ -27,7 +27,6 @@ build-ui-sdk:
     - linux-docker
   script:
     - npm i
-    - npm run clean
     - npm run build
   artifacts:
     paths:
