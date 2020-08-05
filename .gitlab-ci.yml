@@ -5,7 +5,7 @@ stages:
   - build
 
 test-coverage:
-  stage: test_coverage
+  stage: test-coverage
   tags:
     - linux-docker
   script:
