@@ -1,3 +1,3 @@
-import { RadioGroup } from '@ayx/ui-core';
+import { RadioGroup, useRadioGroup } from '@ayx/ui-core';
 
-export default RadioGroup;
+export { RadioGroup, useRadioGroup };

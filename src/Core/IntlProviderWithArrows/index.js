@@ -1,3 +1,3 @@
-import { IntlProviderWithArrows } from '@ayx/ui-core';
+import { IntlProviderWithArrows, padMessages } from '@ayx/ui-core';
 
-export default IntlProviderWithArrows;
+export { IntlProviderWithArrows, padMessages };

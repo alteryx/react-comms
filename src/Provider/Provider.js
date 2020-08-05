@@ -1,45 +1,63 @@
-import React, { useEffect } from 'react';
-import { AyxAppWrapper } from '@ayx/ui-core';
-import UiSdkContext from '../Context';
-import { isValidMessageType } from '../Utils/communication'
+/* eslint-disable no-underscore-dangle */
+/* eslint-disable react/forbid-prop-types */
+import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 
+import AyxAppWrapper from '../Core/AyxAppWrapper';
+import { subscriptionEvents } from '../DesignerMessageApi/DesignerMessageApi';
+import UiSdkContext from '../Context';
 
 const Provider = props => {
-  const [dataEnvelope, updateDataEnvelope] = useState(window.dataEnvelope);
-  const [hasEventListener, setHasEventListener] = useState(false);
+  const { messages, messageBroker } = props;
+  const { darkMode = false, productTheme = {}, locale = 'en' } = messageBroker.ayxAppContext;
+  const [model, updateModel] = useState(messageBroker.model);
 
-  const receiveMessageEnvelope = ({ data }) => {
-    if (isValidMessageType(data.type)) {
-      updateDataEnvelope(data.payload);
-    }
+  const handleUpdateModel = newModel => {
+    updateModel(newModel);
+    messageBroker.model = newModel;
   };
 
   useEffect(() => {
-    if (!hasEventListener) {
-      window.addEventListener('message', receiveMessageEnvelope);
-      setHasEventListener(true);
-    }
-
-    return function removeEventListener() {
-      window.removeEventListener('message', receiveMessageEnvelope);
-      setHasEventListener(false);
+    const receiveToolConfiguration = data => {
+      handleUpdateModel({ ...data });
     };
-  });
+    messageBroker.subscribe(subscriptionEvents.MODEL_UPDATED, receiveToolConfiguration);
 
-  const { darkMode, productTheme, locale, model } = dataEnvelope;
-  const { messages } = props
+    return function cleanUp() {
+      handleUpdateModel(messageBroker.model);
+    };
+  }, []);
+
   return (
-    <AyxAppWrapper
-      locale={locale}
-      messages={messages}
-      paletteType={darkMode ? 'dark' : 'light'}
-      productTheme={productTheme}
-    >
-      <UiSdkContext.provider model={model}>
+    <UiSdkContext.Provider id="sdk-provider" value={[model, handleUpdateModel]}>
+      <AyxAppWrapper
+        id="app-wrapper"
+        locale={locale}
+        messages={messages}
+        paletteType={darkMode ? 'dark' : 'light'}
+        productTheme={productTheme}
+      >
         {props.children}
-      </UiSdkContext.provider>
-    </AyxAppWrapper>
+      </AyxAppWrapper>
+    </UiSdkContext.Provider>
   );
+};
+
+Provider.propTypes = {
+  messageBroker: PropTypes.shape({
+    model: PropTypes.shape({}),
+    ayxAppContext: PropTypes.shape({
+      darkMode: PropTypes.bool,
+      productTheme: PropTypes.object,
+      locale: PropTypes.string
+    }),
+    subscribe: PropTypes.func
+  }).isRequired,
+  messages: PropTypes.objectOf(PropTypes.objectOf(PropTypes.string))
+};
+
+Provider.defaultProps = {
+  messages: {}
 };
 
 export default Provider;

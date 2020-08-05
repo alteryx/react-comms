@@ -1,0 +1,24 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Provider should be able to render on the DOM 1`] = `
+<ContextProvider
+  id="sdk-provider"
+  value={
+    Array [
+      Object {
+        "annotation": "",
+        "configuration": Object {},
+      },
+      [Function],
+    ]
+  }
+>
+  <ForwardRef
+    id="app-wrapper"
+    locale="en"
+    messages={Object {}}
+    paletteType="light"
+    productTheme={Object {}}
+  />
+</ContextProvider>
+`;
