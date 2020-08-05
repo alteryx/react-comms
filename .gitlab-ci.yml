@@ -1,15 +1,21 @@
 image: node:lts
 
 stages:
-  - test
+  - test-coverage
   - build
 
 test-sdk:
-  stage: test
+  stage: test-coverage
   tags:
     - linux-docker
   script:
     - npm i && npm run test
+  coverage: /All files[^|]*\|[^|]*\s+([\d\.]+)/
+  artifacts:
+    when: always
+    expire_in: 1h
+    paths:
+      - coverage/
 
 build-ui-sdk:
   stage: build
