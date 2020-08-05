@@ -49,9 +49,9 @@ describe('DesignerMessageApi', () => {
     const messageBroker = new DesignerMessageApi(window.Alteryx);
     const func = jest.fn();
     const map = new Map();
-    map.set('updateModel', func);
+    map.set('MODEL_UPDATED', func);
 
-    messageBroker.subscribe('updateModel', func);
+    messageBroker.subscribe('MODEL_UPDATED', func);
     messageBroker.context.Gui.SetConfiguration();
 
     expect(func).toHaveBeenCalled();
@@ -72,9 +72,9 @@ describe('DesignerMessageApi', () => {
     expect(spyJsEvent).toHaveBeenCalledWith(messageBroker.context, 'GetConfiguration', expected);
   });
 
-  it('should use the getter for language code to return the contexts language code', () => {
+  it('should use the getter for alteryxAppContext to return the contexts language code', () => {
     const messageBroker = new DesignerMessageApi(window.Alteryx);
-    expect(messageBroker.languageCode).toEqual('US-EN');
+    expect(messageBroker.ayxAppContext).toEqual({ darkMode: false, locale: 'US-EN', productTheme: {} });
   });
 
   it('should use the setter for model to data to set _model', () => {
@@ -83,8 +83,8 @@ describe('DesignerMessageApi', () => {
       data: 'such good data'
     };
 
-    messageBroker._model = toolConfiguration;
+    messageBroker.model = toolConfiguration;
 
-    expect(messageBroker._model).toEqual(toolConfiguration);
+    expect(messageBroker.model).toEqual(toolConfiguration);
   });
 });

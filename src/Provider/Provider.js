@@ -3,36 +3,30 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
-import isValidMessageType from '../Utils/Communication';
 import AyxAppWrapper from '../Core/AyxAppWrapper';
+import { subscriptionEvents } from '../DesignerMessageApi/DesignerMessageApi';
 import UiSdkContext from '../Context';
 
 const Provider = props => {
   const { messages, messageBroker } = props;
-  const [dataEnvelope, updateDataEnvelope] = useState({});
-  const [model, updateModel] = useState(messageBroker._model);
+  const { darkMode = false, productTheme = {}, locale = 'en' } = messageBroker.ayxAppContext;
+  const [model, updateModel] = useState(messageBroker.model);
 
   const handleUpdateModel = newModel => {
     updateModel(newModel);
-    messageBroker._model = newModel;
+    messageBroker.model = newModel;
   };
 
   useEffect(() => {
-    const receiveDataEnvelope = ({ data }) => {
-      if (isValidMessageType(data.type)) updateDataEnvelope({ ...data.payload });
-    };
     const receiveToolConfiguration = data => {
       handleUpdateModel({ ...data });
     };
-    messageBroker.subscribe('updateModel', receiveToolConfiguration);
-    messageBroker.subscribe('updateDataEnvelope', receiveDataEnvelope);
+    messageBroker.subscribe(subscriptionEvents.MODEL_UPDATED, receiveToolConfiguration);
 
     return function cleanUp() {
-      handleUpdateModel(messageBroker._model);
+      handleUpdateModel(messageBroker.model);
     };
   }, []);
-
-  const { darkMode = false, productTheme = {}, locale = messageBroker.languageCode || 'en' } = dataEnvelope;
 
   return (
     <UiSdkContext.Provider id="sdk-provider" value={[model, handleUpdateModel]}>
@@ -51,7 +45,12 @@ const Provider = props => {
 
 Provider.propTypes = {
   messageBroker: PropTypes.shape({
-    _model: PropTypes.object,
+    model: PropTypes.shape({}),
+    ayxAppContext: PropTypes.shape({
+      darkMode: PropTypes.bool,
+      productTheme: PropTypes.object,
+      locale: PropTypes.string
+    }),
     subscribe: PropTypes.func
   }).isRequired,
   messages: PropTypes.objectOf(PropTypes.objectOf(PropTypes.string))

@@ -48,9 +48,9 @@ describe('Provider', () => {
     });
   });
 
-  it('should set subscriptions on the messageBroker for SetConfiguration events after it mounts', () => {
+  it('should set a subscription on the messageBroker for SetConfiguration events after it mounts', () => {
     mount(<Provider messageBroker={designerMessageApi} />);
-    expect(designerMessageApi.subscribe).toHaveBeenCalledTimes(2);
+    expect(designerMessageApi.subscribe).toHaveBeenCalledTimes(1);
   });
 
   it('should render the sdk-provider with a model when an event is emitted', () => {

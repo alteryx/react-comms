@@ -1,17 +1,30 @@
 /* eslint-disable no-underscore-dangle */
+import MessageApiBase from '../MessageApiBase/MessageApiBase';
 import * as callback from '../Utils/callback';
 
-class DesignerMessageApi {
+export const messageTypes = {
+  GET_CONFIGURATION: 'GetConfiguration'
+};
+
+export const subscriptionEvents = {
+  MODEL_UPDATED: 'MODEL_UPDATED'
+};
+
+class DesignerMessageApi extends MessageApiBase {
   constructor(ctx) {
-    this.context = ctx;
+    super(ctx);
     this._model = {
       configuration: {},
       annotation: ''
     };
-    this.subscriptions = new Map();
+    this._ayxAppContext = {
+      darkMode: false,
+      productTheme: {},
+      locale: this.context.AlteryxLanguageCode
+    };
     this.context.Gui.SetConfiguration = currentToolConfiguration => {
-      if (this.subscriptions.has('updateModel')) {
-        this.subscriptions.get('updateModel')(currentToolConfiguration);
+      if (this.subscriptions.has('MODEL_UPDATED')) {
+        this.subscriptions.get('MODEL_UPDATED')(currentToolConfiguration);
       }
     };
     this.context.Gui.GetConfiguration = () => {
@@ -23,25 +36,13 @@ class DesignerMessageApi {
           Annotation: this._model.annotation
         }
       };
-      callback.JsEvent(this.context, 'GetConfiguration', payload);
+      this.sendMessage(messageTypes.GET_CONFIGURATION, payload);
     };
   }
 
   sendMessage = (type, payload) => {
     callback.JsEvent(this.context, type, payload);
   };
-
-  subscribe = (messageType, cb) => {
-    this.subscriptions.set(messageType, cb);
-  };
-
-  get languageCode() {
-    return this.context.AlteryxLanguageCode;
-  }
-
-  set model(toolConfiguration) {
-    this._model = toolConfiguration;
-  }
 }
 
 export default DesignerMessageApi;
