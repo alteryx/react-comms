@@ -31,7 +31,7 @@ build-ui-sdk:
     - npm run build
   artifacts:
     paths:
-      - build
+      - build/
 
 sonarqube-check:
   stage: sonarscan
