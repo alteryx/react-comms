@@ -4,15 +4,26 @@ import * as callback from '../Utils/callback';
 class DesignerMessageApi {
   constructor(ctx) {
     this.context = ctx;
-    this._model = {};
+    this._model = {
+      configuration: {},
+      annotation: ''
+    };
     this.subscriptions = new Map();
     this.context.Gui.SetConfiguration = currentToolConfiguration => {
-      if (this.subscriptions.has('SetConfiguration')) {
-        this.subscriptions.get('SetConfiguration')(currentToolConfiguration);
+      if (this.subscriptions.has('updateModel')) {
+        this.subscriptions.get('updateModel')(currentToolConfiguration);
       }
     };
     this.context.Gui.GetConfiguration = () => {
-      callback.JsEvent(this.context, 'GetConfiguration', this._model);
+      const payload = {
+        Configuration: {
+          Configuration: {
+            ...this._model.configuration
+          },
+          Annotation: this._model.annotation
+        }
+      };
+      callback.JsEvent(this.context, 'GetConfiguration', payload);
     };
   }
 

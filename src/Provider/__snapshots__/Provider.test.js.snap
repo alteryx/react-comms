@@ -5,7 +5,10 @@ exports[`Provider should be able to render on the DOM 1`] = `
   id="sdk-provider"
   value={
     Array [
-      Object {},
+      Object {
+        "annotation": "",
+        "configuration": Object {},
+      },
       [Function],
     ]
   }

@@ -4,6 +4,7 @@ import { shallow, mount } from 'enzyme';
 
 import DesignerMessageApi from '../DesignerMessageApi/DesignerMessageApi';
 import UiSdkContext from '../Context';
+import * as callback from '../Utils/callback';
 
 import Provider from './Provider';
 
@@ -12,7 +13,8 @@ describe('Provider', () => {
     Gui: {
       SetConfiguration: jest.fn(),
       GetConfiguration: jest.fn()
-    }
+    },
+    JsEvent: jest.fn()
   };
   const designerMessageApi = new DesignerMessageApi(window.Alteryx);
   designerMessageApi.subscribe = jest.fn();
@@ -23,6 +25,10 @@ describe('Provider', () => {
       locale: 'en',
       model: { count: 0 }
     };
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
   });
   it('should be able to render on the DOM', () => {
     const wrapper = shallow(<Provider messageBroker={designerMessageApi} />);
@@ -51,15 +57,15 @@ describe('Provider', () => {
     const wrapper = shallow(<Provider messageBroker={designerMessageApi} />);
     const valueProp = wrapper.find('#sdk-provider').prop('value');
     expect(valueProp).toHaveLength(2);
-    expect(valueProp[0]).toEqual({});
+    expect(valueProp[0]).toEqual({ annotation: '', configuration: {} });
     expect(valueProp[1]).toBeInstanceOf(Function);
   });
 
   it('should use the context hook to update the providers model', () => {
     const Child = () => {
       const [model, handleUpdateModel] = React.useContext(UiSdkContext);
-      if (model.value !== 'foo') handleUpdateModel({ value: 'foo' });
-      return <div id="child">{model.value}</div>;
+      if (model.annotation !== 'foo') handleUpdateModel({ annotation: 'foo', configuration: {} });
+      return <div id="child">{model.annotation}</div>;
     };
     const wrapper = mount(
       <Provider messageBroker={designerMessageApi}>
@@ -68,5 +74,30 @@ describe('Provider', () => {
     );
 
     expect(wrapper.find('#child').text()).toEqual('foo');
+  });
+
+  it('should use the current model state as the payload when GetConfiguration is called', () => {
+    const spyJsEvent = jest.spyOn(callback, 'JsEvent');
+    const messageBroker = new DesignerMessageApi(window.Alteryx);
+    const expected = {
+      Configuration: {
+        Annotation: 'foo',
+        Configuration: {}
+      }
+    };
+
+    const Child = () => {
+      const [model, handleUpdateModel] = React.useContext(UiSdkContext);
+      if (model.annotation !== 'foo') handleUpdateModel({ annotation: 'foo', configuration: {} });
+      return <div id="child">{model.annotation}</div>;
+    };
+    const wrapper = mount(
+      <Provider messageBroker={messageBroker}>
+        <Child />
+      </Provider>
+    );
+    wrapper.update();
+    messageBroker.context.Gui.GetConfiguration();
+    expect(spyJsEvent).toHaveBeenCalledWith(messageBroker.context, 'GetConfiguration', expected);
   });
 });

@@ -15,6 +15,10 @@ describe('DesignerMessageApi', () => {
     };
   });
 
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
   it('should instantiate itself with a _model, context, and subscriptions', () => {
     const messageBroker = new DesignerMessageApi(window.Alteryx);
     expect(messageBroker._model).toMatchObject({});
@@ -45,9 +49,9 @@ describe('DesignerMessageApi', () => {
     const messageBroker = new DesignerMessageApi(window.Alteryx);
     const func = jest.fn();
     const map = new Map();
-    map.set('SetConfiguration', func);
+    map.set('updateModel', func);
 
-    messageBroker.subscribe('SetConfiguration', func);
+    messageBroker.subscribe('updateModel', func);
     messageBroker.context.Gui.SetConfiguration();
 
     expect(func).toHaveBeenCalled();
@@ -56,12 +60,16 @@ describe('DesignerMessageApi', () => {
   it('should use the context GetConfiguration to invoke a jsEvent with context, GetConfiguration, and model as params', () => {
     const spyJsEvent = jest.spyOn(callback, 'JsEvent');
     const messageBroker = new DesignerMessageApi(window.Alteryx);
-    const func = jest.fn();
-    const map = new Map();
-    map.set('SetConfiguration', func);
+    const expected = {
+      Configuration: {
+        Annotation: '',
+        Configuration: {}
+      }
+    };
+
     messageBroker.context.Gui.GetConfiguration();
 
-    expect(spyJsEvent).toHaveBeenCalledWith(messageBroker.context, 'GetConfiguration', messageBroker._model);
+    expect(spyJsEvent).toHaveBeenCalledWith(messageBroker.context, 'GetConfiguration', expected);
   });
 
   it('should use the getter for language code to return the contexts language code', () => {

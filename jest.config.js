@@ -10,6 +10,8 @@ module.exports = {
   setupFilesAfterEnv: ['<rootDir>/testSetup.js'],
   collectCoverage: true,
   coverageDirectory: '<rootDir>/coverage',
-  coveragePathIgnorePatterns: ['/node_modules/'],
+  collectCoverageFrom: ['src/**/*.{js,jsx,ts,tsx}'],
+  verbose: true,
+  coveragePathIgnorePatterns: ['/node_modules/', 'src/Core/'],
   transformIgnorePatterns: ['/node_modules/(?!lodash-es).+\\.js$']
 };

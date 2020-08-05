@@ -24,11 +24,15 @@ const Provider = props => {
     const receiveToolConfiguration = data => {
       handleUpdateModel({ ...data });
     };
-    messageBroker.subscribe('SetConfiguration', receiveToolConfiguration);
-    messageBroker.subscribe('onReady', receiveDataEnvelope);
+    messageBroker.subscribe('updateModel', receiveToolConfiguration);
+    messageBroker.subscribe('updateDataEnvelope', receiveDataEnvelope);
+
+    return function cleanUp() {
+      handleUpdateModel(messageBroker._model);
+    };
   }, []);
 
-  const { darkMode = false, productTheme = {}, locale = 'en' } = dataEnvelope;
+  const { darkMode = false, productTheme = {}, locale = messageBroker.languageCode || 'en' } = dataEnvelope;
 
   return (
     <UiSdkContext.Provider id="sdk-provider" value={[model, handleUpdateModel]}>
