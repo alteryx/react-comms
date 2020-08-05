@@ -37,6 +37,8 @@ sonarqube-check:
   stage: sonarscan
   tags:
       - linux-docker
+  dependencies:
+    - test-sdk
   image:
       name: sonarsource/sonar-scanner-cli:latest
   variables:
@@ -44,7 +46,7 @@ sonarqube-check:
       GIT_DEPTH: 0
       SONAR_PROJECT_BASE_DIR: "${CI_PROJECT_DIR}"
   script:
-      - sonar-scanner -X -Dproject.settings=sonar-scanner.properties -Dsonar.qualitygate.wait=true
+      - sonar-scanner -X -Dproject.settings=sonar-project.properties -Dsonar.qualitygate.wait=true
   allow_failure: true
   rules:
       - if: "$CI_PIPELINE_SOURCE == 'push'"  
