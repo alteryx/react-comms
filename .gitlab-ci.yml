@@ -4,6 +4,10 @@ stages:
   - test-coverage
   - build
 
+cache:
+  paths:
+    - node_modules/
+
 test-sdk:
   stage: test-coverage
   tags:
