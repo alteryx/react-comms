@@ -2,6 +2,7 @@ image: node:lts
 
 stages:
   - test-coverage
+  - sonarscan
   - build
 
 cache:
@@ -31,6 +32,25 @@ build-ui-sdk:
   artifacts:
     paths:
       - build
-  
+
+sonarqube-check:
+  stage: sonarscan
+  tags:
+      - linux-docker
+  image:
+      name: sonarsource/sonar-scanner-cli:latest
+  variables:
+      # sonarqube requires full clone for commit history-enriched analysis reporting
+      GIT_DEPTH: 0
+      SONAR_PROJECT_BASE_DIR: "${CI_PROJECT_DIR}"
+  script:
+      - sonar-scanner -X -Dproject.settings=Sonarqube/sonar-scanner.properties -Dsonar.qualitygate.wait=true
+  allow_failure: true
+  rules:
+      - if: "$CI_PIPELINE_SOURCE == 'push'"  
+      - if: "$CI_PIPELINE_SOURCE == 'merge_request_event'"  
+      - if: '$CI_COMMIT_REF_NAME  == "master" '  
+      - if: '$CI_COMMIT_REF_NAME  =~ /^release/'
+
 
 
