@@ -1,6 +1,8 @@
 import { v4 as uuidv4 } from 'uuid';
 
-export const JsEvent = (context, Event, item = {}) => {
+import { IContext } from '../MessageApiBase/MessageApiBase';
+
+export const JsEvent = (context: IContext, Event: string, item: object = {}): Promise<unknown> => {
   const callbackRegistrationId = uuidv4();
   const callbackPromise = new Promise(res => {
     context.Gui.Callbacks[callbackRegistrationId] = (...theArgs) => {

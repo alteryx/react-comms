@@ -14,11 +14,10 @@ exports[`Provider should be able to render on the DOM 1`] = `
   }
 >
   <ForwardRef
-    id="app-wrapper"
     locale="en"
     messages={Object {}}
     paletteType="light"
-    productTheme={Object {}}
+    theme={Object {}}
   />
 </ContextProvider>
 `;

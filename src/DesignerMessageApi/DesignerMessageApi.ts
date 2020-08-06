@@ -1,17 +1,41 @@
+/* eslint-disable import/no-cycle */
 /* eslint-disable no-underscore-dangle */
-import MessageApiBase from '../MessageApiBase/MessageApiBase';
+import MessageApiBase, { IContext } from '../MessageApiBase/MessageApiBase';
 import * as callback from '../Utils/callback';
 
-export const messageTypes = {
+export interface IAyxAppContext {
+  darkMode: boolean;
+  productTheme: object;
+  locale: string;
+}
+
+interface IModel {
+  configuration: object;
+  annotation: string;
+}
+
+interface IMessageTypes {
+  GET_CONFIGURATION: string;
+}
+
+interface ISubscriptionTypes {
+  MODEL_UPDATED: string;
+}
+
+export const messageTypes: IMessageTypes = {
   GET_CONFIGURATION: 'GetConfiguration'
 };
 
-export const subscriptionEvents = {
+export const subscriptionEvents: ISubscriptionTypes = {
   MODEL_UPDATED: 'MODEL_UPDATED'
 };
 
 class DesignerMessageApi extends MessageApiBase {
-  constructor(ctx) {
+  _model: IModel;
+
+  _ayxAppContext: IAyxAppContext;
+
+  constructor(ctx: IContext) {
     super(ctx);
     this._model = {
       configuration: {},
@@ -40,7 +64,7 @@ class DesignerMessageApi extends MessageApiBase {
     };
   }
 
-  sendMessage = (type, payload) => {
+  sendMessage = (type: string, payload: object): void => {
     callback.JsEvent(this.context, type, payload);
   };
 }
