@@ -2,8 +2,8 @@ image: node:lts
 
 stages:
   - test-coverage
-  - sonarscan
   - build
+  - sonarscan
 
 cache:
   paths:
