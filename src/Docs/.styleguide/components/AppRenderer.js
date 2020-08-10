@@ -1,9 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Grid, Box, makeStyles, useTheme, lighten } from "@ayx/ui-core";
+import { Grid, Box, makeStyles, useTheme, lighten, Typography } from "@ayx/ui-core";
 import MainAppBar from "./MainAppBar";
 import MarkdownStyleOverrider from "./MarkdownStyleOverrider";
-import Logo from "./Logo";
 
 const useStyles = makeStyles(({ palette, spacing, direction }) => ({
   root: {
@@ -21,7 +20,7 @@ const useStyles = makeStyles(({ palette, spacing, direction }) => ({
   version: {
     textAlign: direction === "rtl" ? "left" : "right",
     fontSize: 11,
-    margin: spacing(-8, 14, 4)
+    margin: spacing(-8, 10, 6)
   },
   sidebar: {
     // color: palette.type === "dark" ? undefined : palette.background.paper, // Needed to avoid the collisions of body1 typography colors
@@ -47,19 +46,16 @@ const StyleGuideRenderer = ({
   productThemeName
 }) => {
   const classes = useStyles();
-  const theme = useTheme();
 
   return (
     <>
       <Grid container className={classes.root}>
         <Grid item className={classes.sidebar} component="nav">
-          {/* <AyxAppWrapper theme={theme} paletteType="dark"> */}
             <Box p={4}>
-              <Logo color={theme.palette.type === "dark" ? theme.palette.grey[100] : theme.palette.grey[900]}/>
+              <Typography variant="h1">UI-SDK</Typography>
             </Box>
-            <Box className={classes.version}>{`VERSION ${version}`}</Box>
+            <Box marginLeft={6} className={classes.version}>{`VERSION 0.0.1`}</Box>
             <Box marginBottom={6}>{toc}</Box>
-          {/* </AyxAppWrapper> */}
         </Grid>
         <MainAppBar
           productThemeName={productThemeName}

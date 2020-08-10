@@ -1,3 +1,4 @@
+const fs = require('fs');
 const path = require('path');
 
 module.exports = {
@@ -130,12 +131,65 @@ module.exports = {
   },
   sections: [
     {
-      name: 'UI-SDK',
+      name: 'Getting Started',
+      content: './src/Docs/index.md',
+      sections: [
+        {
+          name: 'Installation',
+          content: './src/Docs/getting-started/index.md'
+        },
+        {
+          name: 'Usage',
+          content: './src/Docs/getting-started/usage.md'
+        },
+        {
+          name: 'Linter',
+          content: './src/Docs/getting-started/linter.md'
+        },
+        {
+          name: 'Toolchain',
+          content: './src/Docs/getting-started/toolchain.md'
+        }
+      ],
+      exampleMode: 'collapse',
+      usageMode: 'collapse',
+      sectionDepth: 1
+    },
+    {
+      name: 'UI-SDK Components',
       components: './src/**/*.{js,jsx,ts,tsx}',
-      ignore: ['./src/DesignerMessageApi/DesignerMessageApi.js', './src/MessageApiBase/MessageApiBase.js'],
+      ignore: [
+        './src/Core/**/*{js,jsx,ts,tsx}',
+        './src/index.tsx',
+        './src/Utils/*{js,jsx,ts,tsx}',
+        './src/DesignerMessageApi/DesignerMessageApi.js',
+        './src/MessageApiBase/MessageApiBase.js'
+      ],
+      exampleMode: 'collapse',
+      usageMode: 'collapse',
+      sectionDepth: 1
+    },
+    {
+      name: 'UI-Core Components',
+      components: './src/Core/**/*.{js,jsx,ts,tsx}',
       exampleMode: 'collapse',
       usageMode: 'collapse',
       sectionDepth: 1
     }
-  ]
+  ],
+  pagePerSection: true,
+  updateExample(props, exampleFilePath) {
+    // props.settings are passed by any fenced code block, in this case
+    const { settings, lang } = props;
+    if (typeof settings.file === 'string') {
+      const filepath = path.resolve(exampleFilePath, settings.file);
+      delete settings.file;
+      return {
+        content: fs.readFileSync(filepath, 'utf8'),
+        settings,
+        lang
+      };
+    }
+    return props;
+  }
 };
