@@ -1,6 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 
-import { IContext } from '../MessageApiBase/MessageApiBase';
+// eslint-disable-next-line import/no-cycle
+import { IContext } from '../DesignerMessageApi/DesignerMessageApi';
 
 export const JsEvent = (context: IContext, Event: string, item: object = {}): Promise<unknown> => {
   const callbackRegistrationId = uuidv4();

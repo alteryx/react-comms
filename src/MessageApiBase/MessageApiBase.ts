@@ -3,26 +3,16 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 /* eslint-disable no-underscore-dangle */
 
-export interface IContext {
-  Gui: {
-    SetConfiguration: Function;
-    GetConfiguration: Function;
-    Callbacks: object;
-  };
-  AlteryxLanguageCode: string;
-  JsEvent: Function;
-}
-
 abstract class MessageApiBase {
   subscriptions: Map<string, Function>;
 
-  context: IContext;
+  context: object;
 
   _model: object;
 
   _ayxAppContext: object;
 
-  constructor(ctx: IContext) {
+  constructor(ctx: object) {
     this.context = ctx;
     this.subscriptions = new Map();
     this._model = {};

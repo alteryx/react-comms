@@ -1,12 +1,24 @@
+/* eslint-disable react/static-property-placement */
 /* eslint-disable import/no-cycle */
 /* eslint-disable no-underscore-dangle */
-import MessageApiBase, { IContext } from '../MessageApiBase/MessageApiBase';
+
+import MessageApiBase from '../MessageApiBase/MessageApiBase';
 import * as callback from '../Utils/callback';
 
 export interface IAyxAppContext {
   darkMode: boolean;
   productTheme: object;
   locale: string;
+}
+
+export interface IContext {
+  Gui: {
+    SetConfiguration: Function;
+    GetConfiguration: Function;
+    Callbacks: object;
+  };
+  AlteryxLanguageCode: string;
+  JsEvent: Function;
 }
 
 interface IModel {
@@ -31,6 +43,8 @@ export const subscriptionEvents: ISubscriptionTypes = {
 };
 
 class DesignerMessageApi extends MessageApiBase {
+  context: IContext;
+
   _model: IModel;
 
   _ayxAppContext: IAyxAppContext;
