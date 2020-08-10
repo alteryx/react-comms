@@ -73,6 +73,7 @@ build-docs-feature:
   artifacts:
     paths:
       - styleguide
+    expire_in: 1d
 
 pages:
   stage: pages
