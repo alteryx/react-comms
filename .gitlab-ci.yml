@@ -64,7 +64,7 @@ build-docs-feature:
   tags:
     - linux-docker
   script:
-    - npm run install
+    - npm i
     - npm run docs:build
   only:
     changes:
