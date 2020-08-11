@@ -42,7 +42,7 @@ export const subscriptionEvents: ISubscriptionTypes = {
   MODEL_UPDATED: 'MODEL_UPDATED'
 };
 
-class DesignerMessageApi extends MessageApiBase {
+class DesignerMessageApi extends MessageApiBase<object, object, object> {
   context: IContext;
 
   _model: IModel;

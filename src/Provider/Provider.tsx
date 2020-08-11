@@ -13,7 +13,7 @@ interface IProviderProps {
     model: object;
     subscribe: Function;
   };
-  children: Array<HTMLElement>;
+  children: Array<React.ReactNode>;
 }
 
 const Provider: React.FC = (props: IProviderProps) => {

@@ -3,20 +3,18 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 /* eslint-disable no-underscore-dangle */
 
-abstract class MessageApiBase {
+abstract class MessageApiBase<T, TU, TV> {
   subscriptions: Map<string, Function>;
 
-  context: object;
+  context: T;
 
-  _model: object;
+  _model: TU;
 
-  _ayxAppContext: object;
+  _ayxAppContext: TV;
 
-  constructor(ctx: object) {
+  constructor(ctx: T) {
     this.context = ctx;
     this.subscriptions = new Map();
-    this._model = {};
-    this._ayxAppContext = {};
   }
 
   sendMessage = (type: string, payload: object): void => {};
@@ -25,19 +23,19 @@ abstract class MessageApiBase {
     this.subscriptions.set(messageType, cb);
   };
 
-  get model(): object {
+  get model(): TU {
     return this._model;
   }
 
-  set model(newModel: object) {
+  set model(newModel: TU) {
     this._model = newModel;
   }
 
-  get ayxAppContext(): object {
+  get ayxAppContext(): TV {
     return this._ayxAppContext;
   }
 
-  set ayxAppContext(newAppContext: object) {
+  set ayxAppContext(newAppContext: TV) {
     this._ayxAppContext = newAppContext;
   }
 }
