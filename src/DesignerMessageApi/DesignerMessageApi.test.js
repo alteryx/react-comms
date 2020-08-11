@@ -1,7 +1,7 @@
 /* eslint-disable no-underscore-dangle */
-import * as callback from '../Utils/callback';
+import * as callback from '../Utils/callback.ts';
 
-import DesignerMessageApi from './DesignerMessageApi';
+import DesignerMessageApi from './DesignerMessageApi.ts';
 
 describe('DesignerMessageApi', () => {
   beforeAll(() => {

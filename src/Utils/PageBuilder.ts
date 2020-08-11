@@ -1,4 +1,4 @@
-export const getTemplate = (dataEnvelope, vendorBundlePath, mainBundlePath) => {
+export const getTemplate = (dataEnvelope: object, vendorBundlePath: string, mainBundlePath: string): string => {
   if (!dataEnvelope || !vendorBundlePath || !mainBundlePath) {
     throw new Error('All parameters are required');
   }

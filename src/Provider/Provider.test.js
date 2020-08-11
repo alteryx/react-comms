@@ -2,11 +2,11 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
 
-import DesignerMessageApi from '../DesignerMessageApi/DesignerMessageApi';
-import UiSdkContext from '../Context';
-import * as callback from '../Utils/callback';
+import DesignerMessageApi from '../DesignerMessageApi/DesignerMessageApi.ts';
+import UiSdkContext from '../Context/index.tsx';
+import * as callback from '../Utils/callback.ts';
 
-import Provider from './Provider';
+import Provider from './Provider.tsx';
 
 describe('Provider', () => {
   window.Alteryx = {
@@ -38,12 +38,11 @@ describe('Provider', () => {
 
   it('should render AyxAppWrapper with appropriate props if there is model data', () => {
     const wrapper = shallow(<Provider messageBroker={designerMessageApi} />);
-    expect(wrapper.find('#app-wrapper').props()).toEqual({
+    expect(wrapper.find('#sdk-provider').childAt(0).props()).toEqual({
       paletteType: 'light',
-      productTheme: {},
+      theme: {},
       locale: 'en',
       children: undefined,
-      id: 'app-wrapper',
       messages: {}
     });
   });
