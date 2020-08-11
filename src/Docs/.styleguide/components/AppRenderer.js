@@ -63,12 +63,9 @@ const StyleGuideRenderer = ({
           togglePaletteType={togglePaletteType}
           handleProductNameChange={handleProductNameChange}
         />
-        <Grid container className={classes.content} align="center" spacing={4}>
+        <Grid container className={classes.content} spacing={4}>
           <Grid item xs={12} component="main">
               <MarkdownStyleOverrider>{children}</MarkdownStyleOverrider>
-          </Grid>
-          <Grid item xs={12} component="footer">
-            {`UI-Core Version ${version}`}
           </Grid>
         </Grid>
       </Grid>

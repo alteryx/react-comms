@@ -160,7 +160,7 @@ module.exports = {
       components: './src/**/*.{js,jsx,ts,tsx}',
       ignore: [
         './src/Core/**/*{js,jsx,ts,tsx}',
-        './src/index.tsx',
+        './src/**/demo.js',
         './src/Utils/*{js,jsx,ts,tsx}',
         './src/DesignerMessageApi/DesignerMessageApi.js',
         './src/MessageApiBase/MessageApiBase.js'
