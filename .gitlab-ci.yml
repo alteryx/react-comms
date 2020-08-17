@@ -3,6 +3,8 @@ image: node:lts
 stages:
   - test-coverage
   - build
+  - build-docs
+  - pages
   - sonarscan
 
 cache:
@@ -56,6 +58,37 @@ sonarqube-check:
       - if: "$CI_PIPELINE_SOURCE == 'merge_request_event'"  
       - if: '$CI_COMMIT_REF_NAME  == "master" '  
       - if: '$CI_COMMIT_REF_NAME  =~ /^release/'
+
+build-docs-feature:
+  stage: build-docs
+  tags:
+    - linux-docker
+  script:
+    - npm i
+    - npm run docs:build
+  only:
+    changes:
+      - .gitlab-ci.yml
+      - src/**
+  artifacts:
+    paths:
+      - styleguide
+    expire_in: 1d
+
+pages:
+  stage: pages
+  tags:
+    - linux-docker
+  dependencies:
+    - test-sdk
+    - build-docs-feature
+  script:
+    - mv styleguide public
+    - cp public/index.html public/404.html
+  artifacts:
+    paths:
+      - public
+    expire_in: 30 days
 
 
 

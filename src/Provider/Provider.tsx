@@ -18,7 +18,7 @@ interface IProviderProps {
 
 const Provider: React.FC = (props: IProviderProps) => {
   const { messages = {}, messageBroker } = props;
-  const { darkMode = false, productTheme = {}, locale = 'en' } = messageBroker.ayxAppContext;
+  const { darkMode = false, productTheme = {}, locale = 'en' } = messageBroker.ayxAppContext || {};
   const [model, updateModel] = useState(messageBroker.model);
 
   const handleUpdateModel = newModel => {
