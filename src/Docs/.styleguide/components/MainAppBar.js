@@ -1,19 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import {
   AppBar,
   Toolbar,
-  Snackbar,
   Grid,
   Select,
   Tooltip,
-  Button,
   IconButton,
   Divider,
   Box,
   makeStyles,
   useTheme,
-  fade
 } from "@ayx/ui-core";
 import {
   Gitlab,
@@ -31,10 +28,6 @@ const useStyles = makeStyles(({ palette, direction }) => ({
   }
 }));
 
-const LOCAL_STORAGE_KEYS = {
-  alertIndex: "alertIndex"
-};
-const CURRENT_ALERT_INDEX = 4
 
 const MainAppBar = ({
   productThemeName,
@@ -45,14 +38,12 @@ const MainAppBar = ({
 
   // Direction Alert
   const handleToggleDirectionClick = () => {
-    setDirectionAlertOpen(direction !== 'rtl');
     toggleDirection();
   }
 
   const { palette, direction } = useTheme();
 
   const classes = useStyles();
-  const [directionAlertOpen, setDirectionAlertOpen] = useState(direction === 'rtl');
 
   return (
     <>
