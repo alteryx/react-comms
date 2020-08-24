@@ -1,3 +1,3 @@
-import { FormControl, useFormControl } from '@ayx/ui-core';
+import { FormControl } from '@ayx/ui-core';
 
-export { FormControl, useFormControl };
+export default FormControl;

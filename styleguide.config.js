@@ -9,7 +9,7 @@ module.exports = {
     StyleGuideRenderer: path.join(__dirname, 'src/Docs/.styleguide/App.js')
   },
   // eslint-disable-next-line global-require
-  webpackConfig: require('./node_modules/@ayx/ayx-scripts/config/webpack.dev'),
+  webpackConfig: require('./node_modules/@ayx/ayx-scripts/config/webpack.prod'),
   theme: {
     borderRadius: 4,
     color: {
@@ -160,10 +160,12 @@ module.exports = {
       components: './src/**/*.{js,jsx,ts,tsx}',
       ignore: [
         './src/Core/**/*{js,jsx,ts,tsx}',
-        './src/**/demo.js',
+        './src/**/basicDemo.js',
+        './src/**/advancedDemo.js',
+        './src/**/messages.js',
         './src/Utils/*{js,jsx,ts,tsx}',
-        './src/DesignerMessageApi/DesignerMessageApi.js',
-        './src/MessageApiBase/MessageApiBase.js'
+        './src/MessageApiBase/*{js,jsx,ts,tsx}',
+        './src/DesignerMessageApi/*{js,jsx,ts,tsx}'
       ],
       exampleMode: 'collapse',
       usageMode: 'collapse',
@@ -178,10 +180,30 @@ module.exports = {
     }
   ],
   pagePerSection: true,
+  getComponentPathLine(componentPath) {
+    const name = path.basename(componentPath, '.tsx');
+    const dir = path.dirname(componentPath);
+
+    if (dir.includes('src') && !dir.includes('Core')) {
+      const delimiter = dir.includes('/') ? '/' : '\\';
+      const componentName = dir.split(delimiter)[1];
+      const path = `import { ${componentName} } from '@ayx/ui-sdk';`;
+
+      return path;
+    }
+    if (dir.includes('src') && dir.includes('Core')) {
+      const delimiter = dir.includes('/') ? '/' : '\\';
+      const componentName = dir.split(delimiter)[2];
+      const path = `import { ${componentName} } from '@ayx/ui-sdk/core';`;
+
+      return path;
+    }
+    return `import {${name}} from '${dir}';`;
+  },
   updateExample(props, exampleFilePath) {
     // props.settings are passed by any fenced code block, in this case
     const { settings, lang } = props;
-    if (typeof settings.file === 'string') {
+    if (settings && settings.file && typeof settings.file === 'string') {
       const filepath = path.resolve(exampleFilePath, settings.file);
       delete settings.file;
       return {
