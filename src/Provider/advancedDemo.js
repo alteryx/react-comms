@@ -28,6 +28,15 @@ const ProviderDemo = () => {
       handleUpdateModel(initialModelState);
     };
 
+    const submitModel = () => {
+      alert(
+        `This is the message that would be getting sent to your parent app: ${JSON.stringify({
+          type: 'UPDATE_MODEL',
+          payload: model
+        })}`
+      );
+    };
+
     const handleNameChange = event => {
       const newModel = { ...model, name: event.target.value };
       handleUpdateModel(newModel);
@@ -79,7 +88,12 @@ const ProviderDemo = () => {
             />
           </FormControl>
         </Grid>
-        <Grid item xs={12}>
+        <Grid item xs={3}>
+          <Button color="primary" onClick={submitModel} variant="contained">
+            Submit Model
+          </Button>
+        </Grid>
+        <Grid item xs={3}>
           <Button onClick={resetModel} variant="contained">
             Reset Model
           </Button>

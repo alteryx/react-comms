@@ -1,18 +1,18 @@
 const messages = {
   en: {
-    'example.label': 'super awesome string'
+    'example.label': 'Super awesome string.'
   },
   fr: {
-    'example.label': 'ficelle super génial'
+    'example.label': 'Ficelle super génial.'
   },
   de: {
-    'example.label': 'super tolle Saite'
+    'example.label': 'Super tolle Saite.'
   },
   es: {
-    'example.label': 'cadena super impresionante'
+    'example.label': 'Cadena super impresionante.'
   },
   pt: {
-    'example.label': 'corda super incrível'
+    'example.label': 'Corda super incrível.'
   },
   ja: {
     'example.label': '超素晴らしい文字列'
