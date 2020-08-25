@@ -145,10 +145,6 @@ module.exports = {
         {
           name: 'Linter',
           content: './src/Docs/getting-started/linter.md'
-        },
-        {
-          name: 'Toolchain',
-          content: './src/Docs/getting-started/toolchain.md'
         }
       ],
       exampleMode: 'collapse',

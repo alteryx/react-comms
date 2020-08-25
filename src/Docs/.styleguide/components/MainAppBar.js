@@ -76,7 +76,7 @@ const MainAppBar = ({
               <Tooltip arrow title="GitLab">
                 <IconButton
                   onClick={() => {
-                    window.open("https://git.alteryx.com/ayx-ui/ayx-ui/");
+                    window.open("https://git.alteryx.com/ayx-ui-sdk/ayx-ui-sdk/");
                   }}
                 >
                   <Gitlab />

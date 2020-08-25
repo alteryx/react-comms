@@ -16,7 +16,7 @@ Below is an example of what instantiating a Provider with the appropriate props 
 
 ``` jsx static
   import React from 'react'
-  import { MessageAPI, Provider } from 'ayx-ui-sdk'
+  import { MessageAPI, Provider } from '@ayx/ui-sdk'
   const messages = {
     en: {
       'example.label': 'super awesome string'
