@@ -1,10 +1,10 @@
 import React from 'react';
 
-import MessageApi from '../MessageApiBase/MessageApiBase.ts';
+import MessageApi from '../MessageApiBase/index.ts';
 import UiSdkContext from '../Context/index.tsx';
 import { Button, Grid, Typography } from '../Core';
 
-import Provider from './Provider.tsx';
+import Provider from './index.tsx';
 import messages from './messages';
 
 // Instantiate your message handler to pass to the provider

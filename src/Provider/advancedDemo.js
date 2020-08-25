@@ -1,10 +1,10 @@
 import React from 'react';
 
-import MessageApi from '../MessageApiBase/MessageApiBase.ts';
+import MessageApi from '../MessageApiBase/index.ts';
 import UiSdkContext from '../Context/index.tsx';
 import { Button, Grid, Input, FormControl, FormHelperText, FormControlLabel, Checkbox, InputLabel } from '../Core';
 
-import Provider from './Provider.tsx';
+import Provider from './index.tsx';
 import messages from './messages';
 
 const initialModelState = {

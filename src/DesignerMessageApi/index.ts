@@ -2,7 +2,7 @@
 /* eslint-disable import/no-cycle */
 /* eslint-disable no-underscore-dangle */
 
-import MessageApiBase from '../MessageApiBase/MessageApiBase';
+import MessageApiBase from '../MessageApiBase';
 import * as callback from '../Utils/callback';
 
 export interface IAyxAppContext {
