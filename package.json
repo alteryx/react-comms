@@ -6,6 +6,7 @@
   "dependencies": {
     "@ayx/ui-core": "^4.7.3",
     "@babel/plugin-proposal-class-properties": "^7.10.4",
+    "babel-preset-react-app": "^9.1.2",
     "jss-rtl": "^0.3.0",
     "prop-types": "^15.7.2",
     "react-frame-component": "^4.1.2",

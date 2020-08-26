@@ -2,11 +2,11 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
 
-import DesignerMessageApi from '../DesignerMessageApi/DesignerMessageApi.ts';
+import DesignerMessageApi from '../DesignerMessageApi/index.ts';
 import UiSdkContext from '../Context/index.tsx';
 import * as callback from '../Utils/callback.ts';
 
-import Provider from './Provider.tsx';
+import Provider from './index.tsx';
 
 describe('Provider', () => {
   window.Alteryx = {

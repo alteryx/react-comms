@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 
 import AyxAppWrapper from '../Core/AyxAppWrapper';
-import { subscriptionEvents, IAyxAppContext } from '../DesignerMessageApi/DesignerMessageApi';
+import { subscriptionEvents, IAyxAppContext } from '../DesignerMessageApi';
 import UiSdkContext, { IContextProviderProps } from '../Context';
 
 interface IProviderProps {
