@@ -6,6 +6,7 @@
   "dependencies": {
     "@ayx/ui-core": "^4.7.3",
     "@babel/plugin-proposal-class-properties": "^7.10.4",
+    "@babel/preset-typescript": "^7.10.4",
     "babel-preset-react-app": "^9.1.2",
     "jss-rtl": "^0.3.0",
     "prop-types": "^15.7.2",
@@ -40,6 +41,10 @@
     "test": "jest -u --silent",
     "apidocs": "ayx-scripts doc",
     "docs": "styleguidist server",
+    "release": "npm run build:publish && npm publish build --non-interactive",
+    "build:publish": "npm run build:es2015 && npm run build:es2015modules && npm run publish build",
+    "build:es2015": "cross-env NODE_ENV=production babel --config-file ./.babelrc.js ./src --copy-files --out-dir ./build --ignore *.test.js",
+    "build:es2015modules": "cross-env NODE_ENV=production BABEL_ENV=modules babel --config-file ./.babelrc.js ./src/index.ts --out-file ./build/index.es.js",
     "docs:build": "styleguidist build",
     "analyze": "ayx-scripts analyze-bundle",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
