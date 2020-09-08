@@ -99,10 +99,8 @@ publish-sdk:
   only:
     changes:
       - .gitlab-ci.yml
-      - src/**/*
-    refs:
-      - master
-
+      - src/**
+      
 pages:
   stage: pages
   tags:
