@@ -49,7 +49,7 @@ const Provider: React.FC = (props: IProviderProps) => {
     value: [model, handleUpdateModel]
   };
 
-  const { darkMode = false, locale = 'en', productTheme = {} } = appContext || {};
+  const { darkMode, locale, productTheme } = appContext || {};
   const appPropsToSpread = { messages, paletteType: darkMode ? 'dark' : 'light', theme: productTheme, locale };
 
   return (
