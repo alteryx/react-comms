@@ -1,5 +1,5 @@
-import { getTemplate } from './pageBuilder.ts';
-import { isValidMessageType } from './communication.ts';
+import { getTemplate } from './PageBuilder.ts';
+import { isValidMessageType } from './Communication.ts';
 
 describe('pageBuilder', () => {
   it('should return an HTML template when passed valid parameters', () => {

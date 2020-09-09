@@ -13,7 +13,7 @@ exports[`Provider should be able to render on the DOM 1`] = `
     ]
   }
 >
-  <ForwardRef
+  <Child
     locale="en"
     messages={Object {}}
     paletteType="light"

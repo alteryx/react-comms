@@ -2,8 +2,7 @@
 /* eslint-disable react/forbid-prop-types */
 import React, { useEffect, useState } from 'react';
 
-import AyxAppWrapper from '../Core/AyxAppWrapper';
-import { subscriptionEvents, IAyxAppContext } from '../DesignerMessageApi';
+import { IAyxAppContext } from '../DesignerMessageApi';
 import UiSdkContext, { IContextProviderProps } from '../Context';
 
 interface IProviderProps {
@@ -12,26 +11,34 @@ interface IProviderProps {
     ayxAppContext: IAyxAppContext;
     model: object;
     subscribe: Function;
+    sendMessage: Function;
   };
-  children: Array<React.ReactNode>;
+  children: React.ReactElement;
 }
 
 const Provider: React.FC = (props: IProviderProps) => {
   const { messages = {}, messageBroker } = props;
-  const { darkMode = false, productTheme = {}, locale = 'en' } = messageBroker.ayxAppContext || {};
   const [model, updateModel] = useState(messageBroker.model);
+  const [appContext, updateAppContext] = useState(messageBroker.ayxAppContext);
 
   const handleUpdateModel = newModel => {
+    // The reason all 3 of these are here is to work in all use cases for now, DesignerMessageAPI and DevHarness.
+    // TODO: Refactor this to only be dependent on one call
     updateModel(newModel);
     messageBroker.model = newModel;
+    messageBroker.sendMessage('UPDATE_MODEL', newModel);
   };
 
   useEffect(() => {
-    const receiveToolConfiguration = data => {
-      handleUpdateModel({ ...data });
+    const receiveAppContext = data => {
+      updateAppContext({ ...data });
     };
-    messageBroker.subscribe(subscriptionEvents.MODEL_UPDATED, receiveToolConfiguration);
+    const receiveModel = data => {
+      updateModel({ ...data });
+    };
 
+    messageBroker.subscribe('UPDATE_MODEL', receiveModel);
+    messageBroker.subscribe('UPDATE_APP_CONTEXT', receiveAppContext);
     return function cleanUp() {
       handleUpdateModel(messageBroker.model);
     };
@@ -42,11 +49,12 @@ const Provider: React.FC = (props: IProviderProps) => {
     value: [model, handleUpdateModel]
   };
 
+  const { darkMode = false, locale = 'en', productTheme = {} } = appContext || {};
+  const appPropsToSpread = { messages, paletteType: darkMode ? 'dark' : 'light', theme: productTheme, locale };
+
   return (
     <UiSdkContext.Provider {...providerProps}>
-      <AyxAppWrapper locale={locale} messages={messages} paletteType={darkMode ? 'dark' : 'light'} theme={productTheme}>
-        {props.children}
-      </AyxAppWrapper>
+      {React.cloneElement(props.children, { ...appPropsToSpread })}
     </UiSdkContext.Provider>
   );
 };
