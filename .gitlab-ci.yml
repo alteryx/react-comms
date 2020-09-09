@@ -101,7 +101,7 @@ publish-sdk:
     changes:
       - .gitlab-ci.yml
       - src/**
-  except:
+  only:
     - master
       
 pages:
@@ -118,6 +118,8 @@ pages:
     paths:
       - public
     expire_in: 30 days
+  only:
+    - master
 
 
 
