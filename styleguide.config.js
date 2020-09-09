@@ -168,6 +168,7 @@ module.exports = {
     }
   ],
   pagePerSection: true,
+  skipComponentsWithoutExample: true,
   getComponentPathLine(componentPath) {
     const name = path.basename(componentPath, '.tsx');
     const dir = path.dirname(componentPath);
