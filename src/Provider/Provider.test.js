@@ -18,14 +18,6 @@ describe('Provider', () => {
   };
   const designerMessageApi = new DesignerMessageApi(window.Alteryx);
   designerMessageApi.subscribe = jest.fn();
-  beforeAll(() => {
-    window.dataEnvelope = {
-      darkMode: false,
-      productTheme: {},
-      locale: 'en',
-      model: { count: 0 }
-    };
-  });
 
   afterEach(() => {
     jest.clearAllMocks();
@@ -58,7 +50,7 @@ describe('Provider', () => {
     expect(wrapper.find('#sdk-provider').children().props()).toEqual({
       paletteType: 'light',
       theme: {},
-      locale: 'en',
+      locale: undefined,
       children: undefined,
       messages: {}
     });

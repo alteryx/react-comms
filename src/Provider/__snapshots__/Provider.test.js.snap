@@ -14,7 +14,6 @@ exports[`Provider should be able to render on the DOM 1`] = `
   }
 >
   <Child
-    locale="en"
     messages={Object {}}
     paletteType="light"
     theme={Object {}}
