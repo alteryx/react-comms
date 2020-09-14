@@ -1,18 +1,12 @@
 import React from 'react';
-import { Button, Grid, Typography } from '@ayx/ui-core';
+import { AyxAppWrapper, Button, Grid, Typography } from '@ayx/ui-core';
 
-import MessageApi from '../MessageApiBase/index.ts';
 import UiSdkContext from '../Context/index.tsx';
 
-import Provider from './index.tsx';
+import DesignerApi from './index.tsx';
 import messages from './messages';
 
-// Instantiate your message handler to pass to the provider
-const messageBroker = new MessageApi(window);
-// In the real world, this line won't be here. Your model will take the shape of the parent application.
-messageBroker.model = { count: 0 };
-
-const ProviderDemo = () => {
+const DesignerApiDemo = () => {
   const Child = () => {
     const [model, handleUpdateModel] = React.useContext(UiSdkContext);
     const incrementCount = () => {
@@ -21,24 +15,26 @@ const ProviderDemo = () => {
       handleUpdateModel(newModel);
     };
     return (
-      <Grid container>
-        <Grid item>
-          <Button id="child" onClick={incrementCount} variant="contained">
-            <Typography>Click me to increment the count</Typography>
-          </Button>
+      <AyxAppWrapper>
+        <Grid container>
+          <Grid item>
+            <Button id="child" onClick={incrementCount} variant="contained">
+              <Typography>Click me to increment the count</Typography>
+            </Button>
+          </Grid>
+          <Grid item xs={12}>
+            <Typography variant="h1">{model.count}</Typography>
+          </Grid>
         </Grid>
-        <Grid item xs={12}>
-          <Typography variant="h1">{model.count}</Typography>
-        </Grid>
-      </Grid>
+      </AyxAppWrapper>
     );
   };
 
   return (
-    <Provider messageBroker={messageBroker} messages={messages}>
+    <DesignerApi messages={messages}>
       <Child />
-    </Provider>
+    </DesignerApi>
   );
 };
 
-<ProviderDemo />;
+<DesignerApiDemo />;

@@ -14,10 +14,11 @@ module.exports = {
   verbose: true,
   coveragePathIgnorePatterns: [
     '/node_modules/',
-    'src/index.ts',
-    'src/Provider/advancedDemo.js',
-    'src/Provider/basicDemo.js',
-    'src/Provider/messages.js'
+    'src/Core/',
+    'src/Docs/',
+    'src/DesignerApi/advancedDemo.js',
+    'src/DesignerApi/basicDemo.js',
+    'src/DesignerApi/messages.js'
   ],
   transformIgnorePatterns: ['/node_modules/(?!lodash-es).+\\.js$']
 };

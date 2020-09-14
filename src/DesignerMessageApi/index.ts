@@ -21,8 +21,10 @@ export interface IContext {
 }
 
 interface IModel {
-  configuration: object;
-  annotation: string;
+  Configuration: {
+    configuration: object;
+    annotation: string;
+  };
 }
 
 interface IMessageTypes {
@@ -51,8 +53,10 @@ class DesignerMessageApi extends MessageApiBase<object, object, IAyxAppContext> 
   constructor(ctx: IContext) {
     super(ctx);
     this._model = {
-      configuration: {},
-      annotation: ''
+      Configuration: {
+        configuration: {},
+        annotation: ''
+      }
     };
     this._ayxAppContext = {
       darkMode: false,

@@ -1,19 +1,22 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Provider should be able to render on the DOM 1`] = `
+exports[`DesignerApi should be able to render on the DOM 1`] = `
 <ContextProvider
   id="sdk-provider"
   value={
     Array [
       Object {
-        "annotation": "",
-        "configuration": Object {},
+        "Configuration": Object {
+          "annotation": "",
+          "configuration": Object {},
+        },
       },
       [Function],
     ]
   }
 >
   <Child
+    locale="en"
     messages={Object {}}
     paletteType="light"
     theme={Object {}}
