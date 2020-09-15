@@ -1,8 +1,8 @@
 import React from 'react';
+import { Button, Grid, Typography } from '@ayx/ui-core';
 
 import MessageApi from '../MessageApiBase/index.ts';
 import UiSdkContext from '../Context/index.tsx';
-import { Button, Grid, Typography } from '../Core';
 
 import Provider from './index.tsx';
 import messages from './messages';

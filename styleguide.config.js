@@ -155,7 +155,6 @@ module.exports = {
       name: 'UI-SDK Components',
       components: './src/**/*.{js,jsx,ts,tsx}',
       ignore: [
-        './src/Core/**/*{js,jsx,ts,tsx}',
         './src/**/basicDemo.js',
         './src/**/advancedDemo.js',
         './src/**/messages.js',
@@ -166,31 +165,18 @@ module.exports = {
       exampleMode: 'collapse',
       usageMode: 'collapse',
       sectionDepth: 1
-    },
-    {
-      name: 'UI-Core Components',
-      components: './src/Core/**/*.{js,jsx,ts,tsx}',
-      exampleMode: 'collapse',
-      usageMode: 'collapse',
-      sectionDepth: 1
     }
   ],
   pagePerSection: true,
+  skipComponentsWithoutExample: true,
   getComponentPathLine(componentPath) {
     const name = path.basename(componentPath, '.tsx');
     const dir = path.dirname(componentPath);
 
-    if (dir.includes('src') && !dir.includes('Core')) {
+    if (dir.includes('src')) {
       const delimiter = dir.includes('/') ? '/' : '\\';
       const componentName = dir.split(delimiter)[1];
       const path = `import { ${componentName} } from '@ayx/ui-sdk';`;
-
-      return path;
-    }
-    if (dir.includes('src') && dir.includes('Core')) {
-      const delimiter = dir.includes('/') ? '/' : '\\';
-      const componentName = dir.split(delimiter)[2];
-      const path = `import { ${componentName} } from '@ayx/ui-sdk/core';`;
 
       return path;
     }

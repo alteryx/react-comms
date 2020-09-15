@@ -62,8 +62,8 @@ describe('DesignerMessageApi', () => {
     const messageBroker = new DesignerMessageApi(window.Alteryx);
     const expected = {
       Configuration: {
-        Annotation: '',
-        Configuration: {}
+        annotation: '',
+        configuration: {}
       }
     };
 

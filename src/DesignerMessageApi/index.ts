@@ -1,7 +1,6 @@
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable react/static-property-placement */
 /* eslint-disable import/no-cycle */
-/* eslint-disable no-underscore-dangle */
-
 import MessageApiBase from '../MessageApiBase';
 import * as callback from '../Utils/callback';
 
@@ -13,12 +12,12 @@ export interface IAyxAppContext {
 
 export interface IContext {
   Gui: {
-    SetConfiguration: Function;
-    GetConfiguration: Function;
-    Callbacks: object;
+    SetConfiguration?: Function;
+    GetConfiguration?: Function;
+    Callbacks?: object;
   };
-  AlteryxLanguageCode: string;
-  JsEvent: Function;
+  AlteryxLanguageCode?: string;
+  JsEvent?: Function;
 }
 
 interface IModel {
@@ -42,7 +41,7 @@ export const subscriptionEvents: ISubscriptionTypes = {
   MODEL_UPDATED: 'MODEL_UPDATED'
 };
 
-class DesignerMessageApi extends MessageApiBase<object, object, object> {
+class DesignerMessageApi extends MessageApiBase<object, object, IAyxAppContext> {
   context: IContext;
 
   _model: IModel;
@@ -60,21 +59,22 @@ class DesignerMessageApi extends MessageApiBase<object, object, object> {
       productTheme: {},
       locale: this.context.AlteryxLanguageCode
     };
-    this.context.Gui.SetConfiguration = currentToolConfiguration => {
-      if (this.subscriptions.has('MODEL_UPDATED')) {
-        this.subscriptions.get('MODEL_UPDATED')(currentToolConfiguration);
-      }
-    };
-    this.context.Gui.GetConfiguration = () => {
-      const payload = {
-        Configuration: {
-          Configuration: {
-            ...this._model.configuration
-          },
-          Annotation: this._model.annotation
+    this.context.Gui = {
+      SetConfiguration: currentToolConfiguration => {
+        if (this.subscriptions && this.subscriptions.has('MODEL_UPDATED')) {
+          this.subscriptions.get('MODEL_UPDATED')(currentToolConfiguration);
         }
-      };
-      this.sendMessage(messageTypes.GET_CONFIGURATION, payload);
+        this.context.JsEvent(JSON.stringify({ Event: 'SetConfiguration' }));
+      },
+      GetConfiguration: () => {
+        const payload = {
+          Configuration: {
+            ...this._model
+          }
+        };
+        this.sendMessage(messageTypes.GET_CONFIGURATION, payload);
+      },
+      Callbacks: {}
     };
   }
 
