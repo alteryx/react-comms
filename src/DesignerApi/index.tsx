@@ -3,12 +3,12 @@
 /* eslint-disable react/forbid-prop-types */
 import React, { useEffect, useState } from 'react';
 
-import DesignerMessageApi, { IContext } from '../DesignerMessageApi';
+import DesignerMessageApi, { IContext, subscriptionEvents } from '../DesignerMessageApi';
 import UiSdkContext, { IContextProviderProps } from '../Context';
 
 interface IDesignerApiProps {
   messages: object;
-  ctx?: any;
+  ctx?: IContext;
   children: React.ReactElement;
 }
 
@@ -24,7 +24,7 @@ let messageBroker;
 const DesignerApi: React.FC = (props: IDesignerApiProps) => {
   const { messages = {} } = props;
   if (!messageBroker) {
-    messageBroker = new DesignerMessageApi(props.ctx || window.Alteryx)
+    messageBroker = new DesignerMessageApi(props.ctx || window.Alteryx);
   }
   const [model, updateModel] = useState(messageBroker.model);
   const [appContext, updateAppContext] = useState(messageBroker.ayxAppContext);
@@ -44,8 +44,8 @@ const DesignerApi: React.FC = (props: IDesignerApiProps) => {
       updateModel({ ...data });
     };
 
-    messageBroker.subscribe('MODEL_UPDATED', receiveModel);
-    messageBroker.subscribe('APP_CONTEXT_UPDATED', receiveAppContext);
+    messageBroker.subscribe(subscriptionEvents.MODEL_UPDATED, receiveModel);
+    messageBroker.subscribe(subscriptionEvents.AYX_APP_CONTEXT_UPDATED, receiveAppContext);
     return function cleanUp() {
       handleUpdateModel(messageBroker.model);
     };

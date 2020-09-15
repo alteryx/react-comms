@@ -25,8 +25,9 @@ describe('DesignerApi', () => {
   it('should be able to render on the DOM', () => {
     const Child = () => {
       const [model, handleUpdateModel] = React.useContext(UiSdkContext);
-      if (model.Configuration.annotation !== 'foo') handleUpdateModel({ Configuration: { annotation: 'foo', configuration: {} } });
-      return <div id="child">{model.annotation}</div>;
+      if (model.Configuration.Annotation !== 'foo')
+        handleUpdateModel({ Configuration: { Annotation: 'foo', Configuration: {} } });
+      return <div id="child">{model.Annotation}</div>;
     };
     const wrapper = shallow(
       <DesignerApi ctx={window.Alteryx}>
@@ -39,7 +40,8 @@ describe('DesignerApi', () => {
   it('should render AyxAppWrapper with appropriate props if there is model data', () => {
     const Child = () => {
       const [model, handleUpdateModel] = React.useContext(UiSdkContext);
-      if (model.Configuration.annotation !== 'foo') handleUpdateModel({ Configuration: { annotation: 'foo', configuration: {} } });
+      if (model.Configuration.Annotation !== 'foo')
+        handleUpdateModel({ Configuration: { Annotation: 'foo', Configuration: {} } });
       return <div id="child">{model.annotation}</div>;
     };
     const wrapper = shallow(
@@ -59,7 +61,7 @@ describe('DesignerApi', () => {
   it('should render the sdk-provider with a model when an event is emitted', () => {
     const Child = () => {
       const [model] = React.useContext(UiSdkContext);
-      return <div id="child">{model.Configuration.annotation}</div>;
+      return <div id="child">{model.Configuration.Annotation}</div>;
     };
     const wrapper = shallow(
       <DesignerApi ctx={window.Alteryx}>
@@ -68,19 +70,19 @@ describe('DesignerApi', () => {
     );
     const valueProp = wrapper.find('#sdk-provider').prop('value');
     expect(valueProp).toHaveLength(2);
-    expect(valueProp[0]).toEqual({ Configuration: { annotation: '', configuration: {} } });
+    expect(valueProp[0]).toEqual({ Configuration: { Annotation: '', Configuration: {} } });
     expect(valueProp[1]).toBeInstanceOf(Function);
   });
 
   it('should use the context hook to update the providers model', () => {
     const Child = () => {
       const [model, handleUpdateModel] = React.useContext(UiSdkContext);
-      if (model.Configuration.annotation !== 'foo') {
+      if (model.Configuration.Annotation !== 'foo') {
         const newModel = { ...model };
-        newModel.Configuration.annotation = 'foo';
+        newModel.Configuration.Annotation = 'foo';
         handleUpdateModel(newModel);
       }
-      return <div id="child">{model.Configuration.annotation}</div>;
+      return <div id="child">{model.Configuration.Annotation}</div>;
     };
     const wrapper = mount(
       <DesignerApi ctx={window.Alteryx}>
@@ -95,19 +97,19 @@ describe('DesignerApi', () => {
     const spyJsEvent = jest.spyOn(callback, 'JsEvent');
     const expected = {
       Configuration: {
-        annotation: 'foo',
-        configuration: {}
+        Annotation: 'foo',
+        Configuration: {}
       }
     };
 
     const Child = () => {
       const [model, handleUpdateModel] = React.useContext(UiSdkContext);
-      if (model && model.Configuration.annotation !== 'foo') {
+      if (model && model.Configuration.Annotation !== 'foo') {
         const newModel = { ...model };
-        newModel.Configuration.annotation = 'foo';
+        newModel.Configuration.Annotation = 'foo';
         handleUpdateModel(newModel);
       }
-      return <div id="child">{model.Configuration.annotation}</div>;
+      return <div id="child">{model.Configuration.Annotation}</div>;
     };
     const wrapper = mount(
       <DesignerApi ctx={window.Alteryx}>

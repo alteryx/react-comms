@@ -7,8 +7,8 @@ exports[`DesignerApi should be able to render on the DOM 1`] = `
     Array [
       Object {
         "Configuration": Object {
-          "annotation": "",
-          "configuration": Object {},
+          "Annotation": "",
+          "Configuration": Object {},
         },
       },
       [Function],
