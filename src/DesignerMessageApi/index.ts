@@ -21,8 +21,10 @@ export interface IContext {
 }
 
 interface IModel {
-  configuration: object;
-  annotation: string;
+  Configuration: {
+    Configuration: object;
+    Annotation: string;
+  };
 }
 
 interface IMessageTypes {
@@ -31,6 +33,7 @@ interface IMessageTypes {
 
 interface ISubscriptionTypes {
   MODEL_UPDATED: string;
+  AYX_APP_CONTEXT_UPDATED: string;
 }
 
 export const messageTypes: IMessageTypes = {
@@ -38,7 +41,8 @@ export const messageTypes: IMessageTypes = {
 };
 
 export const subscriptionEvents: ISubscriptionTypes = {
-  MODEL_UPDATED: 'MODEL_UPDATED'
+  MODEL_UPDATED: 'MODEL_UPDATED',
+  AYX_APP_CONTEXT_UPDATED: 'AYX_APP_CONTEXT_UPDATED'
 };
 
 class DesignerMessageApi extends MessageApiBase<object, object, IAyxAppContext> {
@@ -51,8 +55,10 @@ class DesignerMessageApi extends MessageApiBase<object, object, IAyxAppContext> 
   constructor(ctx: IContext) {
     super(ctx);
     this._model = {
-      configuration: {},
-      annotation: ''
+      Configuration: {
+        Configuration: {},
+        Annotation: ''
+      }
     };
     this._ayxAppContext = {
       darkMode: false,
@@ -68,9 +74,7 @@ class DesignerMessageApi extends MessageApiBase<object, object, IAyxAppContext> 
       },
       GetConfiguration: () => {
         const payload = {
-          Configuration: {
-            ...this._model
-          }
+          ...this._model
         };
         this.sendMessage(messageTypes.GET_CONFIGURATION, payload);
       },

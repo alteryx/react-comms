@@ -1,23 +1,31 @@
+/* eslint-disable react/require-default-props */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable react/forbid-prop-types */
 import React, { useEffect, useState } from 'react';
 
-import { IAyxAppContext } from '../DesignerMessageApi';
+import DesignerMessageApi, { IContext, subscriptionEvents } from '../DesignerMessageApi';
 import UiSdkContext, { IContextProviderProps } from '../Context';
 
-interface IProviderProps {
+interface IDesignerApiProps {
   messages: object;
-  messageBroker: {
-    ayxAppContext: IAyxAppContext;
-    model: object;
-    subscribe: Function;
-    sendMessage: Function;
-  };
+  ctx?: IContext;
   children: React.ReactElement;
 }
 
-const Provider: React.FC = (props: IProviderProps) => {
-  const { messages = {}, messageBroker } = props;
+declare global {
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  interface Window {
+    Alteryx: IContext;
+  }
+}
+
+let messageBroker;
+
+const DesignerApi: React.FC = (props: IDesignerApiProps) => {
+  const { messages = {} } = props;
+  if (!messageBroker) {
+    messageBroker = new DesignerMessageApi(props.ctx || window.Alteryx);
+  }
   const [model, updateModel] = useState(messageBroker.model);
   const [appContext, updateAppContext] = useState(messageBroker.ayxAppContext);
 
@@ -26,7 +34,6 @@ const Provider: React.FC = (props: IProviderProps) => {
     // TODO: Refactor this to only be dependent on one call
     updateModel(newModel);
     messageBroker.model = newModel;
-    messageBroker.sendMessage('UPDATE_MODEL', newModel);
   };
 
   useEffect(() => {
@@ -37,14 +44,14 @@ const Provider: React.FC = (props: IProviderProps) => {
       updateModel({ ...data });
     };
 
-    messageBroker.subscribe('UPDATE_MODEL', receiveModel);
-    messageBroker.subscribe('UPDATE_APP_CONTEXT', receiveAppContext);
+    messageBroker.subscribe(subscriptionEvents.MODEL_UPDATED, receiveModel);
+    messageBroker.subscribe(subscriptionEvents.AYX_APP_CONTEXT_UPDATED, receiveAppContext);
     return function cleanUp() {
       handleUpdateModel(messageBroker.model);
     };
   }, []);
 
-  const providerProps: IContextProviderProps = {
+  const contextProps: IContextProviderProps = {
     id: 'sdk-provider',
     value: [model, handleUpdateModel]
   };
@@ -53,10 +60,10 @@ const Provider: React.FC = (props: IProviderProps) => {
   const appPropsToSpread = { messages, paletteType: darkMode ? 'dark' : 'light', theme: productTheme, locale };
 
   return (
-    <UiSdkContext.Provider {...providerProps}>
+    <UiSdkContext.Provider {...contextProps}>
       {React.cloneElement(props.children, { ...appPropsToSpread })}
     </UiSdkContext.Provider>
   );
 };
 
-export default Provider;
+export default DesignerApi;
