@@ -72,9 +72,7 @@ class DesignerMessageApi extends MessageApiBase<object, object, IAyxAppContext> 
       },
       GetConfiguration: () => {
         const payload = {
-          Configuration: {
-            ...this._model
-          }
+          ...this._model
         };
         this.sendMessage(messageTypes.GET_CONFIGURATION, payload);
       },

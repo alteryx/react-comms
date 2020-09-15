@@ -15,6 +15,7 @@ module.exports = {
   coveragePathIgnorePatterns: [
     '/node_modules/',
     'src/Core/',
+    'src/index.ts',
     'src/Docs/',
     'src/DesignerApi/advancedDemo.js',
     'src/DesignerApi/basicDemo.js',
