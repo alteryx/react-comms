@@ -90,7 +90,7 @@ publish-sdk:
     - echo email = $ARTIFACTORY_EMAIL>>.npmrc
     - echo always-auth = true>>.npmrc
     - npm version patch
-    - npm run build:publish --tag $CI_COMMIT_REF_SLUG
+    - npm run build:publish --tag Alpha
   except:
     variables:
       - $CI_COMMIT_MESSAGE =~ /\[No Publish\]/i
