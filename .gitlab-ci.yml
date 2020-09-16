@@ -89,7 +89,7 @@ publish-sdk:
     - echo _auth = $ARTIFACTORY_AUTH>>.npmrc
     - echo email = $ARTIFACTORY_EMAIL>>.npmrc
     - echo always-auth = true>>.npmrc
-    - npm version 0.0.$CI_PIPELINE_ID-$CI_COMMIT_REF_SLUG --no-git-tag-version
+    - npm version patch
     - npm run build:publish --tag $CI_COMMIT_REF_SLUG
   except:
     variables:
