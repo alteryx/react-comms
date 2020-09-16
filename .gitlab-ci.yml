@@ -86,10 +86,14 @@ publish-sdk:
     - git config --global user.name $REMOTE_PUSH_USER
     - REPO_URL=`echo $CI_REPOSITORY_URL | sed -e "s/https:\/\/gitlab-ci-token:.*@//g"`
     - git remote set-url origin https://gitlab-ci-token:$REMOTE_PUSH_USER_TOKEN@$REPO_URL
+    - mkdir .git
+    - npm version patch
+    - git stage build*
+    - git commit -m "Bumping version for master build"
+    - git pull origin master && git push && git push --tags
     - echo _auth = $ARTIFACTORY_AUTH>>.npmrc
     - echo email = $ARTIFACTORY_EMAIL>>.npmrc
     - echo always-auth = true>>.npmrc
-    - npm version patch
     - npm run build:publish --tag Alpha
   except:
     variables:
