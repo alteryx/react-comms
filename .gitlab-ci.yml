@@ -31,7 +31,7 @@ build-ui-sdk:
     - linux-docker
   script:
     - npm i
-    - npm run build
+    - npm run build:es2015 && npm run build:es2015modules
   artifacts:
     when: always
     expire_in: 1h
@@ -83,7 +83,7 @@ publish-sdk:
   script:
     - git checkout $CI_COMMIT_REF_NAME
     - npm i
-    - npm run build
+    - npm run build:publish
     - git config --global user.email $REMOTE_PUSH_EMAIL
     - git config --global user.name $REMOTE_PUSH_USER
     - REPO_URL=`echo $CI_REPOSITORY_URL | sed -e "s/https:\/\/gitlab-ci-token:.*@//g"`
