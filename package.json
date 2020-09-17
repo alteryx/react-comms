@@ -1,5 +1,5 @@
 {
-  "name": "ayx-ui-sdk",
+  "name": "@ayx/ayx-ui-sdk",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
