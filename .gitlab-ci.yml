@@ -84,8 +84,8 @@ publish-sdk:
     - git remote set-url origin https://gitlab-ci-token:$REMOTE_PUSH_USER_TOKEN@$REPO_URL
     - git stage build*
     - git commit -m "Bumping version for master build [ci skip]"
-    - npm version patch
-    - git push origin master && git push --tags
+    - npm version patch --no-git-tag-version
+    - git pull origin master && git push && git push --tags
     - echo _auth = $ARTIFACTORY_AUTH>>.npmrc
     - echo email = $ARTIFACTORY_EMAIL>>.npmrc
     - echo always-auth = true>>.npmrc
