@@ -85,7 +85,7 @@ publish-sdk:
     - npm version patch
     - git add .
     - git commit -m "Bumping version for master build [ci skip]"
-    - git pull origin master && git push && git push --tags
+    - git push origin master && git push --tags
     - echo _auth = $ARTIFACTORY_AUTH>>.npmrc
     - echo email = $ARTIFACTORY_EMAIL>>.npmrc
     - echo always-auth = true>>.npmrc
