@@ -4,8 +4,8 @@ stages:
   - test-coverage
   - build
   - build-docs
-  - pages
   - publish
+  - pages
   - sonarscan
 
 cache:
