@@ -82,9 +82,9 @@ publish-sdk:
     - git config --global user.name $REMOTE_PUSH_USER
     - REPO_URL=`echo $CI_REPOSITORY_URL | sed -e "s/https:\/\/gitlab-ci-token:.*@//g"`
     - git remote set-url origin https://gitlab-ci-token:$REMOTE_PUSH_USER_TOKEN@$REPO_URL
-    - npm version patch
     - git stage build*
     - git commit -m "Bumping version for master build [ci skip]"
+    - npm version patch
     - git push origin master && git push --tags
     - echo _auth = $ARTIFACTORY_AUTH>>.npmrc
     - echo email = $ARTIFACTORY_EMAIL>>.npmrc
