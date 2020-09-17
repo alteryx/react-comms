@@ -42,7 +42,7 @@
     "apidocs": "ayx-scripts doc",
     "docs": "styleguidist server",
     "release": "npm run build:publish && npm publish build --non-interactive",
-    "build:publish": "npm run build:es2015 && npm run build:es2015modules && npm publish build",
+    "build:publish": "npm run build:es2015 && npm run build:es2015modules && npm publish build --tag Alpha",
     "build:es2015": "NODE_ENV=production babel --config-file ./.babelrc.js ./src --copy-files --out-dir ./build --ignore *.test.js ./package.json --copy-files --out-dir ./build",
     "build:es2015modules": "NODE_ENV=production BABEL_ENV=modules babel --config-file ./.babelrc.js ./src/index.ts --out-file ./build/index.es.js",
     "docs:build": "styleguidist build",
