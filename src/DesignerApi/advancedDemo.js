@@ -28,8 +28,12 @@ const initialModelState = {
 const DesignerApiDemo = () => {
   const Child = () => {
     const [model, handleUpdateModel] = React.useContext(UiSdkContext);
-
+    // Example of maintaing local state seperate from context state
+    // Also allows us to "fake" having a model since there is no parent child app relationship here
+    // In the real world, you'd likely only maintain state in one or the other.
+    const [formData, updateForm] = React.useState(initialModelState);
     const resetModel = () => {
+      updateForm(initialModelState);
       handleUpdateModel(initialModelState);
     };
 
@@ -43,19 +47,22 @@ const DesignerApiDemo = () => {
     };
 
     const handleNameChange = event => {
-      const newModel = { ...model, name: event.target.value };
+      const newModel = { ...formData, name: event.target.value };
+      updateForm(newModel);
       handleUpdateModel(newModel);
     };
 
     const handleValueChange = (prop, event) => {
-      const values = { ...model.values, [prop]: event.target.value };
-      const newModel = { ...model, values };
+      const values = { ...formData.values, [prop]: event.target.value };
+      const newModel = { ...formData, values };
+      updateForm(newModel);
       handleUpdateModel(newModel);
     };
 
     const handleCheckedChange = () => {
-      const values = { ...model.values, checked: !model.values.checked };
-      const newModel = { ...model, values };
+      const values = { ...formData.values, checked: !formData.values.checked };
+      const newModel = { ...formData, values };
+      updateForm(newModel);
       handleUpdateModel(newModel);
     };
 
@@ -65,27 +72,31 @@ const DesignerApiDemo = () => {
           <Grid item md={3} sm={6} xs={12}>
             <FormControl>
               <InputLabel htmlFor="component-simple">Name</InputLabel>
-              <Input id="component-simple" onChange={handleNameChange} value={model.name} />
+              <Input id="component-simple" onChange={handleNameChange} value={formData.name} />
             </FormControl>
           </Grid>
           <Grid item md={3} sm={6} xs={12}>
             <FormControl aria-describedby="component-helper-text">
               <InputLabel htmlFor="component-helper">Value 1</InputLabel>
-              <Input id="component-helper" onChange={e => handleValueChange('field1', e)} value={model.values.field1} />
+              <Input
+                id="component-helper"
+                onChange={e => handleValueChange('field1', e)}
+                value={formData.values.field1}
+              />
               <FormHelperText id="component-helper-text">Some important helper text</FormHelperText>
             </FormControl>
           </Grid>
           <Grid item md={3} sm={6} xs={12}>
             <FormControl>
               <InputLabel htmlFor="component">Value 2</InputLabel>
-              <Input id="component" onChange={e => handleValueChange('field2', e)} value={model.values.field2} />
+              <Input id="component" onChange={e => handleValueChange('field2', e)} value={formData.values.field2} />
               <FormHelperText>Some more important helper text</FormHelperText>
             </FormControl>
           </Grid>
           <Grid item>
             <FormControl component="fieldset">
               <FormControlLabel
-                checked={model.values.checked}
+                checked={formData.values.checked}
                 control={<Checkbox />}
                 label="Checked"
                 labelPlacement="top"
