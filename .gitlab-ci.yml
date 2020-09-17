@@ -67,10 +67,6 @@ build-docs-feature:
   script:
     - npm i
     - npm run docs:build
-  only:
-    changes:
-      - .gitlab-ci.yml
-      - src/**
   artifacts:
     paths:
       - styleguide
