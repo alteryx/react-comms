@@ -11,21 +11,13 @@ Object.defineProperty(exports, "Context", {
     return _Context.default;
   }
 });
-Object.defineProperty(exports, "DesignerMessageApi", {
+Object.defineProperty(exports, "DesignerApi", {
   enumerable: true,
   get: function get() {
-    return _DesignerMessageApi.default;
-  }
-});
-Object.defineProperty(exports, "Provider", {
-  enumerable: true,
-  get: function get() {
-    return _Provider.default;
+    return _DesignerApi.default;
   }
 });
 
 var _Context = _interopRequireDefault(require("./Context"));
 
-var _DesignerMessageApi = _interopRequireDefault(require("./DesignerMessageApi"));
-
-var _Provider = _interopRequireDefault(require("./Provider"));
+var _DesignerApi = _interopRequireDefault(require("./DesignerApi"));
