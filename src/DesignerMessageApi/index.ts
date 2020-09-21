@@ -21,10 +21,12 @@ export interface IContext {
 }
 
 interface IModel {
-  Configuration: {
-    Configuration: object;
-    Annotation: string;
-  };
+  Configuration: object;
+  Annotation?: string;
+  Meta?: Array<any>;
+  ToolName: string;
+  ToolId: number;
+  srcData: object;
 }
 
 interface IMessageTypes {
@@ -55,10 +57,12 @@ class DesignerMessageApi extends MessageApiBase<object, object, IAyxAppContext> 
   constructor(ctx: IContext) {
     super(ctx);
     this._model = {
-      Configuration: {
-        Configuration: {},
-        Annotation: ''
-      }
+      Configuration: {},
+      Annotation: '',
+      Meta: [],
+      ToolName: '',
+      ToolId: undefined,
+      srcData: {}
     };
     this._ayxAppContext = {
       darkMode: false,
@@ -68,13 +72,27 @@ class DesignerMessageApi extends MessageApiBase<object, object, IAyxAppContext> 
     this.context.Gui = {
       SetConfiguration: currentToolConfiguration => {
         if (this.subscriptions && this.subscriptions.has('MODEL_UPDATED')) {
-          this.subscriptions.get('MODEL_UPDATED')(currentToolConfiguration);
+          const modifiedConfigShape = {
+            Configuration: currentToolConfiguration.Configuration.Configuration,
+            Annotation: currentToolConfiguration.Configuration.Configuration.Annotation,
+            Meta:
+              typeof currentToolConfiguration.Configuration.MetaInfo === 'object'
+                ? [currentToolConfiguration.Configuration.MetaInfo]
+                : currentToolConfiguration.Configuration.MetaInfo,
+            ToolName: currentToolConfiguration.Configuration.ToolName,
+            ToolId: currentToolConfiguration.Configuration.ToolId,
+            srcData: currentToolConfiguration
+          };
+          this.subscriptions.get('MODEL_UPDATED')(modifiedConfigShape);
         }
         this.context.JsEvent(JSON.stringify({ Event: 'SetConfiguration' }));
       },
       GetConfiguration: () => {
         const payload = {
-          ...this._model
+          Configuration: {
+            Configuration: this._model.Configuration,
+            Annotation: this._model.Annotation
+          }
         };
         this.sendMessage(messageTypes.GET_CONFIGURATION, payload);
       },

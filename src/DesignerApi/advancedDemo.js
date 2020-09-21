@@ -34,7 +34,7 @@ const DesignerApiDemo = () => {
     const [formData, updateForm] = React.useState(initialModelState);
     const resetModel = () => {
       updateForm(initialModelState);
-      handleUpdateModel(initialModelState);
+      handleUpdateModel({ Configuration: { ...initialModelState } });
     };
 
     const submitModel = () => {
@@ -49,21 +49,21 @@ const DesignerApiDemo = () => {
     const handleNameChange = event => {
       const newModel = { ...formData, name: event.target.value };
       updateForm(newModel);
-      handleUpdateModel(newModel);
+      handleUpdateModel({ Configuration: { ...newModel } });
     };
 
     const handleValueChange = (prop, event) => {
       const values = { ...formData.values, [prop]: event.target.value };
       const newModel = { ...formData, values };
       updateForm(newModel);
-      handleUpdateModel(newModel);
+      handleUpdateModel({ Configuration: { ...newModel } });
     };
 
     const handleCheckedChange = () => {
       const values = { ...formData.values, checked: !formData.values.checked };
       const newModel = { ...formData, values };
       updateForm(newModel);
-      handleUpdateModel(newModel);
+      handleUpdateModel({ Configuration: { ...newModel } });
     };
 
     return (

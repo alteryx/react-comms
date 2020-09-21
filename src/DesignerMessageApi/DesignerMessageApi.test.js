@@ -52,7 +52,17 @@ describe('DesignerMessageApi', () => {
     map.set('MODEL_UPDATED', func);
 
     messageBroker.subscribe('MODEL_UPDATED', func);
-    messageBroker.context.Gui.SetConfiguration();
+    messageBroker.context.Gui.SetConfiguration({
+      Configuration: {
+        Configuration: {
+          Annotation: '',
+          Count: 1
+        },
+        MetaInfo: [{ data: 'some data' }],
+        ToolName: 'Sample Tool',
+        ToolId: 1
+      }
+    });
 
     expect(func).toHaveBeenCalled();
   });

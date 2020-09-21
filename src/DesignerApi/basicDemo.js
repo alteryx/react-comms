@@ -9,10 +9,14 @@ import messages from './messages';
 const DesignerApiDemo = () => {
   const Child = () => {
     const [model, handleUpdateModel] = React.useContext(UiSdkContext);
+    // This is just to force data to be in the model. This isn't a real world use case
+    if (!model.Configuration.count) {
+      handleUpdateModel({ Configuration: { count: 1 } });
+    }
     const incrementCount = () => {
-      const newModel = { ...model };
-      newModel.count++;
-      handleUpdateModel(newModel);
+      let { count } = model.Configuration;
+      count++;
+      handleUpdateModel({ Configuration: { count } });
     };
     return (
       <AyxAppWrapper>
@@ -23,7 +27,7 @@ const DesignerApiDemo = () => {
             </Button>
           </Grid>
           <Grid item xs={12}>
-            <Typography variant="h1">{model.count}</Typography>
+            <Typography variant="h1">{model.Configuration.count}</Typography>
           </Grid>
         </Grid>
       </AyxAppWrapper>
