@@ -6,10 +6,12 @@ exports[`DesignerApi should be able to render on the DOM 1`] = `
   value={
     Array [
       Object {
-        "Configuration": Object {
-          "Annotation": "",
-          "Configuration": Object {},
-        },
+        "Annotation": "",
+        "Configuration": Object {},
+        "Meta": Array [],
+        "ToolId": undefined,
+        "ToolName": "",
+        "srcData": Object {},
       },
       [Function],
     ]
