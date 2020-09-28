@@ -4,14 +4,6 @@ var _interopRequireWildcard = require("@babel/runtime/helpers/interopRequireWild
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
 
-require("core-js/modules/es.array.filter");
-
-require("core-js/modules/es.object.get-own-property-descriptors");
-
-require("core-js/modules/web.dom-collections.for-each");
-
-var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
-
 var _slicedToArray2 = _interopRequireDefault(require("@babel/runtime/helpers/slicedToArray"));
 
 var _react = _interopRequireDefault(require("react"));
@@ -24,10 +16,7 @@ var callback = _interopRequireWildcard(require("../Utils/callback.ts"));
 
 var _index2 = _interopRequireDefault(require("./index.tsx"));
 
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { (0, _defineProperty2.default)(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
+/* eslint-disable no-underscore-dangle */
 describe('DesignerApi', () => {
   beforeAll(() => {
     window.Alteryx = {
@@ -49,11 +38,8 @@ describe('DesignerApi', () => {
             model = _React$useContext2[0],
             handleUpdateModel = _React$useContext2[1];
 
-      if (model.Configuration.Annotation !== 'foo') handleUpdateModel({
-        Configuration: {
-          Annotation: 'foo',
-          Configuration: {}
-        }
+      if (model.Annotation !== 'foo') handleUpdateModel({
+        Annotation: 'foo'
       });
       return /*#__PURE__*/_react.default.createElement("div", {
         id: "child"
@@ -72,15 +58,12 @@ describe('DesignerApi', () => {
             model = _React$useContext4[0],
             handleUpdateModel = _React$useContext4[1];
 
-      if (model.Configuration.Annotation !== 'foo') handleUpdateModel({
-        Configuration: {
-          Annotation: 'foo',
-          Configuration: {}
-        }
+      if (model.Annotation !== 'foo') handleUpdateModel({
+        Annotation: 'foo'
       });
       return /*#__PURE__*/_react.default.createElement("div", {
         id: "child"
-      }, model.annotation);
+      }, model.Annotation);
     };
 
     const wrapper = (0, _enzyme.shallow)( /*#__PURE__*/_react.default.createElement(_index2.default, {
@@ -102,7 +85,7 @@ describe('DesignerApi', () => {
 
       return /*#__PURE__*/_react.default.createElement("div", {
         id: "child"
-      }, model.Configuration.Annotation);
+      }, model.Annotation);
     };
 
     const wrapper = (0, _enzyme.shallow)( /*#__PURE__*/_react.default.createElement(_index2.default, {
@@ -111,10 +94,12 @@ describe('DesignerApi', () => {
     const valueProp = wrapper.find('#sdk-provider').prop('value');
     expect(valueProp).toHaveLength(2);
     expect(valueProp[0]).toEqual({
-      Configuration: {
-        Annotation: '',
-        Configuration: {}
-      }
+      ToolName: '',
+      ToolId: undefined,
+      Annotation: '',
+      Configuration: {},
+      Meta: [],
+      srcData: {}
     });
     expect(valueProp[1]).toBeInstanceOf(Function);
   });
@@ -125,16 +110,15 @@ describe('DesignerApi', () => {
             model = _React$useContext8[0],
             handleUpdateModel = _React$useContext8[1];
 
-      if (model.Configuration.Annotation !== 'foo') {
-        const newModel = _objectSpread({}, model);
-
-        newModel.Configuration.Annotation = 'foo';
-        handleUpdateModel(newModel);
+      if (model.Annotation !== 'foo') {
+        handleUpdateModel({
+          Annotation: 'foo'
+        });
       }
 
       return /*#__PURE__*/_react.default.createElement("div", {
         id: "child"
-      }, model.Configuration.Annotation);
+      }, model.Annotation);
     };
 
     const wrapper = (0, _enzyme.mount)( /*#__PURE__*/_react.default.createElement(_index2.default, {
@@ -157,16 +141,15 @@ describe('DesignerApi', () => {
             model = _React$useContext10[0],
             handleUpdateModel = _React$useContext10[1];
 
-      if (model && model.Configuration.Annotation !== 'foo') {
-        const newModel = _objectSpread({}, model);
-
-        newModel.Configuration.Annotation = 'foo';
-        handleUpdateModel(newModel);
+      if (model && model.Annotation !== 'foo') {
+        handleUpdateModel({
+          Annotation: 'foo'
+        });
       }
 
       return /*#__PURE__*/_react.default.createElement("div", {
         id: "child"
-      }, model.Configuration.Annotation);
+      }, model.Annotation);
     };
 
     const wrapper = (0, _enzyme.mount)( /*#__PURE__*/_react.default.createElement(_index2.default, {

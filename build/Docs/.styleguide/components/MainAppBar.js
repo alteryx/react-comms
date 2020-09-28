@@ -74,7 +74,7 @@ const MainAppBar = ({
     title: "GitLab"
   }, /*#__PURE__*/_react.default.createElement(_uiCore.IconButton, {
     onClick: () => {
-      window.open("https://git.alteryx.com/ayx-ui-sdk/ayx-ui-sdk/");
+      window.open("https://git.alteryx.com/ayx-ui-sdk/ui-sdk");
     }
   }, /*#__PURE__*/_react.default.createElement(_icons.Gitlab, null)))), /*#__PURE__*/_react.default.createElement(_uiCore.Grid, null, /*#__PURE__*/_react.default.createElement(_uiCore.Box, {
     m: 3

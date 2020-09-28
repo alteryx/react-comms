@@ -44,10 +44,21 @@ const DesignerApiDemo = () => {
     const _React$useContext = _react.default.useContext(_index.default),
           _React$useContext2 = (0, _slicedToArray2.default)(_React$useContext, 2),
           model = _React$useContext2[0],
-          handleUpdateModel = _React$useContext2[1];
+          handleUpdateModel = _React$useContext2[1]; // Example of maintaing local state seperate from context state
+    // Also allows us to "fake" having a model since there is no parent child app relationship here
+    // In the real world, you'd likely only maintain state in one or the other.
+
+
+    const _React$useState = _react.default.useState(initialModelState),
+          _React$useState2 = (0, _slicedToArray2.default)(_React$useState, 2),
+          formData = _React$useState2[0],
+          updateForm = _React$useState2[1];
 
     const resetModel = () => {
-      handleUpdateModel(initialModelState);
+      updateForm(initialModelState);
+      handleUpdateModel({
+        Configuration: _objectSpread({}, initialModelState)
+      });
     };
 
     const submitModel = () => {
@@ -58,35 +69,44 @@ const DesignerApiDemo = () => {
     };
 
     const handleNameChange = event => {
-      const newModel = _objectSpread(_objectSpread({}, model), {}, {
+      const newModel = _objectSpread(_objectSpread({}, formData), {}, {
         name: event.target.value
       });
 
-      handleUpdateModel(newModel);
+      updateForm(newModel);
+      handleUpdateModel({
+        Configuration: _objectSpread({}, newModel)
+      });
     };
 
     const handleValueChange = (prop, event) => {
-      const values = _objectSpread(_objectSpread({}, model.values), {}, {
+      const values = _objectSpread(_objectSpread({}, formData.values), {}, {
         [prop]: event.target.value
       });
 
-      const newModel = _objectSpread(_objectSpread({}, model), {}, {
+      const newModel = _objectSpread(_objectSpread({}, formData), {}, {
         values
       });
 
-      handleUpdateModel(newModel);
+      updateForm(newModel);
+      handleUpdateModel({
+        Configuration: _objectSpread({}, newModel)
+      });
     };
 
     const handleCheckedChange = () => {
-      const values = _objectSpread(_objectSpread({}, model.values), {}, {
-        checked: !model.values.checked
+      const values = _objectSpread(_objectSpread({}, formData.values), {}, {
+        checked: !formData.values.checked
       });
 
-      const newModel = _objectSpread(_objectSpread({}, model), {}, {
+      const newModel = _objectSpread(_objectSpread({}, formData), {}, {
         values
       });
 
-      handleUpdateModel(newModel);
+      updateForm(newModel);
+      handleUpdateModel({
+        Configuration: _objectSpread({}, newModel)
+      });
     };
 
     return /*#__PURE__*/_react.default.createElement(_uiCore.AyxAppWrapper, null, /*#__PURE__*/_react.default.createElement(_uiCore.Grid, {
@@ -102,7 +122,7 @@ const DesignerApiDemo = () => {
     }, "Name"), /*#__PURE__*/_react.default.createElement(_uiCore.Input, {
       id: "component-simple",
       onChange: handleNameChange,
-      value: model.name
+      value: formData.name
     }))), /*#__PURE__*/_react.default.createElement(_uiCore.Grid, {
       item: true,
       md: 3,
@@ -115,7 +135,7 @@ const DesignerApiDemo = () => {
     }, "Value 1"), /*#__PURE__*/_react.default.createElement(_uiCore.Input, {
       id: "component-helper",
       onChange: e => handleValueChange('field1', e),
-      value: model.values.field1
+      value: formData.values.field1
     }), /*#__PURE__*/_react.default.createElement(_uiCore.FormHelperText, {
       id: "component-helper-text"
     }, "Some important helper text"))), /*#__PURE__*/_react.default.createElement(_uiCore.Grid, {
@@ -128,13 +148,13 @@ const DesignerApiDemo = () => {
     }, "Value 2"), /*#__PURE__*/_react.default.createElement(_uiCore.Input, {
       id: "component",
       onChange: e => handleValueChange('field2', e),
-      value: model.values.field2
+      value: formData.values.field2
     }), /*#__PURE__*/_react.default.createElement(_uiCore.FormHelperText, null, "Some more important helper text"))), /*#__PURE__*/_react.default.createElement(_uiCore.Grid, {
       item: true
     }, /*#__PURE__*/_react.default.createElement(_uiCore.FormControl, {
       component: "fieldset"
     }, /*#__PURE__*/_react.default.createElement(_uiCore.FormControlLabel, {
-      checked: model.values.checked,
+      checked: formData.values.checked,
       control: /*#__PURE__*/_react.default.createElement(_uiCore.Checkbox, null),
       label: "Checked",
       labelPlacement: "top",

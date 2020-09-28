@@ -19,6 +19,8 @@ declare global {
   }
 }
 
+const validUpdateKeys = ['Configuration', 'Annotation'];
+
 let messageBroker;
 
 const DesignerApi: React.FC = (props: IDesignerApiProps) => {
@@ -29,7 +31,14 @@ const DesignerApi: React.FC = (props: IDesignerApiProps) => {
   const [model, updateModel] = useState(messageBroker.model);
   const [appContext, updateAppContext] = useState(messageBroker.ayxAppContext);
 
-  const handleUpdateModel = newModel => {
+  const handleUpdateModel = updatedData => {
+    const badKeys = Object.keys(updatedData).filter(k => !validUpdateKeys.includes(k));
+    if (badKeys.length) {
+      // eslint-disable-next-line no-console
+      console.warn('Only Configuration and Annotation support updates');
+      return;
+    }
+    const newModel = { ...model, ...updatedData };
     // The reason all 3 of these are here is to work in all use cases for now, DesignerMessageAPI and DevHarness.
     // TODO: Refactor this to only be dependent on one call
     updateModel(newModel);

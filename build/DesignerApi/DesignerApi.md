@@ -40,7 +40,9 @@ Below is an example of what instantiating a Provider with the appropriate props 
 ```
 
 ## Updating Your Data (Part One)
-One of the DesignerApi's main jobs is exposing model data and the ability to update that model in your custom app and in the parent app. It does this through leveraging React Context. The DesignerApi gives any child component access to a handleUpdateModel method and the model itself. This can be leveraged through the useContext hook. In the example below, the handleUpdateModel callback is being utilized to update the model data for the custom application. In this case, a simple incrementer. 
+One of the DesignerApi's main jobs is exposing model data and the ability to update that model in your custom app and in the parent app. It does this through leveraging React Context. The DesignerApi gives any child component access to a handleUpdateModel method and the model itself. This can be leveraged through the useContext hook. In the example below, the handleUpdateModel callback is being utilized to update the model data for the custom application. In this case, a simple incrementer. *Note:* You can only update the `Configuration` and `Annotation` keys of the model directly. Updates will fail to any other key. 
+
+`handleModelUpdate` is expecting to be based an object containing one or both keys of the following keys: Configuration and Annotation. Any other key will fail to cause an update.
 
 ```js { "file": "../basicDemo.js" }
 ```
