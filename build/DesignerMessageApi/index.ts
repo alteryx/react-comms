@@ -47,7 +47,7 @@ export const subscriptionEvents: ISubscriptionTypes = {
   AYX_APP_CONTEXT_UPDATED: 'AYX_APP_CONTEXT_UPDATED'
 };
 
-class DesignerMessageApi extends MessageApiBase<object, object, IAyxAppContext> {
+class DesignerMessageApi extends MessageApiBase<object, IModel, IAyxAppContext> {
   context: IContext;
 
   _model: IModel;
@@ -73,16 +73,17 @@ class DesignerMessageApi extends MessageApiBase<object, object, IAyxAppContext> 
       SetConfiguration: currentToolConfiguration => {
         if (this.subscriptions && this.subscriptions.has('MODEL_UPDATED')) {
           const modifiedConfigShape = {
-            Configuration: currentToolConfiguration.Configuration.Configuration,
-            Annotation: currentToolConfiguration.Configuration.Configuration.Annotation,
+            Configuration: currentToolConfiguration.Configuration.Configuration || this.model.Configuration,
+            Annotation: currentToolConfiguration.Annotation || this.model.Annotation,
             Meta:
-              typeof currentToolConfiguration.Configuration.MetaInfo === 'object'
-                ? [currentToolConfiguration.Configuration.MetaInfo]
-                : currentToolConfiguration.Configuration.MetaInfo,
-            ToolName: currentToolConfiguration.Configuration.ToolName,
-            ToolId: currentToolConfiguration.Configuration.ToolId,
+              typeof currentToolConfiguration.MetaInfo === 'object'
+                ? [currentToolConfiguration.MetaInfo]
+                : currentToolConfiguration.MetaInfo,
+            ToolName: currentToolConfiguration.ToolName,
+            ToolId: currentToolConfiguration.ToolId,
             srcData: currentToolConfiguration
           };
+          this.model = modifiedConfigShape;
           this.subscriptions.get('MODEL_UPDATED')(modifiedConfigShape);
         }
         this.context.JsEvent(JSON.stringify({ Event: 'SetConfiguration' }));
