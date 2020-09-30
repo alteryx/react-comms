@@ -4,7 +4,7 @@ The DesignerApi is a required component when you create your custom application 
 When you implement the DesignerApi, it expects to receive only one prop: `messages`. The messages prop is an object that includes any internationalized messages that you expect your app to have access to. The example below shows this in more detail. Additionally, if you plan to use UI-Core, you must wrap your custom app in an AyxAppWrapper.
 
 ## Props Example
-The DesignerApi expects that you provide your own translated messages for any languages you'd like to support, in the format shown below.
+The DesignerApi expects you to provide your own translated messages for any languages you'd like to support, in the format shown below.
 
 ``` jsx static
   import React from 'react'
