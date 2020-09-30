@@ -41,7 +41,7 @@ The DesignerApi expects you to provide your own translated messages for any lang
   </Provider>
 ```
 
-## Updating Your Data (Part One)
+## Updating Your Data (Part 1)
 One of the main jobs of the DesignerApi is to expose model data and the ability to update that model in both your custom app and the parent app. To do this, the DesignerAPI leverages React Context.
 
 The DesignerApi gives any child component access to a handleUpdateModel method as well as the model itself. You can leverage this through the useContext hook. The example below uses the handleUpdateModel callback to update the model data for the custom app (in this case, a simple incrementer).
