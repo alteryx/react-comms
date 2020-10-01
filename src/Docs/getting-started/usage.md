@@ -51,23 +51,6 @@ From there, you can use the FormattedMessage component provided by `react-intl` 
   </Provider>
 ```
 
-## The Message Broker
-
-Because Alteryx is a platform with a variety of products, we've created a variety of API interfaces for you to use depending on that product. This handles all of the communication logic for you, enabling you to leverage the Provider component with ease. As of now, you'll be using the `DevHarnessMessageApi` to develop against. This will provide stubbed communication for you between your tool and the dev harness. Once you're ready to build and ship your custom application, you'll want to leverage the `DesignerMessageApi`. This is as simple as passing the required prop to your Provider as seen below:
-
-```jsx static
-  import { Provider, DesignerMessageApi } from '@ayx/ui-sdk'
-
-  // The DesignerMessageApi requires that you pass it window.Alteryx as its application context
-  const designerMessageApi = new DesignerMessageApi(window.Alteryx)
-
-  <Provider messageBroker={designerMessageApi}>
-    {Your custom code here}
-  </Provider>
-```
-
-You won't need to change anything else in your code. The messageBroker handles all of that for you!
-
 ## Context
 
 Once you've created your provider, you're probably going to want to send updates to and from your custom application. This can be handled through `React.Context`. When you open up the dev harness code, you'll already see a simple example for a button that increments a model count. That looks something like this:
