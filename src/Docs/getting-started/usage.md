@@ -53,7 +53,7 @@ From there, you can use the FormattedMessage component provided by `react-intl` 
 
 ## Context
 
-Once you've created your provider, you're probably going to want to send updates to and from your custom application. This can be handled through `React.Context`. When you open up the dev harness code, you'll already see a simple example for a button that increments a model count. That looks something like this:
+Once you've created your provider, you will likely want to send updates to and from your custom application. You can do this via `React.Context`. When you open the dev harness code, you will see a simple example for a button that increments a model count. The example looks something like this:
 
 ```jsx static
 import React, { useContext } from 'react';
@@ -71,7 +71,11 @@ const SampleButton = () => {
 };
 ```
 
-It is best practice not to override or manipulate your model directly. That's where the `newModel` const is useful. After you've made a copy of your model and made any updates required to it, you simply call the handleUpdateModel method provided to you by the useContext React hook. This will update the model state internal to your custom application as well as dispatch any relevant messages to the parent application. To see more advanced examples, check out our `<Provider />` docs [here](#/UI-SDK%20Components/Provider).
+As a best practice, you should not override or manipulate your model directly. That's where the `newModel` const is useful.
+
+After you make a copy of your model and make any required updates, call the `handleUpdateModel` method provided to you by the `useContext` React hook. This updates the model state internal to your custom app and dispatches any relevant messages to the parent application.
+
+To explore more advanced examples, visit our `<DesignerApi />`  [docs](#/UI-SDK%20Components/DesignerApi).
 
 ## Build Process
 
