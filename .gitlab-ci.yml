@@ -84,7 +84,8 @@ publish-sdk:
     - git remote set-url origin https://gitlab-ci-token:$REMOTE_PUSH_USER_TOKEN@$REPO_URL
     - git stage build*
     - git commit -m "Staging build"
-    - npm version patch --no-git-tag-version
+    - npm version alpha@0.0.$CI_PIPELINE_ID --no-git-tag-version
+    - npm run build:copy-files && npm publish build --tag alpha
     - git add .
     - git commit -m "Updating version [ci skip]"
     - git pull origin master && git push && git push --tags
