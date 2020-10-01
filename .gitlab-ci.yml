@@ -85,14 +85,13 @@ publish-sdk:
     - git stage build*
     - git commit -m "Staging build"
     - npm version alpha@0.0.$CI_PIPELINE_ID --no-git-tag-version
-    - npm run build:copy-files && npm publish build --tag alpha
     - git add .
     - git commit -m "Updating version [ci skip]"
-    - git pull origin master && git push && git push --tags
+    - git pull origin master && git push
     - echo _auth = $ARTIFACTORY_AUTH>>.npmrc
     - echo email = $ARTIFACTORY_EMAIL>>.npmrc
     - echo always-auth = true>>.npmrc
-    - npm run build:publish
+    - npm run build:publish && npm publish build --tag alpha && git push --tags
   except:
     variables:
       - $CI_COMMIT_MESSAGE =~ /\[No Publish\]/i
