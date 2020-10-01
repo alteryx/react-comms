@@ -1,12 +1,14 @@
-## Booting Up the Dev Harness
+## Boot Up the Dev Harness
 
-Once you've forked the [Dev Harness](https://git.alteryx.com/ayx-ui-sdk/ui-sdk-dev-harness) project and done an `npm install` inside of that project, you'll be ready to go. From here, just use the `npm run start` command from your terminal. You'll see that the dev harness is now being served from localhost:3000.
+Once you fork the [Dev Harness](https://git.alteryx.com/ayx-ui-sdk/ui-sdk-dev-harness) project and run `npm install` inside of the project, you're ready to go. From here, use the `npm run start` command from your terminal. You will see that the dev harness is now served from localhost:3000.
 
-## Making Changes
+## Make Changes
 
-When developing in the Dev Harness, you'll be making all of your changes in the `childApp` directory of the Dev Harness project. Within this directory, there's an `index.tsx` file where the sample code currently lives. You can make changes directly here, but we recommend structuring your application for a production environment with appropriate folder structures and importing your components as needed.
+When you develop in the Dev Harness, you make all your changes in the `childApp` directory of the Dev Harness project. In this directory, there is an `index.tsx` file where the sample code currently lives.
 
-## Using the Provider
+While you can make changes here directly, we recommend that you structure your app for a production environment (with appropriate folder structures) and import your components as needed.
+
+## Use the DesignerApi
 
 The single most important component in the UI-SDK is the Provider. It serves as the facilitator of communication between the Alteryx product you're building for and the custom application you've created. It accomplishes much of this under the hood, creating an easy experience for you to interface with. The provider requires only two props: a messageBroker and an object of your translated messages. 
 
