@@ -79,5 +79,6 @@ To explore more advanced examples, visit our `<DesignerApi />`  [docs](#/UI-SDK%
 
 ## Build Process
 
-Once you've developed your custom tool, you can build it using our built in `npm run build` command. This script will bundle your custom application for you. From there, it just needs to be installed into the Designer plugins directory. You can simply manually copy and paste the output of the `dist` directory. 
-(TO DO: Update this to reflect once no part of this process is manual).
+Once you develop your custom tool, you can build it with our built-in `npm run build` command. This script bundles your custom app for you.
+
+From there, you need to install it into the Designer plugins directory. You can manually copy and paste the output of the `dist` directory.
