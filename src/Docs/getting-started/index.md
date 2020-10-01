@@ -1,4 +1,6 @@
-The UI-SDK is a software development kit built on top of our UI-Core library, which is a suite of React components that implement [Material-UI (MUI)](https://github.com/mui-org/material-ui) with a custom Alteryx theme. The SDK itself provides global context, a Provider component, and multiple messaging APIs to utilize depending on which Alteryx product your custom app will live in. 
+The UI-SDK is a software development kit built on top of our UI-Core library. The library is a suite of React components that use [Material-UI (MUI)](https://github.com/mui-org/material-ui) with a custom Alteryx theme.
+
+The UI-SDK provides global context, a Provider component, and multiple messaging APIs. The messaging API that you use will depend on the Alteryx product that your custom app will live in.
 
 ## Initial Setup
 
