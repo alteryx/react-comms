@@ -16,7 +16,7 @@ The single most important component in the UI-SDK is the DesignerApi. It serves 
 
 To support internationalization, you need to pass a `messages` object to your DesignerApi. The `messages` object should contain your translated messages.
 
-From there, you can use the FormattedMessage component provided by `react-intl` to toggle the message based on your locale. The locale is managed by the communication bridge between the DesignerApi and the Alteryx product your custom app lives in.
+From there, you can use the `FormattedMessage` component provided by `react-intl` to toggle the message based on your locale. The locale is managed by the communication bridge between the DesignerApi and the Alteryx product your custom app lives in.
 
 ``` jsx static
   import React from 'react'
@@ -75,7 +75,7 @@ As a best practice, you should not override or manipulate your model directly. T
 
 After you make a copy of your model and make any required updates, call the `handleUpdateModel` method provided to you by the `useContext` React hook. This updates the model state internal to your custom app and dispatches any relevant messages to the parent application.
 
-To explore more advanced examples, visit our `<DesignerApi />`  [docs](#/UI-SDK%20Components/DesignerApi).
+To explore more advanced examples, visit our [DesignerApi docs](#/UI-SDK%20Components/DesignerApi).
 
 ## Build Process
 
