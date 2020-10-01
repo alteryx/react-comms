@@ -10,11 +10,13 @@ While you can make changes here directly, we recommend that you structure your a
 
 ## Use the DesignerApi
 
-The single most important component in the UI-SDK is the Provider. It serves as the facilitator of communication between the Alteryx product you're building for and the custom application you've created. It accomplishes much of this under the hood, creating an easy experience for you to interface with. The provider requires only two props: a messageBroker and an object of your translated messages. 
+The single most important component in the UI-SDK is the DesignerApi. It serves as the facilitator of communication between the Alteryx product you build for, and the custom app you create. The DesignerApi accomplishes much of this under the hood. The result is an easy experience for you to interface with. The DesignerApi requires only one prop: `messages`. The messages prop is an object that includes any internationalized messages that you expect your app to have access to.
 
 ## Messages
 
-In order to support internationalization, you'll pass a messages object containing your translated messages to your Provider. From there, you can use the FormattedMessage component provided by `react-intl` to handle toggling the message based on your locale. The locale itself is managed by the communication bridge between the Provider and the Alteryx Product your custom application lives within. 
+To support internationalization, you need to pass a `messages` object to your DesignerApi. The `messages` object should contain your translated messages.
+
+From there, you can use the FormattedMessage component provided by `react-intl` to toggle the message based on your locale. The locale is managed by the communication bridge between the DesignerApi and the Alteryx product your custom app lives in.
 
 ``` jsx static
   import React from 'react'
