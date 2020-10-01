@@ -44,9 +44,7 @@ The DesignerApi expects you to provide your own translated messages for any lang
 ## Update Your Data (Part 1)
 One of the main jobs of the DesignerApi is to expose model data and the ability to update that model in both your custom app and the parent app. To do this, the DesignerAPI leverages React Context.
 
-The DesignerApi gives any child component access to a handleUpdateModel method as well as the model itself. You can leverage this through the useContext hook. The example below uses the handleUpdateModel callback to update the model data for the custom app (in this case, a simple incrementer).
-
-*Note:* You can only update the `Configuration` and `Annotation` keys of the model directly. Updates to any other key will fail. 
+The DesignerApi gives any child component access to a handleUpdateModel method as well as the model itself. You can leverage this through the useContext hook. The example below uses the handleUpdateModel callback to update the model data for the custom app (in this case, a simple incrementer). *Note:* You can only update the `Configuration` and `Annotation` keys of the model directly. Updates to any other key will fail. 
 
 `handleModelUpdate` expects to be based on an object that contains one or both of these keys: Configuration and Annotation. Any other key will fail to cause an update.
 
