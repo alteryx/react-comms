@@ -53,7 +53,7 @@ From there, you can use the `FormattedMessage` component provided by `react-intl
 
 ## Context
 
-Once you've created your provider, you will likely want to send updates to and from your custom application. You can do this via `React.Context`. When you open the dev harness code, you will see a simple example for a button that increments a model count. The example looks something like this:
+Once you've created your DesignerApi, you will likely want to send updates to and from your custom application. You can do this via `React.Context`. When you open the dev harness code, you will see a simple example for a button that increments a model count. The example looks something like this:
 
 ```jsx static
 import React, { useContext } from 'react';
