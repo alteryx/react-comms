@@ -1,6 +1,6 @@
 The UI-SDK is a software development kit built on top of our UI-Core library. The library is a suite of React components that use [Material-UI (MUI)](https://github.com/mui-org/material-ui) with a custom Alteryx theme.
 
-The UI-SDK provides global context, a DesignerApi component, and multiple messaging APIs. The messaging API that you use will depend on the Alteryx product that your custom app will live in.
+The UI-SDK provides global context, a DesignerApi component, and multiple messaging APIs. The messaging API that you use will depend on the Alteryx product where your custom app lives.
 
 ## Initial Setup
 
@@ -16,7 +16,7 @@ To install Git, go to https://www.atlassian.com/git/tutorials/install-git. The i
 
 To install node, go to https://nodejs.org/en/download/. We recommend the LTS version. You can also use NVM or something similar if your project is dependent on an older version of node.
 
-Note: If you use a Windows machine you will most likely need to remove the version of node that Visual Studio ships with. Under computer, search for node.exe and remove the file if it stems from a visual studio/ directory.
+Note: If you use a Windows machine you will most likely need to remove the version of node that Visual Studio ships with. Under computer, search for node.exe and remove the file if it stems from a Visual Studio directory.
 
 ### Package Managers
 
