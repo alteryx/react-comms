@@ -1,4 +1,4 @@
-## Boot Up the Dev Harness
+## Start Up the Dev Harness
 
 Once you fork the [Dev Harness](https://git.alteryx.com/ayx-ui-sdk/ui-sdk-dev-harness) project and run `npm install` inside of the project, you're ready to go. From here, use the `npm run start` command from your terminal. You will see that the dev harness is now served from localhost:3000.
 
@@ -10,7 +10,7 @@ While you can make changes here directly, we recommend that you structure your a
 
 ## Use the DesignerApi
 
-The single most important component in the UI-SDK is the DesignerApi. It serves as the facilitator of communication between the Alteryx product you build for, and the custom app you create. The DesignerApi accomplishes much of this under the hood. The result is an easy experience for you to interface with. The DesignerApi requires only one prop: `messages`. The messages prop is an object that includes any internationalized messages that you expect your app to have access to.
+The single most important component in the UI-SDK is the DesignerApi. It serves as the facilitator of communication between the Alteryx product you build for, and the custom app you create. The DesignerApi accomplishes much of this under the hood. The result is an easy experience for you to interface with. The DesignerApi requires only one prop: `messages`. The messages prop is an object that includes any internationalized messages that you expect your app to access.
 
 ## Messages
 
