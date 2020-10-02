@@ -1,7 +1,7 @@
 ## Overview
 The DesignerApi is a required component when you create your custom application with the UI-SDK, and design the app for Alteryx Designer. Every custom application must be wrapped in a DesignerApi. This lets the app access and update the relevant information in the parent application from anywhere within the component hierarchy.
 
-When you implement the DesignerApi, it expects to receive only one prop: `messages`. The messages prop is an object that includes any internationalized messages that you expect your app to have access to. The example below shows this in more detail. Additionally, if you plan to use UI-Core, you must wrap your custom app in an AyxAppWrapper.
+When you implement the DesignerApi, it expects to receive only one prop: `messages`. The messages prop is an object that includes any internationalized messages that you expect your app to access. The example below shows this in more detail. Additionally, if you plan to use UI-Core, you must wrap your custom app in an AyxAppWrapper.
 
 ## Props Example
 The DesignerApi expects you to provide your own translated messages for any languages you want to support, in the format shown below.
@@ -44,7 +44,7 @@ The DesignerApi expects you to provide your own translated messages for any lang
 ## Update Your Data (Part 1)
 The main roles of the DesignerApi are to expose model data and to update that model in both your custom app and the parent app. To do this, the DesignerAPI leverages React Context.
 
-The DesignerApi gives any child component access to a `handleUpdateModel` method as well as the model itself. You can leverage this through the `useContext` hook. The example below uses the `handleUpdateModel` callback to update the model data for the custom app (in this case, a simple incrementer).
+The DesignerApi gives any child component access to a `handleUpdateModel` method as well as the model itself. You can leverage this via the `useContext` hook. The example below uses the `handleUpdateModel` callback to update the model data for the custom app (in this case, a simple incrementer).
 
 `handleUpdateModel` expects to be based on an object that contains one or both of these keys: `Configuration` and `Annotation`. Any other key causes the update to fail.
 
