@@ -35,5 +35,5 @@ yarn add eslint-config-ayx-ui -D
 4. Optionally, you can set `eslint.autoFixOnSave` to `true`.
 
 ### Extend the Rules
-Teams that want to add additional rules can do so by extending the config. Go to the linting project for details: [eslint-config-ayx-ui](https://git.alteryx.com/ayx-ui/eslint-config-ayx-ui).
+Teams that want to add additional rules can extend the config. Go to the linting project for details: [eslint-config-ayx-ui](https://git.alteryx.com/ayx-ui/eslint-config-ayx-ui).
 
