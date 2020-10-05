@@ -1,8 +1,8 @@
 #### Visual Studio Code
 
-A snippet extension has been developed for UI Core. You can find it on the 
+A snippet extension was developed for UI Core. You can find it on the 
 [Visual Studio Code Marketplace](https://marketplace.visualstudio.com/items?itemName=alteryx.vscode-ui-core-snippets) or 
-install it directly in the IDE via the Extensions tab like so: 
+install it directly in the IDE via the Extensions tab as shown below: 
 
 <img style="width: 100%" src="public/static/images/extensions/vscode-snippet-extension.png" alt="vscode snippet extension" />
 
