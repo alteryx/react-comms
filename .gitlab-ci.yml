@@ -103,8 +103,6 @@ publish-sdk:
     - master
       
 pages:
-  environment: pages
-  resource_group: pages
   stage: pages
   tags:
     - linux-docker
