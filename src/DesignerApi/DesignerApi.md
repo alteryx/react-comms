@@ -54,6 +54,6 @@ The DesignerApi gives any child component access to a `handleUpdateModel` method
 ## Update Your Data (Part 2)
 Most of the time, you're not going to be working with a simple incrementer, like the above example. In this example, we manage form data across many inputs in a nested model structure.
 
-We've provided many different `onChange` callback examples to help you decide what you need to use. This will depend on the data structure and UI you've designed. 
+We've provided many different `onChange` callback examples to help you decide what you need to use. This will depend on the data structure and UI you've designed.  
 ```js { "file": "../advancedDemo.js" }
 
