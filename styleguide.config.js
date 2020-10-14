@@ -8,6 +8,7 @@ module.exports = {
     TableOfContentsRenderer: path.join(__dirname, 'src/Docs/.styleguide/components/Sidebar.js'),
     StyleGuideRenderer: path.join(__dirname, 'src/Docs/.styleguide/App.js')
   },
+  title: 'UI-SDK',
   // eslint-disable-next-line global-require
   webpackConfig: require('./node_modules/@ayx/ayx-scripts/config/webpack.prod'),
   theme: {
