@@ -9,10 +9,7 @@ import messages from './messages';
 const DesignerApiDemo = () => {
   const Child = () => {
     const [model, handleUpdateModel] = React.useContext(UiSdkContext);
-    // This is just to force data to be in the model. This isn't a real world use case
-    if (!model.Configuration.count) {
-      handleUpdateModel({ Configuration: { count: 1 } });
-    }
+
     const incrementCount = () => {
       let { count } = model.Configuration;
       count++;
@@ -35,7 +32,7 @@ const DesignerApiDemo = () => {
   };
 
   return (
-    <DesignerApi messages={messages}>
+    <DesignerApi defaultConfig={{ Configuration: { count: 0 } }} messages={messages}>
       <Child />
     </DesignerApi>
   );

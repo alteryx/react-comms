@@ -121,7 +121,7 @@ const DesignerApiDemo = () => {
   };
 
   return (
-    <DesignerApi messages={messages}>
+    <DesignerApi defaultConfig={{ Configuration: { ...initialModelState } }} messages={messages}>
       <Child />
     </DesignerApi>
   );

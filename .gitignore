@@ -16,4 +16,5 @@ styleguide
 yalc.lock
 npm-debug.log
 build/
+styleguide/
 report.*

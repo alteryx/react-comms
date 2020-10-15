@@ -25,3 +25,29 @@ exports[`DesignerApi should be able to render on the DOM 1`] = `
   />
 </ContextProvider>
 `;
+
+exports[`DesignerApi should be able to render on the DOM with a defaultConfig 1`] = `
+<ContextProvider
+  id="sdk-provider"
+  value={
+    Array [
+      Object {
+        "Annotation": "foo",
+        "Configuration": Object {},
+        "Meta": Array [],
+        "ToolId": undefined,
+        "ToolName": "",
+        "srcData": Object {},
+      },
+      [Function],
+    ]
+  }
+>
+  <Child
+    locale="en"
+    messages={Object {}}
+    paletteType="light"
+    theme={Object {}}
+  />
+</ContextProvider>
+`;

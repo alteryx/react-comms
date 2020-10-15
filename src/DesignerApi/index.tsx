@@ -9,6 +9,7 @@ import UiSdkContext, { IContextProviderProps } from '../Context';
 interface IDesignerApiProps {
   messages: object;
   ctx?: IContext;
+  defaultConfig?: object;
   children: React.ReactElement;
 }
 
@@ -24,11 +25,11 @@ const validUpdateKeys = ['Configuration', 'Annotation'];
 let messageBroker;
 
 const DesignerApi: React.FC = (props: IDesignerApiProps) => {
-  const { messages = {} } = props;
+  const { messages = {}, defaultConfig } = props;
   if (!messageBroker) {
     messageBroker = new DesignerMessageApi(props.ctx || window.Alteryx);
   }
-  const [model, updateModel] = useState(messageBroker.model);
+  const [model, updateModel] = useState({ ...messageBroker.model, ...defaultConfig });
   const [appContext, updateAppContext] = useState(messageBroker.ayxAppContext);
 
   const handleUpdateModel = updatedData => {

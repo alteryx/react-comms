@@ -36,6 +36,28 @@ describe('DesignerApi', () => {
     expect(wrapper).toMatchSnapshot();
   });
 
+  it('should be able to render on the DOM with a defaultConfig', () => {
+    const Child = () => {
+      const [model] = React.useContext(UiSdkContext);
+      return <div id="child">{model.Annotation}</div>;
+    };
+    const wrapper = shallow(
+      <DesignerApi ctx={window.Alteryx} defaultConfig={{ Annotation: 'foo' }}>
+        <Child />
+      </DesignerApi>
+    );
+    const valueProp = wrapper.find('#sdk-provider').prop('value');
+    expect(valueProp[0]).toEqual({
+      ToolName: '',
+      ToolId: undefined,
+      Annotation: 'foo',
+      Configuration: {},
+      Meta: [],
+      srcData: {}
+    });
+    expect(wrapper).toMatchSnapshot();
+  });
+
   it('should render AyxAppWrapper with appropriate props if there is model data', () => {
     const Child = () => {
       const [model, handleUpdateModel] = React.useContext(UiSdkContext);
