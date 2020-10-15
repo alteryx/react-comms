@@ -11,11 +11,11 @@ module.exports = {
           browsers: ['>0.25%', 'not dead', 'not ie 11', 'not op_mini all']
         }
       }
-    ]
+    ],
   ],
   env: {
     production: {
-      ignore: ['**/*.test.*', '**/__test__', '**/__mocks__']
+      ignore: ['**/*.test.js', '**/__test__', '**/__snapshots__', '**/messages.js', '**/__mocks__', '**/*.md', './src/Docs/*']
     }
   },
   plugins: [
