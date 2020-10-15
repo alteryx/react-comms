@@ -122,8 +122,8 @@ describe('DesignerApi', () => {
     const spyJsEvent = jest.spyOn(callback, 'JsEvent');
     const expected = {
       Configuration: {
-        Annotation: 'foo',
-        Configuration: {}
+        Configuration: {},
+        Annotation: 'foo'
       }
     };
 

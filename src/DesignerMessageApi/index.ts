@@ -1,50 +1,10 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable import/no-cycle */
+/* eslint-disable react/static-property-placement */
 import MessageApiBase from '../MessageApiBase';
 import * as callback from '../Utils/callback';
-
-export interface IAyxAppContext {
-  darkMode: boolean;
-  productTheme: object;
-  locale: string;
-}
-
-export interface IContext {
-  Gui: {
-    SetConfiguration?: Function;
-    GetConfiguration?: Function;
-    Callbacks?: object;
-  };
-  AlteryxLanguageCode?: string;
-  JsEvent?: Function;
-}
-
-interface IModel {
-  Configuration: object;
-  Annotation?: string;
-  Meta?: Array<any>;
-  ToolName: string;
-  ToolId: number;
-  srcData: object;
-}
-
-interface IMessageTypes {
-  GET_CONFIGURATION: string;
-}
-
-interface ISubscriptionTypes {
-  MODEL_UPDATED: string;
-  AYX_APP_CONTEXT_UPDATED: string;
-}
-
-export const messageTypes: IMessageTypes = {
-  GET_CONFIGURATION: 'GetConfiguration'
-};
-
-export const subscriptionEvents: ISubscriptionTypes = {
-  MODEL_UPDATED: 'MODEL_UPDATED',
-  AYX_APP_CONTEXT_UPDATED: 'AYX_APP_CONTEXT_UPDATED'
-};
+import { IContext, messageTypes, IModel, IAyxAppContext, IDesignerConfiguration, IConfigShape } from '../Utils/types';
+import FieldListArray from '../MetaInfoHelpers/FieldListArray';
 
 class DesignerMessageApi extends MessageApiBase<IContext, IModel, IAyxAppContext> {
   constructor(ctx: IContext) {
@@ -65,19 +25,8 @@ class DesignerMessageApi extends MessageApiBase<IContext, IModel, IAyxAppContext
     this.context.Gui = {
       SetConfiguration: currentToolConfiguration => {
         if (this.subscriptions && this.subscriptions.has('MODEL_UPDATED')) {
-          const modifiedConfigShape = {
-            Configuration: currentToolConfiguration.Configuration.Configuration || this.model.Configuration,
-            Annotation: currentToolConfiguration.Annotation || this.model.Annotation,
-            Meta:
-              typeof currentToolConfiguration.MetaInfo === 'object'
-                ? [currentToolConfiguration.MetaInfo]
-                : currentToolConfiguration.MetaInfo,
-            ToolName: currentToolConfiguration.ToolName,
-            ToolId: currentToolConfiguration.ToolId,
-            srcData: currentToolConfiguration
-          };
-          this.model = modifiedConfigShape;
-          this.subscriptions.get('MODEL_UPDATED')(modifiedConfigShape);
+          this.model = this.generateConfigShape(currentToolConfiguration);
+          this.subscriptions.get('MODEL_UPDATED')(this.model);
         }
         this.context.JsEvent(JSON.stringify({ Event: 'SetConfiguration' }));
       },
@@ -96,6 +45,17 @@ class DesignerMessageApi extends MessageApiBase<IContext, IModel, IAyxAppContext
 
   sendMessage = (type: string, payload: object): void => {
     callback.JsEvent(this.context, type, payload);
+  };
+
+  generateConfigShape = (currentToolConfiguration: IDesignerConfiguration): IConfigShape => {
+    return {
+      Configuration: currentToolConfiguration.Configuration.Configuration || this.model.Configuration,
+      Annotation: currentToolConfiguration.Annotation || this.model.Annotation,
+      Meta: new FieldListArray(currentToolConfiguration.MetaInfo),
+      ToolName: currentToolConfiguration.ToolName,
+      ToolId: currentToolConfiguration.ToolId,
+      srcData: currentToolConfiguration
+    };
   };
 }
 

@@ -14,9 +14,11 @@ module.exports = {
   verbose: true,
   coveragePathIgnorePatterns: [
     '/node_modules/',
-    'src/Core/',
     'src/index.ts',
     'src/Docs/',
+    'src/MetaInfoHelpers/dummyData.js',
+    'build',
+    'src/Utils/types.ts',
     'src/DesignerApi/advancedDemo.js',
     'src/DesignerApi/basicDemo.js',
     'src/DesignerApi/messages.js'

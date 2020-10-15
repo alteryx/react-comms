@@ -56,4 +56,18 @@ Most of the time, you're not going to be working with a simple incrementer, like
 
 We've provided many different `onChange` callback examples to help you decide what you need to use. This will depend on the data structure and UI you've designed.  
 ```js { "file": "../advancedDemo.js" }
+```
+
+## Accessing Meta
+
+The `DesignerApi` does some really nice cleanup for you when it comes to accessing your meta data. Meta will always be an array. Each index of the array represents a different list of fields from an input anchor. Accessing model.Meta[0] will give you the list of fields from the first input. If you wanted to access the 2nd field in that list, you'd chain an index of 1 to the fields property on the Meta. See below for an example:
+```jsx static
+const Child = () => {
+  const [model, handleUpdateModel] = React.useContext(UiSdkContext);
+  const greatMetaInfo = model.Meta[0].fields[1]
+})
+```
+
+If you'd like to debug the meta data in more depth as it comes to you from Designer, simply add a `console.log(model.Meta)` from any component in your application where the model is accessible via context.
+
 
