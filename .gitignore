@@ -9,9 +9,11 @@ dist-electron/
 artifacts
 .env.development
 .env.production
+styleguide
 .testcafe-electron-rc
 .ltk/log
 .yalc/
 yalc.lock
 npm-debug.log
+build/
 report.*
