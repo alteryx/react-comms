@@ -15,7 +15,7 @@ module.exports = {
   ],
   env: {
     production: {
-      ignore: ['**/*.test.js', '**/__test__', '**/__snapshots__', '**/messages.js', '**/__mocks__', '**/*.md', './src/Docs/*']
+      ignore: ['**/*.test.js', '**/__test__', '**/__snapshots__', '**/messages.js', '**/__mocks__', '**/*.md']
     }
   },
   plugins: [
