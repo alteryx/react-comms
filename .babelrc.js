@@ -26,6 +26,7 @@ module.exports = {
         "loose": true
       }
     ],
+    ['@babel/plugin-transform-classes'],
     ['@babel/transform-runtime'],
     [
       'transform-imports',

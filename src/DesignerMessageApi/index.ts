@@ -1,5 +1,4 @@
 /* eslint-disable no-underscore-dangle */
-/* eslint-disable react/static-property-placement */
 /* eslint-disable import/no-cycle */
 import MessageApiBase from '../MessageApiBase';
 import * as callback from '../Utils/callback';
@@ -47,13 +46,7 @@ export const subscriptionEvents: ISubscriptionTypes = {
   AYX_APP_CONTEXT_UPDATED: 'AYX_APP_CONTEXT_UPDATED'
 };
 
-class DesignerMessageApi extends MessageApiBase<object, IModel, IAyxAppContext> {
-  context: IContext;
-
-  _model: IModel;
-
-  _ayxAppContext: IAyxAppContext;
-
+class DesignerMessageApi extends MessageApiBase<IContext, IModel, IAyxAppContext> {
   constructor(ctx: IContext) {
     super(ctx);
     this._model = {
