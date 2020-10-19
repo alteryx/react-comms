@@ -8,6 +8,9 @@ stages:
   - publish
   - pages
 
+variables:
+  NEW_VERSION: $(node -e "console.log(parseInt(require('./package.json').version.split('.')[2].split('-')[0]) + 1)") 
+
 cache:
   paths:
     - node_modules/
@@ -82,7 +85,7 @@ publish-sdk:
     - git config --global user.name $REMOTE_PUSH_USER
     - REPO_URL=`echo $CI_REPOSITORY_URL | sed -e "s/https:\/\/gitlab-ci-token:.*@//g"`
     - git remote set-url origin https://gitlab-ci-token:$REMOTE_PUSH_USER_TOKEN@$REPO_URL
-    - npm version 0.0.$CI_PIPELINE_ID-alpha --no-git-tag-version
+    - npm version 0.0.$NEW_VERSION-alpha --no-git-tag-version
     - git add . 
     - git commit -m "Bumping version for master build [ci skip]"
     - git pull origin master && git push && git push --tags
