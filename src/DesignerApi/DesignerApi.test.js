@@ -52,6 +52,7 @@ describe('DesignerApi', () => {
       ToolId: undefined,
       Annotation: 'foo',
       Configuration: {},
+      Secrets: {},
       Meta: [],
       srcData: {}
     });
@@ -95,6 +96,7 @@ describe('DesignerApi', () => {
       ToolId: undefined,
       Annotation: '',
       Configuration: {},
+      Secrets: {},
       Meta: [],
       srcData: {}
     });
@@ -122,7 +124,9 @@ describe('DesignerApi', () => {
     const spyJsEvent = jest.spyOn(callback, 'JsEvent');
     const expected = {
       Configuration: {
-        Configuration: {},
+        Configuration: {
+          Secrets: {}
+        },
         Annotation: 'foo'
       }
     };

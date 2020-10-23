@@ -1,4 +1,5 @@
 ### Next release
+- Added support for obfuscating sensitive information via `Encrypt` and `Decrypt`
 - Added support for a `defaultConfig` prop
 - Changed the shape of `model.Meta` to make it more easily accessible
 - Updated documentation

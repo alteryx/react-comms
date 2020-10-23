@@ -64,10 +64,29 @@ The `DesignerApi` does some really nice cleanup for you when it comes to accessi
 ```jsx static
 const Child = () => {
   const [model, handleUpdateModel] = React.useContext(UiSdkContext);
-  const greatMetaInfo = model.Meta[0].fields[1]
+  const greatMetaInfo = model.Meta[0].fields[1];
 })
 ```
 
 If you'd like to debug the meta data in more depth as it comes to you from Designer, simply add a `console.log(model.Meta)` from any component in your application where the model is accessible via context.
+
+## Secrets
+
+If your UI has password fields or other information that you'd consider sensitive, you can ensure it is obfuscated when stored in your XML by placing it in the `Secrets` key of the model. This key resolves to an object that you can place any key inside of. When the tool configuration is saved off, anything you place into this key will automatically be obfuscated and unobfuscated upon the set and get configuration calls. See below: 
+
+```jsx static
+  const Child = () => {
+    const [model, handleUpdateModel] = React.useContext(UiSdkContext);
+    const { Secrets } = model;
+
+    const handleChange = event => {
+      handleUpdateModel({ Secrets: { password: event.target.value }});
+    };
+
+    return (
+      <input value={Secrets.password} onChange={handleChange}/>
+    )
+  }; 
+```
 
 

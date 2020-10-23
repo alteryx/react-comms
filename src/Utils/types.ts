@@ -46,7 +46,10 @@ export interface IAyxAppContext {
 
 export interface IDesignerConfiguration {
   Configuration: {
-    Configuration?: any;
+    Configuration?: {
+      Secrets?: object;
+      Annotation?: string;
+    };
   };
   Annotation: string;
   MetaInfo: Array<any>;
@@ -60,6 +63,7 @@ export interface IConfigShape {
   Meta: FieldListArray;
   ToolName: string;
   ToolId: number;
+  Secrets?: object;
   srcData: IDesignerConfiguration;
 }
 
@@ -68,6 +72,7 @@ export interface IModel {
   Annotation: string;
   Meta: FieldListArray | Array<any>;
   ToolName: string;
+  Secrets?: object;
   ToolId: number;
   srcData: object;
 }

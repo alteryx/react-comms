@@ -21,7 +21,7 @@ declare global {
   }
 }
 
-const validUpdateKeys = ['Configuration', 'Annotation'];
+const validUpdateKeys = ['Configuration', 'Annotation', 'Secrets'];
 
 let messageBroker;
 
@@ -41,8 +41,7 @@ const DesignerApi: React.FC = (props: IDesignerApiProps) => {
       return;
     }
     const newModel = { ...model, ...updatedData };
-    // The reason all 3 of these are here is to work in all use cases for now, DesignerMessageAPI and DevHarness.
-    // TODO: Refactor this to only be dependent on one call
+
     updateModel(newModel);
     messageBroker.model = newModel;
   };

@@ -14,6 +14,7 @@ class DesignerMessageApi extends MessageApiBase<IContext, IModel, IAyxAppContext
       Annotation: '',
       Meta: [],
       ToolName: '',
+      Secrets: {},
       ToolId: undefined,
       srcData: {}
     };
@@ -31,9 +32,10 @@ class DesignerMessageApi extends MessageApiBase<IContext, IModel, IAyxAppContext
         this.context.JsEvent(JSON.stringify({ Event: 'SetConfiguration' }));
       },
       GetConfiguration: () => {
+        const encryptedSecrets = Object.keys(this.model.Secrets).reduce(this.encryptSecrets, {});
         const payload = {
           Configuration: {
-            Configuration: this._model.Configuration,
+            Configuration: { ...this._model.Configuration, Secrets: encryptedSecrets },
             Annotation: this._model.Annotation
           }
         };
@@ -43,19 +45,45 @@ class DesignerMessageApi extends MessageApiBase<IContext, IModel, IAyxAppContext
     };
   }
 
-  sendMessage = (type: string, payload: object): void => {
-    callback.JsEvent(this.context, type, payload);
+  sendMessage = (type: string, payload: object): Promise<any> => {
+    return callback.JsEvent(this.context, type, payload);
+  };
+
+  encryptSecrets = async (acc: object, key: string): Promise<any> => {
+    acc[key] = await this.sendMessage('Encrypt', { text: this.model.Secrets[key] });
+    return acc;
+  };
+
+  decryptSecrets = async (acc: object, key: string): Promise<any> => {
+    acc[key] = await this.sendMessage('Decrypt', { text: acc[key] });
+    return acc;
   };
 
   generateConfigShape = (currentToolConfiguration: IDesignerConfiguration): IConfigShape => {
+    const { Annotation } = currentToolConfiguration.Configuration.Configuration;
+    const [decryptedSecrets, cleanToolConfiguration] = this.cleanConfigAndDecryptSecrets(currentToolConfiguration);
     return {
-      Configuration: currentToolConfiguration.Configuration.Configuration || this.model.Configuration,
-      Annotation: currentToolConfiguration.Annotation || this.model.Annotation,
+      Configuration: cleanToolConfiguration.Configuration.Configuration || this.model.Configuration,
+      Secrets: decryptedSecrets || this.model.Secrets,
+      Annotation: Annotation || this.model.Annotation,
       Meta: new FieldListArray(currentToolConfiguration.MetaInfo),
       ToolName: currentToolConfiguration.ToolName,
       ToolId: currentToolConfiguration.ToolId,
       srcData: currentToolConfiguration
     };
+  };
+
+  cleanConfigAndDecryptSecrets = (
+    currentToolConfiguration: IDesignerConfiguration
+  ): [object, IDesignerConfiguration] => {
+    const { Secrets, Annotation } = currentToolConfiguration.Configuration.Configuration;
+    let decryptedSecrets;
+    if (Secrets) {
+      delete currentToolConfiguration.Configuration.Configuration.Secrets;
+      decryptedSecrets = Object.keys(Secrets).reduce(this.decryptSecrets, Secrets);
+    }
+    if (Annotation) delete currentToolConfiguration.Configuration.Configuration.Annotation;
+    return [decryptedSecrets, currentToolConfiguration];
   };
 }
 
