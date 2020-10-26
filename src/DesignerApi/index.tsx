@@ -4,6 +4,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 
 import DesignerMessageApi from '../DesignerMessageApi';
+import MicroAppMessageApi from '../MicroAppMessageApi';
 import { IContext, SUBSCRIPTION_EVENTS } from '../Utils/types';
 import UiSdkContext, { IContextProviderProps } from '../Context';
 
@@ -28,7 +29,10 @@ let messageBroker;
 const DesignerApi: React.FC = (props: IDesignerApiProps) => {
   const { messages = {}, defaultConfig } = props;
   if (!messageBroker) {
-    messageBroker = new DesignerMessageApi(props.ctx || window.Alteryx);
+    messageBroker =
+      window.Alteryx && window.Alteryx.AlteryxLanguageCode
+        ? new DesignerMessageApi(props.ctx || window.Alteryx)
+        : new MicroAppMessageApi();
   }
   const [model, updateModel] = useState({ ...messageBroker.model, ...defaultConfig });
   const [appContext, updateAppContext] = useState(messageBroker.ayxAppContext);
@@ -41,9 +45,11 @@ const DesignerApi: React.FC = (props: IDesignerApiProps) => {
       return;
     }
     const newModel = { ...model, ...updatedData };
-
     updateModel(newModel);
     messageBroker.model = newModel;
+    if (messageBroker instanceof MicroAppMessageApi) {
+      messageBroker.sendMessage(SUBSCRIPTION_EVENTS.MODEL_UPDATED, newModel);
+    }
   };
 
   useEffect(() => {

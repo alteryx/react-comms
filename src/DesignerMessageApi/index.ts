@@ -3,7 +3,15 @@
 /* eslint-disable react/static-property-placement */
 import MessageApiBase from '../MessageApiBase';
 import * as callback from '../Utils/callback';
-import { IContext, messageTypes, IModel, IAyxAppContext, IDesignerConfiguration, IConfigShape } from '../Utils/types';
+import {
+  IContext,
+  IModel,
+  IAyxAppContext,
+  IDesignerConfiguration,
+  IConfigShape,
+  MESSAGE_TYPES,
+  SUBSCRIPTION_EVENTS
+} from '../Utils/types';
 import FieldListArray from '../MetaInfoHelpers/FieldListArray';
 
 class DesignerMessageApi extends MessageApiBase<IContext, IModel, IAyxAppContext> {
@@ -29,7 +37,7 @@ class DesignerMessageApi extends MessageApiBase<IContext, IModel, IAyxAppContext
           this.model = await this.generateConfigShape(currentToolConfiguration);
           this.subscriptions.get('MODEL_UPDATED')(this.model);
         }
-        this.context.JsEvent(JSON.stringify({ Event: 'SetConfiguration' }));
+        this.context.JsEvent(JSON.stringify({ Event: MESSAGE_TYPES.SET_CONFIGURATION }));
       },
       GetConfiguration: () => {
         const keys = Object.keys(this.model.Secrets);

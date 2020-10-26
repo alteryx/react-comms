@@ -1,7 +1,8 @@
 import FieldListArray from '../MetaInfoHelpers/FieldListArray';
 
-interface IMessageTypes {
-  GET_CONFIGURATION: string;
+export enum MESSAGE_TYPES {
+  GET_CONFIGURATION = 'GET_CONFIGURATION',
+  SET_CONFIGURATION = 'SET_CONFIGURATION'
 }
 
 export interface ISubscriptionTypes {
@@ -65,6 +66,18 @@ export interface IConfigShape {
   ToolId: number;
   Secrets?: object;
   srcData: IDesignerConfiguration;
+}
+
+export interface IMicroAppMessage {
+  data: {
+    type: string;
+    payload: {
+      model?: object;
+      darkMode?: boolean;
+      locale?: string;
+      productTheme?: object;
+    };
+  };
 }
 
 export interface IModel {
