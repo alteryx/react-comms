@@ -1,23 +1,14 @@
 import FieldListArray from '../MetaInfoHelpers/FieldListArray';
 
 export enum MESSAGE_TYPES {
-  GET_CONFIGURATION = 'GET_CONFIGURATION',
-  SET_CONFIGURATION = 'SET_CONFIGURATION'
+  GET_CONFIGURATION = 'GetConfiguration',
+  SET_CONFIGURATION = 'SetConfiguration'
 }
-
-export interface ISubscriptionTypes {
-  MODEL_UPDATED: string;
-  AYX_APP_CONTEXT_UPDATED: string;
-}
-
-export const subscriptionEvents: ISubscriptionTypes = {
-  MODEL_UPDATED: 'MODEL_UPDATED',
-  AYX_APP_CONTEXT_UPDATED: 'AYX_APP_CONTEXT_UPDATED'
-};
 
 export enum SUBSCRIPTION_EVENTS {
   MODEL_UPDATED = 'MODEL_UPDATED',
-  AYX_APP_CONTEXT_UPDATED = 'AYX_APP_CONTEXT_UPDATED'
+  AYX_APP_CONTEXT_UPDATED = 'AYX_APP_CONTEXT_UPDATED',
+  INIT = 'INIT'
 }
 
 export interface IModelUpdatedEvent {
@@ -89,7 +80,3 @@ export interface IModel {
   ToolId: number;
   srcData: object;
 }
-
-export const messageTypes: IMessageTypes = {
-  GET_CONFIGURATION: 'GetConfiguration'
-};

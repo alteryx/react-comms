@@ -1,11 +1,5 @@
 import MessageApi from '../MessageApiBase';
-import { IMicroAppMessage } from '../Utils/types';
-
-interface IAyxAppContext {
-  darkMode?: boolean;
-  productTheme?: object;
-  locale?: string;
-}
+import { IMicroAppMessage, IAyxAppContext } from '../Utils/types';
 
 let initRes: any;
 
