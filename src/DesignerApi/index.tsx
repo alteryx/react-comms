@@ -1,11 +1,11 @@
 /* eslint-disable react/require-default-props */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable react/forbid-prop-types */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 
 import DesignerMessageApi from '../DesignerMessageApi';
 import { IContext, SUBSCRIPTION_EVENTS } from '../Utils/types';
-import UiSdkContext, { IContextProviderProps } from '../Context';
+import UiSdkContext from '../Context';
 
 interface IDesignerApiProps {
   messages: object;
@@ -51,7 +51,7 @@ const DesignerApi: React.FC = (props: IDesignerApiProps) => {
       updateAppContext({ ...data });
     };
     const receiveModel = data => {
-      updateModel({ ...data });
+      updateModel(data);
     };
 
     messageBroker.subscribe(SUBSCRIPTION_EVENTS.MODEL_UPDATED, receiveModel);
@@ -61,16 +61,13 @@ const DesignerApi: React.FC = (props: IDesignerApiProps) => {
     };
   }, []);
 
-  const contextProps: IContextProviderProps = {
-    id: 'sdk-provider',
-    value: [model, handleUpdateModel]
-  };
+  const getContextValue = useCallback(() => [model, handleUpdateModel], [model, handleUpdateModel]);
 
   const { darkMode, locale, productTheme } = appContext || {};
   const appPropsToSpread = { messages, paletteType: darkMode ? 'dark' : 'light', theme: productTheme, locale };
 
   return (
-    <UiSdkContext.Provider {...contextProps}>
+    <UiSdkContext.Provider value={getContextValue()}>
       {React.cloneElement(props.children, { ...appPropsToSpread })}
     </UiSdkContext.Provider>
   );

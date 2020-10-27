@@ -32,14 +32,21 @@ class DesignerMessageApi extends MessageApiBase<IContext, IModel, IAyxAppContext
         this.context.JsEvent(JSON.stringify({ Event: 'SetConfiguration' }));
       },
       GetConfiguration: () => {
-        const encryptedSecrets = Object.keys(this.model.Secrets).reduce(this.encryptSecrets, {});
-        const payload = {
-          Configuration: {
-            Configuration: { ...this._model.Configuration, Secrets: encryptedSecrets },
-            Annotation: this._model.Annotation
-          }
-        };
-        this.sendMessage(messageTypes.GET_CONFIGURATION, payload);
+        const keys = Object.keys(this.model.Secrets);
+        Promise.all(keys.map(this.encryptSecrets)).then(values => {
+          values.forEach(secret => {
+            keys.forEach(key => {
+              this.model.Secrets[key] = secret;
+            });
+          });
+          const payload = {
+            Configuration: {
+              Configuration: { ...this._model.Configuration, Secrets: this.model.Secrets },
+              Annotation: this._model.Annotation
+            }
+          };
+          this.sendMessage(messageTypes.GET_CONFIGURATION, payload);
+        });
       },
       Callbacks: {}
     };
@@ -49,23 +56,27 @@ class DesignerMessageApi extends MessageApiBase<IContext, IModel, IAyxAppContext
     return callback.JsEvent(this.context, type, payload);
   };
 
-  encryptSecrets = async (acc: object, key: string): Promise<any> => {
-    acc[key] = await this.sendMessage('Encrypt', { text: this.model.Secrets[key] });
-    return acc;
+  encryptSecrets = (key: string): object => {
+    return Promise.resolve(this.sendMessage('Encrypt', { text: this.model.Secrets[key] })).then(res => {
+      return res;
+    });
   };
 
-  decryptSecrets = async (acc: object, key: string): Promise<any> => {
-    acc[key] = await this.sendMessage('Decrypt', { text: acc[key] });
-    return acc;
+  decryptSecrets = (value: string): object => {
+    console.log('decryptValue', value);
+    return Promise.resolve(this.sendMessage('Decrypt', { text: value })).then(res => {
+      console.log('decryptRes', res);
+      return res;
+    });
   };
 
   generateConfigShape = (currentToolConfiguration: IDesignerConfiguration): IConfigShape => {
-    const { Annotation } = currentToolConfiguration.Configuration.Configuration;
+    const { Annotation } = currentToolConfiguration.Configuration.Configuration || this.model;
     const [decryptedSecrets, cleanToolConfiguration] = this.cleanConfigAndDecryptSecrets(currentToolConfiguration);
     return {
       Configuration: cleanToolConfiguration.Configuration.Configuration || this.model.Configuration,
       Secrets: decryptedSecrets || this.model.Secrets,
-      Annotation: Annotation || this.model.Annotation,
+      Annotation,
       Meta: new FieldListArray(currentToolConfiguration.MetaInfo),
       ToolName: currentToolConfiguration.ToolName,
       ToolId: currentToolConfiguration.ToolId,
@@ -73,17 +84,29 @@ class DesignerMessageApi extends MessageApiBase<IContext, IModel, IAyxAppContext
     };
   };
 
-  cleanConfigAndDecryptSecrets = (
-    currentToolConfiguration: IDesignerConfiguration
-  ): [object, IDesignerConfiguration] => {
-    const { Secrets, Annotation } = currentToolConfiguration.Configuration.Configuration;
-    let decryptedSecrets;
-    if (Secrets) {
-      delete currentToolConfiguration.Configuration.Configuration.Secrets;
-      decryptedSecrets = Object.keys(Secrets).reduce(this.decryptSecrets, Secrets);
+  cleanConfigAndDecryptSecrets = (currentToolConfiguration: IDesignerConfiguration): Promise<any> => {
+    const decryptedSecrets = {};
+    if (
+      currentToolConfiguration.Configuration.Configuration &&
+      currentToolConfiguration.Configuration.Configuration.Annotation
+    ) {
+      delete currentToolConfiguration.Configuration.Configuration.Annotation;
     }
-    if (Annotation) delete currentToolConfiguration.Configuration.Configuration.Annotation;
-    return [decryptedSecrets, currentToolConfiguration];
+    if (
+      currentToolConfiguration.Configuration.Configuration &&
+      currentToolConfiguration.Configuration.Configuration.Secrets
+    ) {
+      const encryptedValues = Object.values(currentToolConfiguration.Configuration.Configuration.Secrets);
+      return Promise.all(encryptedValues.map(this.decryptSecrets)).then(values => {
+        values.forEach(secret => {
+          Object.keys(currentToolConfiguration.Configuration.Configuration.Secrets).forEach(key => {
+            decryptedSecrets[key] = secret;
+          });
+        });
+        delete currentToolConfiguration.Configuration.Configuration.Secrets;
+        return [decryptedSecrets, currentToolConfiguration];
+      });
+    }
   };
 }
 
