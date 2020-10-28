@@ -3,15 +3,8 @@
 /* eslint-disable react/static-property-placement */
 import MessageApiBase from '../MessageApiBase';
 import * as callback from '../Utils/callback';
-import {
-  IContext,
-  IModel,
-  IAyxAppContext,
-  IDesignerConfiguration,
-  IConfigShape,
-  MESSAGE_TYPES,
-  SUBSCRIPTION_EVENTS
-} from '../Utils/types';
+import { IContext, IModel, IAyxAppContext, IDesignerConfiguration, IConfigShape } from '../Utils/types';
+import { MESSAGE_TYPES, SUBSCRIPTION_EVENTS } from '../Utils/constants';
 import FieldListArray from '../MetaInfoHelpers/FieldListArray';
 
 class DesignerMessageApi extends MessageApiBase<IContext, IModel, IAyxAppContext> {

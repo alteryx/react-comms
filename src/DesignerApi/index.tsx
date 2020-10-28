@@ -5,7 +5,8 @@ import React, { useEffect, useState, useCallback } from 'react';
 
 import DesignerMessageApi from '../DesignerMessageApi';
 import MicroAppMessageApi from '../MicroAppMessageApi';
-import { IContext, SUBSCRIPTION_EVENTS } from '../Utils/types';
+import { IContext } from '../Utils/types';
+import { SUBSCRIPTION_EVENTS } from '../Utils/constants';
 import UiSdkContext, { IContextProviderProps } from '../Context';
 
 interface IDesignerApiProps {

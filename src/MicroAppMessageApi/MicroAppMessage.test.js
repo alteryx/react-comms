@@ -1,4 +1,4 @@
-import { SUBSCRIPTION_EVENTS } from '../Utils/types.ts';
+import { SUBSCRIPTION_EVENTS } from '../Utils/constants.ts';
 
 import MicroAppMessageApi from './index.ts';
 
@@ -11,7 +11,7 @@ describe('MicroAppMessageApi', () => {
   beforeEach(() => {
     jest.resetAllMocks();
   });
-  it('should be exist', () => {
+  it('should exist', () => {
     const messageBroker = new MicroAppMessageApi();
 
     expect(messageBroker).toBeTruthy();
