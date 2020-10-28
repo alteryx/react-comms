@@ -4,7 +4,7 @@
 import MessageApiBase from '../MessageApiBase';
 import * as callback from '../Utils/callback';
 import { IContext, IModel, IAyxAppContext, IDesignerConfiguration, IConfigShape } from '../Utils/types';
-import { MESSAGE_TYPES, SUBSCRIPTION_EVENTS } from '../Utils/constants';
+import { MESSAGE_TYPES } from '../Utils/constants';
 import FieldListArray from '../MetaInfoHelpers/FieldListArray';
 
 class DesignerMessageApi extends MessageApiBase<IContext, IModel, IAyxAppContext> {
@@ -46,7 +46,7 @@ class DesignerMessageApi extends MessageApiBase<IContext, IModel, IAyxAppContext
               Annotation: this._model.Annotation
             }
           };
-          this.sendMessage(messageTypes.GET_CONFIGURATION, payload);
+          this.sendMessage(MESSAGE_TYPES.GET_CONFIGURATION, payload);
         });
       },
       Callbacks: {}
