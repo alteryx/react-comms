@@ -5,7 +5,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 
 import DesignerMessageApi from '../DesignerMessageApi';
 import { IContext, SUBSCRIPTION_EVENTS } from '../Utils/types';
-import UiSdkContext from '../Context';
+import UiSdkContext, { IContextProviderProps } from '../Context';
 
 interface IDesignerApiProps {
   messages: object;
@@ -63,11 +63,16 @@ const DesignerApi: React.FC = (props: IDesignerApiProps) => {
 
   const getContextValue = useCallback(() => [model, handleUpdateModel], [model, handleUpdateModel]);
 
+  const contextProps: IContextProviderProps = {
+    id: 'sdk-provider',
+    value: getContextValue()
+  };
+
   const { darkMode, locale, productTheme } = appContext || {};
   const appPropsToSpread = { messages, paletteType: darkMode ? 'dark' : 'light', theme: productTheme, locale };
 
   return (
-    <UiSdkContext.Provider value={getContextValue()}>
+    <UiSdkContext.Provider {...contextProps}>
       {React.cloneElement(props.children, { ...appPropsToSpread })}
     </UiSdkContext.Provider>
   );

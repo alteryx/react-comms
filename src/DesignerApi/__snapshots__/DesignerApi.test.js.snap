@@ -2,6 +2,7 @@
 
 exports[`DesignerApi should be able to render on the DOM 1`] = `
 <ContextProvider
+  id="sdk-provider"
   value={
     Array [
       Object {

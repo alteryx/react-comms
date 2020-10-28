@@ -45,14 +45,14 @@ describe('DesignerMessageApi', () => {
     expect(messageBroker.subscriptions).toEqual(map);
   });
 
-  it('should invoke the SetConfiguration callback in its subscriptions through the context.Gui if it is subscribed to SetConfiguration', () => {
+  it('should invoke the SetConfiguration callback in its subscriptions through the context.Gui if it is subscribed to SetConfiguration', async () => {
     const messageBroker = new DesignerMessageApi(window.Alteryx);
     const func = jest.fn();
     const map = new Map();
     map.set('MODEL_UPDATED', func);
 
     messageBroker.subscribe('MODEL_UPDATED', func);
-    messageBroker.context.Gui.SetConfiguration({
+    await messageBroker.context.Gui.SetConfiguration({
       Configuration: {
         Configuration: {
           Annotation: '',
@@ -112,7 +112,7 @@ describe('DesignerMessageApi', () => {
     expect(spyJsEvent).toHaveBeenCalledWith(messageBroker.context, 'Encrypt', expected);
   });
 
-  it('should use the context GetConfiguration to invoke a jsEvent with context, GetConfiguration, and model as params', () => {
+  it('should use the context GetConfiguration to invoke a jsEvent with context, GetConfiguration, and model as params', async () => {
     const spyJsEvent = jest.spyOn(callback, 'JsEvent');
     const messageBroker = new DesignerMessageApi(window.Alteryx);
     const expected = {
@@ -124,7 +124,7 @@ describe('DesignerMessageApi', () => {
       }
     };
 
-    messageBroker.context.Gui.GetConfiguration();
+    await messageBroker.context.Gui.GetConfiguration();
 
     expect(spyJsEvent).toHaveBeenCalledWith(messageBroker.context, 'GetConfiguration', expected);
   });

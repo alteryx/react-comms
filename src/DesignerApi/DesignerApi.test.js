@@ -33,19 +33,21 @@ describe('DesignerApi', () => {
         <Child />
       </DesignerApi>
     );
+
     expect(wrapper).toMatchSnapshot();
   });
 
-  it('should be able to render on the DOM with a defaultConfig', () => {
+  it('should be able to render on the DOM with a defaultConfig', async () => {
     const Child = () => {
       const [model] = React.useContext(UiSdkContext);
       return <div id="child">{model.Annotation}</div>;
     };
-    const wrapper = shallow(
+    const wrapper = await shallow(
       <DesignerApi ctx={window.Alteryx} defaultConfig={{ Annotation: 'foo' }}>
         <Child />
       </DesignerApi>
     );
+
     const valueProp = wrapper.find('#sdk-provider').prop('value');
     expect(valueProp[0]).toEqual({
       ToolName: '',
@@ -120,7 +122,7 @@ describe('DesignerApi', () => {
     expect(wrapper.find('#child').text()).toEqual('foo');
   });
 
-  it('should use the current model state as the payload when GetConfiguration is called', () => {
+  it('should use the current model state as the payload when GetConfiguration is called', async () => {
     const spyJsEvent = jest.spyOn(callback, 'JsEvent');
     const expected = {
       Configuration: {
@@ -144,7 +146,7 @@ describe('DesignerApi', () => {
       </DesignerApi>
     );
     wrapper.update();
-    window.Alteryx.Gui.GetConfiguration();
+    await window.Alteryx.Gui.GetConfiguration();
     expect(spyJsEvent).toHaveBeenCalledWith(window.Alteryx, 'GetConfiguration', expected);
   });
 });
