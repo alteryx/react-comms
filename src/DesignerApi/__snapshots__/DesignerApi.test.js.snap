@@ -1,6 +1,30 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`DesignerApi should be able to render on the DOM 1`] = `""`;
+exports[`DesignerApi should be able to render on the DOM 1`] = `
+<ContextProvider
+  value={
+    Array [
+      Object {
+        "Annotation": "",
+        "Configuration": Object {},
+        "Meta": Array [],
+        "Secrets": Object {},
+        "ToolId": undefined,
+        "ToolName": "",
+        "srcData": Object {},
+      },
+      [Function],
+    ]
+  }
+>
+  <Child
+    locale="en"
+    messages={Object {}}
+    paletteType="light"
+    theme={Object {}}
+  />
+</ContextProvider>
+`;
 
 exports[`DesignerApi should be able to render on the DOM with a defaultConfig 1`] = `
 <ContextProvider

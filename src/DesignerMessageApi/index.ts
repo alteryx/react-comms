@@ -24,9 +24,9 @@ class DesignerMessageApi extends MessageApiBase<IContext, IModel, IAyxAppContext
       locale: this.context.AlteryxLanguageCode
     };
     this.context.Gui = {
-      SetConfiguration: currentToolConfiguration => {
+      SetConfiguration: async currentToolConfiguration => {
         if (this.subscriptions && this.subscriptions.has('MODEL_UPDATED')) {
-          this.model = this.generateConfigShape(currentToolConfiguration);
+          this.model = await this.generateConfigShape(currentToolConfiguration);
           this.subscriptions.get('MODEL_UPDATED')(this.model);
         }
         this.context.JsEvent(JSON.stringify({ Event: 'SetConfiguration' }));
@@ -63,16 +63,16 @@ class DesignerMessageApi extends MessageApiBase<IContext, IModel, IAyxAppContext
   };
 
   decryptSecrets = (value: string): object => {
-    console.log('decryptValue', value);
     return Promise.resolve(this.sendMessage('Decrypt', { text: value })).then(res => {
-      console.log('decryptRes', res);
       return res;
     });
   };
 
-  generateConfigShape = (currentToolConfiguration: IDesignerConfiguration): IConfigShape => {
+  generateConfigShape = async (currentToolConfiguration: IDesignerConfiguration): Promise<IConfigShape> => {
     const { Annotation } = currentToolConfiguration.Configuration.Configuration || this.model;
-    const [decryptedSecrets, cleanToolConfiguration] = this.cleanConfigAndDecryptSecrets(currentToolConfiguration);
+    const [decryptedSecrets, cleanToolConfiguration] = await this.cleanConfigAndDecryptSecrets(
+      currentToolConfiguration
+    );
     return {
       Configuration: cleanToolConfiguration.Configuration.Configuration || this.model.Configuration,
       Secrets: decryptedSecrets || this.model.Secrets,
@@ -84,7 +84,9 @@ class DesignerMessageApi extends MessageApiBase<IContext, IModel, IAyxAppContext
     };
   };
 
-  cleanConfigAndDecryptSecrets = (currentToolConfiguration: IDesignerConfiguration): Promise<any> => {
+  cleanConfigAndDecryptSecrets = async (
+    currentToolConfiguration: IDesignerConfiguration
+  ): Promise<[object, IDesignerConfiguration]> => {
     const decryptedSecrets = {};
     if (
       currentToolConfiguration.Configuration.Configuration &&
@@ -97,16 +99,15 @@ class DesignerMessageApi extends MessageApiBase<IContext, IModel, IAyxAppContext
       currentToolConfiguration.Configuration.Configuration.Secrets
     ) {
       const encryptedValues = Object.values(currentToolConfiguration.Configuration.Configuration.Secrets);
-      return Promise.all(encryptedValues.map(this.decryptSecrets)).then(values => {
-        values.forEach(secret => {
-          Object.keys(currentToolConfiguration.Configuration.Configuration.Secrets).forEach(key => {
-            decryptedSecrets[key] = secret;
-          });
+      const decryptedValues = await Promise.all(encryptedValues.map(this.decryptSecrets));
+      decryptedValues.forEach(secret => {
+        Object.keys(currentToolConfiguration.Configuration.Configuration.Secrets).forEach(key => {
+          decryptedSecrets[key] = secret;
         });
-        delete currentToolConfiguration.Configuration.Configuration.Secrets;
-        return [decryptedSecrets, currentToolConfiguration];
       });
+      delete currentToolConfiguration.Configuration.Configuration.Secrets;
     }
+    return [decryptedSecrets, currentToolConfiguration];
   };
 }
 
