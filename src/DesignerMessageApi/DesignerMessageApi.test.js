@@ -67,7 +67,7 @@ describe('DesignerMessageApi', () => {
     expect(func).toHaveBeenCalled();
   });
 
-  it('should call JsEvent to Encrypt passwords on GetConfiguration if the Secrets key is present', () => {
+  it('should call JsEvent to Decrypt passwords on GetConfiguration if the Secrets key is present', () => {
     const spyJsEvent = jest.spyOn(callback, 'JsEvent');
 
     const messageBroker = new DesignerMessageApi(window.Alteryx);
@@ -98,8 +98,8 @@ describe('DesignerMessageApi', () => {
     expect(spyJsEvent).toHaveBeenCalledWith(messageBroker.context, 'Decrypt', expected);
   });
 
-  it('should call JsEvent to Decrypt passwords on SetConfiguration if the Secrets key is present', () => {
-    const spyJsEvent = jest.spyOn(callback, 'JsEvent');
+  it('should call JsEvent to Encrypt passwords on SetConfiguration if the Secrets key is present', () => {
+    const spyJsEvent = jest.spyOn(callback, 'JsEvent').mockImplementationOnce(() => 'secret');
 
     const messageBroker = new DesignerMessageApi(window.Alteryx);
     messageBroker.model.Secrets = { secret: 'Secret' };

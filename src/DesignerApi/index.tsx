@@ -1,5 +1,6 @@
 /* eslint-disable react/require-default-props */
 /* eslint-disable no-underscore-dangle */
+/* eslint-disable no-console */
 /* eslint-disable react/forbid-prop-types */
 import React, { useEffect, useState, useCallback } from 'react';
 
@@ -39,11 +40,20 @@ const DesignerApi: React.FC = (props: IDesignerApiProps) => {
   const [appContext, updateAppContext] = useState(messageBroker.ayxAppContext);
 
   const handleUpdateModel = updatedData => {
+    console.log(updatedData);
     const badKeys = Object.keys(updatedData).filter(k => !validUpdateKeys.includes(k));
     if (badKeys.length) {
-      // eslint-disable-next-line no-console
-      console.warn('Only Configuration and Annotation support updates');
+      console.warn('Only Configuration, Annotation, and Secrets support updates');
       return;
+    }
+    if (updatedData.Secrets) {
+      Object.keys(updatedData.Secrets).forEach(k => {
+        console.log('key', k);
+        if (typeof updatedData.Secrets[k] === 'object') {
+          delete updatedData.Secrets[k];
+          console.warn('The Secrets key does not support objects as values');
+        }
+      });
     }
     const newModel = { ...model, ...updatedData };
     updateModel(newModel);
