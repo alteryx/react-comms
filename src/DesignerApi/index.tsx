@@ -40,22 +40,27 @@ const DesignerApi: React.FC = (props: IDesignerApiProps) => {
   const [appContext, updateAppContext] = useState(messageBroker.ayxAppContext);
 
   const handleUpdateModel = updatedData => {
-    console.log(updatedData);
-    const badKeys = Object.keys(updatedData).filter(k => !validUpdateKeys.includes(k));
+    const updatedDataKeys = Object.keys(updatedData);
+    const newModel = { ...model };
+    const badKeys = updatedDataKeys.filter(k => !validUpdateKeys.includes(k));
+
     if (badKeys.length) {
       console.warn('Only Configuration, Annotation, and Secrets support updates');
       return;
     }
     if (updatedData.Secrets) {
       Object.keys(updatedData.Secrets).forEach(k => {
-        console.log('key', k);
         if (typeof updatedData.Secrets[k] === 'object') {
           delete updatedData.Secrets[k];
           console.warn('The Secrets key does not support objects as values');
         }
       });
     }
-    const newModel = { ...model, ...updatedData };
+    updatedDataKeys.forEach(k => {
+      if (Array.isArray(updatedData[k])) newModel[k] = [...newModel[k], ...updatedData[k]];
+      else if (typeof updatedData[k] === 'object') newModel[k] = { ...newModel[k], ...updatedData[k] };
+      else newModel[k] = updatedData[k];
+    });
     updateModel(newModel);
     messageBroker.model = newModel;
     if (messageBroker instanceof MicroAppMessageApi) {
