@@ -30,6 +30,6 @@ While technically you can use any integrated development environment (IDE), we r
 
 We built a development harness that lets you simulate custom app development in realtime.
 
-The harness gives you a sandboxed iframe where you can develop your custom application. The iframe is housed within a sample *product* that mocks some of the data contracts you can expect to interact with in an Alteryx product. Additionally, it provides you with all the build processes you need to deploy your tool to the Alteryx product of your choice.
+The harness gives you a sandboxed iframe where you can develop your custom application. The iframe is housed within a sample *product* that mocks some of the data contracts you can expect to interact with in an Alteryx product. Additionally, it provides you with all the build processes you need to deploy your tool to the Alteryx product of your choice. 
 
 To get started, clone this repo: [UI-SDK Dev Harness](https://git.alteryx.com/ayx-ui-sdk/ui-sdk-dev-harness).
