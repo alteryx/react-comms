@@ -85,7 +85,7 @@ publish-sdk:
     - git config --global user.name $REMOTE_PUSH_USER
     - REPO_URL=`echo $CI_REPOSITORY_URL | sed -e "s/https:\/\/gitlab-ci-token:.*@//g"`
     - git remote set-url origin https://gitlab-ci-token:$REMOTE_PUSH_USER_TOKEN@$REPO_URL
-    - console.log($NEW_VERSION)
+    - echo $NEW_VERSION
     - npm version 0.0.$NEW_VERSION-alpha --no-git-tag-version
     - git add . 
     - git commit -m "Bumping version for master build [ci skip]"
