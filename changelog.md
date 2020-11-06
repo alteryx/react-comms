@@ -1,4 +1,4 @@
-### Next release
+### November 6th, 2020
 - Added the ability to use DesignerApi within an IFrame
 - Added support for obfuscating sensitive information via `Encrypt` and `Decrypt`
 - Added support for a `defaultConfig` prop
