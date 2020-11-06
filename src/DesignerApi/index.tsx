@@ -1,14 +1,19 @@
 /* eslint-disable react/require-default-props */
 /* eslint-disable no-underscore-dangle */
+/* eslint-disable no-console */
 /* eslint-disable react/forbid-prop-types */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 
-import DesignerMessageApi, { IContext, subscriptionEvents } from '../DesignerMessageApi';
+import DesignerMessageApi from '../DesignerMessageApi';
+import MicroAppMessageApi from '../MicroAppMessageApi';
+import { IContext } from '../Utils/types';
+import { SUBSCRIPTION_EVENTS } from '../Utils/constants';
 import UiSdkContext, { IContextProviderProps } from '../Context';
 
 interface IDesignerApiProps {
   messages: object;
   ctx?: IContext;
+  defaultConfig?: object;
   children: React.ReactElement;
 }
 
@@ -19,30 +24,48 @@ declare global {
   }
 }
 
-const validUpdateKeys = ['Configuration', 'Annotation'];
+const validUpdateKeys = ['Configuration', 'Annotation', 'Secrets'];
 
 let messageBroker;
 
 const DesignerApi: React.FC = (props: IDesignerApiProps) => {
-  const { messages = {} } = props;
+  const { messages = {}, defaultConfig } = props;
   if (!messageBroker) {
-    messageBroker = new DesignerMessageApi(props.ctx || window.Alteryx);
+    messageBroker =
+      window.Alteryx && window.Alteryx.AlteryxLanguageCode
+        ? new DesignerMessageApi(props.ctx || window.Alteryx)
+        : new MicroAppMessageApi();
   }
-  const [model, updateModel] = useState(messageBroker.model);
+  const [model, updateModel] = useState({ ...messageBroker.model, ...defaultConfig });
   const [appContext, updateAppContext] = useState(messageBroker.ayxAppContext);
 
   const handleUpdateModel = updatedData => {
-    const badKeys = Object.keys(updatedData).filter(k => !validUpdateKeys.includes(k));
+    const updatedDataKeys = Object.keys(updatedData);
+    const newModel = { ...model };
+    const badKeys = updatedDataKeys.filter(k => !validUpdateKeys.includes(k));
+
     if (badKeys.length) {
-      // eslint-disable-next-line no-console
-      console.warn('Only Configuration and Annotation support updates');
+      console.warn('Only Configuration, Annotation, and Secrets support updates');
       return;
     }
-    const newModel = { ...model, ...updatedData };
-    // The reason all 3 of these are here is to work in all use cases for now, DesignerMessageAPI and DevHarness.
-    // TODO: Refactor this to only be dependent on one call
+    if (updatedData.Secrets) {
+      Object.keys(updatedData.Secrets).forEach(k => {
+        if (typeof updatedData.Secrets[k] === 'object') {
+          delete updatedData.Secrets[k];
+          console.warn('The Secrets key does not support objects as values');
+        }
+      });
+    }
+    updatedDataKeys.forEach(k => {
+      if (Array.isArray(updatedData[k])) newModel[k] = [...newModel[k], ...updatedData[k]];
+      else if (typeof updatedData[k] === 'object') newModel[k] = { ...newModel[k], ...updatedData[k] };
+      else newModel[k] = updatedData[k];
+    });
     updateModel(newModel);
     messageBroker.model = newModel;
+    if (messageBroker instanceof MicroAppMessageApi) {
+      messageBroker.sendMessage(SUBSCRIPTION_EVENTS.MODEL_UPDATED, newModel);
+    }
   };
 
   useEffect(() => {
@@ -50,19 +73,21 @@ const DesignerApi: React.FC = (props: IDesignerApiProps) => {
       updateAppContext({ ...data });
     };
     const receiveModel = data => {
-      updateModel({ ...data });
+      updateModel(data);
     };
 
-    messageBroker.subscribe(subscriptionEvents.MODEL_UPDATED, receiveModel);
-    messageBroker.subscribe(subscriptionEvents.AYX_APP_CONTEXT_UPDATED, receiveAppContext);
+    messageBroker.subscribe(SUBSCRIPTION_EVENTS.MODEL_UPDATED, receiveModel);
+    messageBroker.subscribe(SUBSCRIPTION_EVENTS.AYX_APP_CONTEXT_UPDATED, receiveAppContext);
     return function cleanUp() {
       handleUpdateModel(messageBroker.model);
     };
   }, []);
 
+  const getContextValue = useCallback(() => [model, handleUpdateModel], [model, handleUpdateModel]);
+
   const contextProps: IContextProviderProps = {
     id: 'sdk-provider',
-    value: [model, handleUpdateModel]
+    value: getContextValue()
   };
 
   const { darkMode, locale, productTheme } = appContext || {};

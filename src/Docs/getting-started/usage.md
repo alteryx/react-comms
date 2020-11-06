@@ -10,7 +10,7 @@ While you can make changes here directly, we recommend that you structure your a
 
 ## Use the DesignerApi
 
-The single most important component in the UI-SDK is the DesignerApi. It serves as the facilitator of communication between the Alteryx product you build for, and the custom app you create. The DesignerApi accomplishes much of this under the hood. The result is an easy experience for you to interface with. The DesignerApi requires only one prop: `messages`. The messages prop is an object that includes any internationalized messages that you expect your app to access.
+The single most important component in the UI-SDK is the DesignerApi. It serves as the facilitator of communication between the Alteryx product you build for, and the custom app you create. The DesignerApi accomplishes much of this under the hood. The result is an easy experience for you to interface with. The DesignerApi requires only one prop: `messages`. The messages prop is an object that includes any internationalized messages that you expect your app to access. The DesignerApi also supports the `defaultConfig` prop, which is an optional prop that allows you to establish your default model state for your application.
 
 ## Messages
 

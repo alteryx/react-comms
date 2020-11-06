@@ -45,14 +45,14 @@ describe('DesignerMessageApi', () => {
     expect(messageBroker.subscriptions).toEqual(map);
   });
 
-  it('should invoke the SetConfiguration callback in its subscriptions through the context.Gui if it is subscribed to SetConfiguration', () => {
+  it('should invoke the SetConfiguration callback in its subscriptions through the context.Gui if it is subscribed to SetConfiguration', async () => {
     const messageBroker = new DesignerMessageApi(window.Alteryx);
     const func = jest.fn();
     const map = new Map();
     map.set('MODEL_UPDATED', func);
 
     messageBroker.subscribe('MODEL_UPDATED', func);
-    messageBroker.context.Gui.SetConfiguration({
+    await messageBroker.context.Gui.SetConfiguration({
       Configuration: {
         Configuration: {
           Annotation: '',
@@ -67,17 +67,64 @@ describe('DesignerMessageApi', () => {
     expect(func).toHaveBeenCalled();
   });
 
-  it('should use the context GetConfiguration to invoke a jsEvent with context, GetConfiguration, and model as params', () => {
+  it('should call JsEvent to Decrypt passwords on GetConfiguration if the Secrets key is present', () => {
+    const spyJsEvent = jest.spyOn(callback, 'JsEvent');
+
+    const messageBroker = new DesignerMessageApi(window.Alteryx);
+    const func = jest.fn();
+    const map = new Map();
+    map.set('MODEL_UPDATED', func);
+
+    const expected = {
+      text: 'Secret'
+    };
+
+    messageBroker.subscribe('MODEL_UPDATED', func);
+    messageBroker.context.Gui.SetConfiguration({
+      Configuration: {
+        Configuration: {
+          Annotation: '',
+          Count: 1,
+          Secrets: {
+            Secret: 'Secret'
+          }
+        },
+        MetaInfo: [{ data: 'some data' }],
+        ToolName: 'Sample Tool',
+        ToolId: 1
+      }
+    });
+
+    expect(spyJsEvent).toHaveBeenCalledWith(messageBroker.context, 'Decrypt', expected);
+  });
+
+  it('should call JsEvent to Encrypt passwords on SetConfiguration if the Secrets key is present', () => {
+    const spyJsEvent = jest.spyOn(callback, 'JsEvent').mockImplementationOnce(() => 'secret');
+
+    const messageBroker = new DesignerMessageApi(window.Alteryx);
+    messageBroker.model.Secrets = { secret: 'Secret' };
+    const expected = {
+      text: 'Secret'
+    };
+
+    messageBroker.context.Gui.GetConfiguration();
+
+    expect(spyJsEvent).toHaveBeenCalledWith(messageBroker.context, 'Encrypt', expected);
+  });
+
+  it('should use the context GetConfiguration to invoke a jsEvent with context, GetConfiguration, and model as params', async () => {
     const spyJsEvent = jest.spyOn(callback, 'JsEvent');
     const messageBroker = new DesignerMessageApi(window.Alteryx);
     const expected = {
       Configuration: {
-        Annotation: '',
-        Configuration: {}
+        Configuration: {
+          Secrets: {}
+        },
+        Annotation: ''
       }
     };
 
-    messageBroker.context.Gui.GetConfiguration();
+    await messageBroker.context.Gui.GetConfiguration();
 
     expect(spyJsEvent).toHaveBeenCalledWith(messageBroker.context, 'GetConfiguration', expected);
   });

@@ -18,6 +18,7 @@ import messages from './messages';
 
 const initialModelState = {
   name: '',
+  password: '',
   values: {
     field1: '',
     field2: '',
@@ -66,6 +67,13 @@ const DesignerApiDemo = () => {
       handleUpdateModel({ Configuration: { ...newModel } });
     };
 
+    const handlePasswordChange = event => {
+      const newData = { ...formData, password: event.target.value };
+      updateForm(newData);
+
+      handleUpdateModel({ Secrets: { password: event.target.value } });
+    };
+
     return (
       <AyxAppWrapper>
         <Grid container spacing={3}>
@@ -73,6 +81,12 @@ const DesignerApiDemo = () => {
             <FormControl>
               <InputLabel htmlFor="component-simple">Name</InputLabel>
               <Input id="component-simple" onChange={handleNameChange} value={formData.name} />
+            </FormControl>
+          </Grid>
+          <Grid item md={3} sm={6} xs={12}>
+            <FormControl>
+              <InputLabel htmlFor="component-password">Password</InputLabel>
+              <Input id="component-password" onChange={handlePasswordChange} value={formData.password} />
             </FormControl>
           </Grid>
           <Grid item md={3} sm={6} xs={12}>
@@ -121,7 +135,7 @@ const DesignerApiDemo = () => {
   };
 
   return (
-    <DesignerApi messages={messages}>
+    <DesignerApi defaultConfig={{ Configuration: { ...initialModelState } }} messages={messages}>
       <Child />
     </DesignerApi>
   );

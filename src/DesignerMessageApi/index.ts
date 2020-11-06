@@ -1,50 +1,11 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable import/no-cycle */
+/* eslint-disable react/static-property-placement */
 import MessageApiBase from '../MessageApiBase';
 import * as callback from '../Utils/callback';
-
-export interface IAyxAppContext {
-  darkMode: boolean;
-  productTheme: object;
-  locale: string;
-}
-
-export interface IContext {
-  Gui: {
-    SetConfiguration?: Function;
-    GetConfiguration?: Function;
-    Callbacks?: object;
-  };
-  AlteryxLanguageCode?: string;
-  JsEvent?: Function;
-}
-
-interface IModel {
-  Configuration: object;
-  Annotation?: string;
-  Meta?: Array<any>;
-  ToolName: string;
-  ToolId: number;
-  srcData: object;
-}
-
-interface IMessageTypes {
-  GET_CONFIGURATION: string;
-}
-
-interface ISubscriptionTypes {
-  MODEL_UPDATED: string;
-  AYX_APP_CONTEXT_UPDATED: string;
-}
-
-export const messageTypes: IMessageTypes = {
-  GET_CONFIGURATION: 'GetConfiguration'
-};
-
-export const subscriptionEvents: ISubscriptionTypes = {
-  MODEL_UPDATED: 'MODEL_UPDATED',
-  AYX_APP_CONTEXT_UPDATED: 'AYX_APP_CONTEXT_UPDATED'
-};
+import { IContext, IModel, IAyxAppContext, IDesignerConfiguration, IConfigShape } from '../Utils/types';
+import { MESSAGE_TYPES } from '../Utils/constants';
+import FieldListArray from '../MetaInfoHelpers/FieldListArray';
 
 class DesignerMessageApi extends MessageApiBase<IContext, IModel, IAyxAppContext> {
   constructor(ctx: IContext) {
@@ -54,6 +15,7 @@ class DesignerMessageApi extends MessageApiBase<IContext, IModel, IAyxAppContext
       Annotation: '',
       Meta: [],
       ToolName: '',
+      Secrets: {},
       ToolId: undefined,
       srcData: {}
     };
@@ -63,39 +25,90 @@ class DesignerMessageApi extends MessageApiBase<IContext, IModel, IAyxAppContext
       locale: this.context.AlteryxLanguageCode
     };
     this.context.Gui = {
-      SetConfiguration: currentToolConfiguration => {
+      SetConfiguration: async currentToolConfiguration => {
         if (this.subscriptions && this.subscriptions.has('MODEL_UPDATED')) {
-          const modifiedConfigShape = {
-            Configuration: currentToolConfiguration.Configuration.Configuration || this.model.Configuration,
-            Annotation: currentToolConfiguration.Annotation || this.model.Annotation,
-            Meta:
-              typeof currentToolConfiguration.MetaInfo === 'object'
-                ? [currentToolConfiguration.MetaInfo]
-                : currentToolConfiguration.MetaInfo,
-            ToolName: currentToolConfiguration.ToolName,
-            ToolId: currentToolConfiguration.ToolId,
-            srcData: currentToolConfiguration
-          };
-          this.model = modifiedConfigShape;
-          this.subscriptions.get('MODEL_UPDATED')(modifiedConfigShape);
+          this.model = await this.generateConfigShape(currentToolConfiguration);
+          this.subscriptions.get('MODEL_UPDATED')(this.model);
         }
-        this.context.JsEvent(JSON.stringify({ Event: 'SetConfiguration' }));
+        this.context.JsEvent(JSON.stringify({ Event: MESSAGE_TYPES.SET_CONFIGURATION }));
       },
       GetConfiguration: () => {
-        const payload = {
-          Configuration: {
-            Configuration: this._model.Configuration,
-            Annotation: this._model.Annotation
-          }
-        };
-        this.sendMessage(messageTypes.GET_CONFIGURATION, payload);
+        const keys = Object.keys(this.model.Secrets);
+        Promise.all(keys.map(this.encryptSecrets)).then(values => {
+          values.forEach(secret => {
+            keys.forEach(key => {
+              this.model.Secrets[key] = secret;
+            });
+          });
+          const payload = {
+            Configuration: {
+              Configuration: { ...this._model.Configuration, Secrets: this.model.Secrets },
+              Annotation: this._model.Annotation
+            }
+          };
+          this.sendMessage(MESSAGE_TYPES.GET_CONFIGURATION, payload);
+        });
       },
       Callbacks: {}
     };
   }
 
-  sendMessage = (type: string, payload: object): void => {
-    callback.JsEvent(this.context, type, payload);
+  sendMessage = (type: string, payload: object): Promise<any> => {
+    return callback.JsEvent(this.context, type, payload);
+  };
+
+  encryptSecrets = (key: string): object => {
+    return Promise.resolve(this.sendMessage('Encrypt', { text: this.model.Secrets[key] })).then(res => {
+      return res;
+    });
+  };
+
+  decryptSecrets = (value: string): object => {
+    return Promise.resolve(this.sendMessage('Decrypt', { text: value })).then(res => {
+      return res;
+    });
+  };
+
+  generateConfigShape = async (currentToolConfiguration: IDesignerConfiguration): Promise<IConfigShape> => {
+    const { Annotation } = currentToolConfiguration.Configuration.Configuration || this.model;
+    const [decryptedSecrets, cleanToolConfiguration] = await this.cleanConfigAndDecryptSecrets(
+      currentToolConfiguration
+    );
+    return {
+      Configuration: cleanToolConfiguration.Configuration.Configuration || this.model.Configuration,
+      Secrets: decryptedSecrets || this.model.Secrets,
+      Annotation,
+      Meta: new FieldListArray(currentToolConfiguration.MetaInfo),
+      ToolName: currentToolConfiguration.ToolName,
+      ToolId: currentToolConfiguration.ToolId,
+      srcData: currentToolConfiguration
+    };
+  };
+
+  cleanConfigAndDecryptSecrets = async (
+    currentToolConfiguration: IDesignerConfiguration
+  ): Promise<[object, IDesignerConfiguration]> => {
+    const decryptedSecrets = {};
+    if (
+      currentToolConfiguration.Configuration.Configuration &&
+      currentToolConfiguration.Configuration.Configuration.Annotation
+    ) {
+      delete currentToolConfiguration.Configuration.Configuration.Annotation;
+    }
+    if (
+      currentToolConfiguration.Configuration.Configuration &&
+      currentToolConfiguration.Configuration.Configuration.Secrets
+    ) {
+      const encryptedValues = Object.values(currentToolConfiguration.Configuration.Configuration.Secrets);
+      const decryptedValues = await Promise.all(encryptedValues.map(this.decryptSecrets));
+      decryptedValues.forEach(secret => {
+        Object.keys(currentToolConfiguration.Configuration.Configuration.Secrets).forEach(key => {
+          decryptedSecrets[key] = secret;
+        });
+      });
+      delete currentToolConfiguration.Configuration.Configuration.Secrets;
+    }
+    return [decryptedSecrets, currentToolConfiguration];
   };
 }
 

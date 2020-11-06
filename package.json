@@ -1,6 +1,6 @@
 {
   "name": "@ayx/ayx-ui-sdk",
-  "version": "0.0.447758-alpha",
+  "version": "0.0.1-alpha",
   "description": "",
   "main": "index.js",
   "dependencies": {
@@ -39,7 +39,7 @@
     "start": "ayx-scripts start",
     "init": "ayx-scripts init",
     "build": "ayx-scripts build",
-    "test": "jest -u --silent",
+    "test": "jest -u",
     "apidocs": "ayx-scripts doc",
     "docs": "styleguidist server",
     "build:publish": "npm run build:copy-package-json && npm run build:es2015 && npm run build:es2015modules",
