@@ -17,7 +17,6 @@ module.exports = {
     'src/index.ts',
     'src/Docs/',
     'src/MetaInfoHelpers/dummyData.js',
-    'build',
     'src/Utils/types.ts',
     'src/DesignerApi/advancedDemo.js',
     'src/DesignerApi/basicDemo.js',
