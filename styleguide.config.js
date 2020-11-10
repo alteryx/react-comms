@@ -153,6 +153,19 @@ module.exports = {
       sectionDepth: 1
     },
     {
+      name: 'Releases',
+      content: './src/Docs/releases/index.md',
+      sections: [
+        {
+          name: 'Changelog',
+          content: './changelog.md'
+        }
+      ],
+      exampleMode: 'collapse',
+      usageMode: 'collapse',
+      sectionDepth: 1
+    },
+    {
       name: 'UI-SDK Components',
       components: './src/**/*.{js,jsx,ts,tsx}',
       ignore: [

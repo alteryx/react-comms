@@ -1,4 +1,4 @@
-# UI-SDK V0.0.0
+# UI-SDK
 
 Check out our docs here:
 

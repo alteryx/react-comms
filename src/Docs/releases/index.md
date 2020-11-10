@@ -1,0 +1,1 @@
+A new release is available every 2 weeks, on the first Thursday following the start of each iteration. The UI-SDK package adheres to semantic versioning: _Major.Minor.Patch_. The UI-SDK package is currently in Alpha and should be installed using `npm install @ayx/ayx-ui-sdk@alpha`. [Release notes](#/Releases/Changelog).
