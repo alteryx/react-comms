@@ -20,7 +20,7 @@ From there, you can use the `FormattedMessage` component provided by `react-intl
 
 ``` jsx static
   import React from 'react'
-  import { Provider } from 'ayx-ui-sdk'
+  import { DesignerApi } from '@ayx/ayx-ui-sdk'
   import { FormattedMessage } from 'react-intl'
   const messages = {
     en: {
@@ -46,9 +46,9 @@ From there, you can use the `FormattedMessage` component provided by `react-intl
     }
   }
 
-  <Provider messages={messages}>
+  <DesignerApi messages={messages}>
     <FormattedMessage id="example.label">
-  </Provider>
+  </DesignerApi>
 ```
 
 ## Context

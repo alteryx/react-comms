@@ -8,7 +8,7 @@ The DesignerApi expects you to provide your own translated messages for any lang
 
 ``` jsx static
   import React from 'react'
-  import { MessageAPI, Provider } from '@ayx/ui-sdk'
+  import { MessageAPI, DesignerApi } from '@ayx/ayx-ui-sdk'
   import { AyxAppWrapper } from '@ayx/ui-core'
   const messages = {
     en: {
@@ -38,7 +38,7 @@ The DesignerApi expects you to provide your own translated messages for any lang
     <AyxAppWrapper>
       Hello World
     </AyxAppWrapper>
-  </Provider>
+  </DesignerApi>
 ```
 
 ## Update Your Data (Part 1)
