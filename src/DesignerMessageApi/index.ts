@@ -3,7 +3,7 @@
 /* eslint-disable react/static-property-placement */
 import MessageApiBase from '../MessageApiBase';
 import * as callback from '../Utils/callback';
-import { IContext, IModel, IAyxAppContext, IDesignerConfiguration, IConfigShape } from '../Utils/types';
+import { IContext, IModel, IAyxAppContext, IDesignerConfiguration, IConfigShape, ISecretsShape } from '../Utils/types';
 import { MESSAGE_TYPES } from '../Utils/constants';
 import FieldListArray from '../MetaInfoHelpers/FieldListArray';
 
@@ -58,13 +58,15 @@ class DesignerMessageApi extends MessageApiBase<IContext, IModel, IAyxAppContext
   };
 
   encryptSecrets = (key: string): object => {
-    return Promise.resolve(this.sendMessage('Encrypt', { text: this.model.Secrets[key] })).then(res => {
+    return Promise.resolve(
+      this.sendMessage('Encrypt', { text: this.model.Secrets[key].text, type: this.model.Secrets[key].type })
+    ).then(res => {
       return res;
     });
   };
 
-  decryptSecrets = (value: string): object => {
-    return Promise.resolve(this.sendMessage('Decrypt', { text: value })).then(res => {
+  decryptSecrets = (value: ISecretsShape): object => {
+    return Promise.resolve(this.sendMessage('Decrypt', { text: value.text, type: value.type })).then(res => {
       return res;
     });
   };

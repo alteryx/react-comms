@@ -76,7 +76,8 @@ describe('DesignerMessageApi', () => {
     map.set('MODEL_UPDATED', func);
 
     const expected = {
-      text: 'Secret'
+      text: 'Secret',
+      type: 'hide'
     };
 
     messageBroker.subscribe('MODEL_UPDATED', func);
@@ -86,7 +87,7 @@ describe('DesignerMessageApi', () => {
           Annotation: '',
           Count: 1,
           Secrets: {
-            Secret: 'Secret'
+            Secret: { text: 'Secret', type: 'hide' }
           }
         },
         MetaInfo: [{ data: 'some data' }],
@@ -102,9 +103,10 @@ describe('DesignerMessageApi', () => {
     const spyJsEvent = jest.spyOn(callback, 'JsEvent').mockImplementationOnce(() => 'secret');
 
     const messageBroker = new DesignerMessageApi(window.Alteryx);
-    messageBroker.model.Secrets = { secret: 'Secret' };
+    messageBroker.model.Secrets = { secret: { text: 'secret', type: 'hide' } };
     const expected = {
-      text: 'Secret'
+      text: 'secret',
+      type: 'hide'
     };
 
     messageBroker.context.Gui.GetConfiguration();
