@@ -48,14 +48,6 @@ const DesignerApi: React.FC = (props: IDesignerApiProps) => {
       console.warn('Only Configuration, Annotation, and Secrets support updates');
       return;
     }
-    if (updatedData.Secrets) {
-      Object.keys(updatedData.Secrets).forEach(k => {
-        if (typeof updatedData.Secrets[k] === 'object') {
-          delete updatedData.Secrets[k];
-          console.warn('The Secrets key does not support objects as values');
-        }
-      });
-    }
     updatedDataKeys.forEach(k => {
       if (Array.isArray(updatedData[k])) newModel[k] = [...newModel[k], ...updatedData[k]];
       else if (typeof updatedData[k] === 'object') newModel[k] = { ...newModel[k], ...updatedData[k] };
