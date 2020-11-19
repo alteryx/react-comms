@@ -4,6 +4,7 @@
 /* eslint-disable react/forbid-prop-types */
 import React, { useEffect, useState, useCallback } from 'react';
 
+import { mergeObjects } from '../Utils/mergeDeep';
 import DesignerMessageApi from '../DesignerMessageApi';
 import MicroAppMessageApi from '../MicroAppMessageApi';
 import { IContext } from '../Utils/types';
@@ -36,7 +37,7 @@ const DesignerApi: React.FC = (props: IDesignerApiProps) => {
         ? new DesignerMessageApi(props.ctx || window.Alteryx)
         : new MicroAppMessageApi();
   }
-  const [model, updateModel] = useState({ ...messageBroker.model, ...defaultConfig });
+  const [model, updateModel] = useState(mergeObjects({}, messageBroker.model, defaultConfig));
   const [appContext, updateAppContext] = useState(messageBroker.ayxAppContext);
 
   const handleUpdateModel = updatedData => {
@@ -65,7 +66,7 @@ const DesignerApi: React.FC = (props: IDesignerApiProps) => {
       updateAppContext({ ...data });
     };
     const receiveModel = data => {
-      updateModel(data);
+      updateModel(mergeObjects({}, model, data));
     };
 
     messageBroker.subscribe(SUBSCRIPTION_EVENTS.MODEL_UPDATED, receiveModel);

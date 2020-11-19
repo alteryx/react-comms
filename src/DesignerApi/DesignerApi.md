@@ -72,7 +72,7 @@ If you'd like to debug the meta data in more depth as it comes to you from Desig
 
 ## Secrets
 
-If your UI has password fields or other information that you'd consider sensitive, you can ensure it is obfuscated when stored in your XML by placing it in the `Secrets` key of the model. This key resolves to an object that you can place any key inside of. Each key should also be an object, with keys of `type` and `text`. `text` references the secret value you'd like to have encoded and `type` represents the obfuscation type you'd like to use: `hide`, `machine`, or `user`. The default type is `hide` if it is not specified. When the tool configuration is saved off, anything you place into this Secrets key will automatically be obfuscated and unobfuscated upon the set and get configuration calls. See below: 
+If your UI has password fields or other information that you'd consider sensitive, you can ensure it is obfuscated when stored in your XML by placing it in the `Secrets` key of the model. This key resolves to an object that you can place any key inside of. Each key should also be an object, with keys of `encryptionMode` and `text`. `text` references the secret value you'd like to have encoded and `encryptionMode` represents the obfuscation type you'd like to use: `hide`, `machine`, or `user`. The default encryptionMode is `hide` if it is not specified. When the tool configuration is saved off, anything you place into this Secrets key will automatically be obfuscated and unobfuscated upon the set and get configuration calls. See below: 
 
 ```jsx static
   const Child = () => {
@@ -80,7 +80,7 @@ If your UI has password fields or other information that you'd consider sensitiv
     const { Secrets } = model;
 
     const handleChange = event => {
-      handleUpdateModel({ Secrets: { password: { text: event.target.value, type: 'hide' }});
+      handleUpdateModel({ Secrets: { password: { text: event.target.value, encryptionMode: 'hide' }});
     };
 
     return (

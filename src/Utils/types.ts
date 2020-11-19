@@ -18,7 +18,7 @@ export interface IAyxAppContext {
 
 export interface ISecretsShape {
   text: string;
-  type: string;
+  encryptionMode: string;
 }
 
 export interface IDesignerConfiguration {
