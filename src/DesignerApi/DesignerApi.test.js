@@ -169,22 +169,25 @@ describe('DesignerApi', () => {
     expect(wrapper.find('#child').text()).toEqual('foo');
   });
 
-  it('should handle updates to the secrets key for both the secret itself and its type', () => {
+  it('should handle updates to the secrets key for both the secret itself and its encryptionMode', () => {
     const Child = () => {
       const [model, handleUpdateModel] = React.useContext(UiSdkContext);
       if (!model.Secrets.password1.text) {
-        handleUpdateModel({ Secrets: { password1: { text: 'secret', type: 'machine' } } });
+        handleUpdateModel({ Secrets: { password1: { text: 'secret', encryptionMode: 'machine' } } });
       }
       return (
         <div>
           <div id="child-1">{model.Secrets.password1.text || ''}</div>
-          <div id="child-2">{model.Secrets.password1.type || ''}</div>
+          <div id="child-2">{model.Secrets.password1.encryptionMode || ''}</div>
         </div>
       );
     };
 
     const wrapper = mount(
-      <DesignerApi ctx={window.Alteryx} defaultConfig={{ Secrets: { password1: { text: null, type: 'hide' } } }}>
+      <DesignerApi
+        ctx={window.Alteryx}
+        defaultConfig={{ Secrets: { password1: { text: null, encryptionMode: 'hide' } } }}
+      >
         <Child />
       </DesignerApi>
     );
@@ -192,20 +195,23 @@ describe('DesignerApi', () => {
     expect(wrapper.find('#child-2').text()).toEqual('machine');
   });
 
-  it('should handle updates to the correct secrets object if there are multiple secret keys for both the secret itself and its type', () => {
+  it('should handle updates to the correct secrets object if there are multiple secret keys for both the secret itself and its encryptionMode', () => {
     const Child = () => {
       const [model, handleUpdateModel] = React.useContext(UiSdkContext);
       if (!model.Secrets.password2.text) {
         handleUpdateModel({
-          Secrets: { password2: { text: 'secret3', type: 'user' }, password1: { text: 'secret2', type: 'machine' } }
+          Secrets: {
+            password2: { text: 'secret3', encryptionMode: 'user' },
+            password1: { text: 'secret2', encryptionMode: 'machine' }
+          }
         });
       }
       return (
         <div>
           <div id="child-1">{model.Secrets.password2.text}</div>
-          <div id="child-2">{model.Secrets.password2.type}</div>
+          <div id="child-2">{model.Secrets.password2.encryptionMode}</div>
           <div id="child-3">{model.Secrets.password1.text}</div>
-          <div id="child-4">{model.Secrets.password1.type}</div>
+          <div id="child-4">{model.Secrets.password1.encryptionMode}</div>
         </div>
       );
     };
@@ -214,7 +220,10 @@ describe('DesignerApi', () => {
       <DesignerApi
         ctx={window.Alteryx}
         defaultConfig={{
-          Secrets: { password1: { text: null, type: 'hide' }, password2: { text: null, type: 'hide' } }
+          Secrets: {
+            password1: { text: null, encryptionMode: 'hide' },
+            password2: { text: null, encryptionMode: 'hide' }
+          }
         }}
       >
         <Child />
