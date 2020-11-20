@@ -41,7 +41,7 @@ const DesignerApi: React.FC = (props: IDesignerApiProps) => {
   const [model, updateModel] = useState(mergedState);
   const [appContext, updateAppContext] = useState(messageBroker.ayxAppContext);
 
-  const handleUpdateModel = updatedData => {
+  const handleUpdateModel = (updatedData: object) => {
     const updatedDataKeys = Object.keys(updatedData);
     const newModel = { ...model };
     const badKeys = updatedDataKeys.filter(k => !validUpdateKeys.includes(k));
@@ -51,8 +51,7 @@ const DesignerApi: React.FC = (props: IDesignerApiProps) => {
       return;
     }
     updatedDataKeys.forEach(k => {
-      if (Array.isArray(updatedData[k])) newModel[k] = merge(newModel[k], updatedData[k]);
-      else if (typeof updatedData[k] === 'object') newModel[k] = merge(newModel[k], updatedData[k]);
+      if (typeof updatedData[k] === 'object') newModel[k] = merge(newModel[k], updatedData[k]);
       else newModel[k] = updatedData[k];
     });
     updateModel(newModel);
