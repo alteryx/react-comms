@@ -3,8 +3,8 @@
 /* eslint-disable no-console */
 /* eslint-disable react/forbid-prop-types */
 import React, { useEffect, useState, useCallback } from 'react';
+import merge from 'deepmerge';
 
-import { mergeObjects } from '../Utils/mergeDeep';
 import DesignerMessageApi from '../DesignerMessageApi';
 import MicroAppMessageApi from '../MicroAppMessageApi';
 import { IContext } from '../Utils/types';
@@ -27,17 +27,18 @@ declare global {
 
 const validUpdateKeys = ['Configuration', 'Annotation', 'Secrets'];
 
-let messageBroker;
+let messageBroker: DesignerMessageApi | MicroAppMessageApi;
 
 const DesignerApi: React.FC = (props: IDesignerApiProps) => {
-  const { messages = {}, defaultConfig } = props;
+  const { messages = {}, defaultConfig = {} } = props;
   if (!messageBroker) {
     messageBroker =
       window.Alteryx && window.Alteryx.AlteryxLanguageCode
         ? new DesignerMessageApi(props.ctx || window.Alteryx)
         : new MicroAppMessageApi();
   }
-  const [model, updateModel] = useState(mergeObjects({}, messageBroker.model, defaultConfig));
+  const mergedState = merge(messageBroker.model, defaultConfig);
+  const [model, updateModel] = useState(mergedState);
   const [appContext, updateAppContext] = useState(messageBroker.ayxAppContext);
 
   const handleUpdateModel = updatedData => {
@@ -50,8 +51,8 @@ const DesignerApi: React.FC = (props: IDesignerApiProps) => {
       return;
     }
     updatedDataKeys.forEach(k => {
-      if (Array.isArray(updatedData[k])) newModel[k] = [...newModel[k], ...updatedData[k]];
-      else if (typeof updatedData[k] === 'object') newModel[k] = { ...newModel[k], ...updatedData[k] };
+      if (Array.isArray(updatedData[k])) newModel[k] = merge(newModel[k], updatedData[k]);
+      else if (typeof updatedData[k] === 'object') newModel[k] = merge(newModel[k], updatedData[k]);
       else newModel[k] = updatedData[k];
     });
     updateModel(newModel);
@@ -66,7 +67,7 @@ const DesignerApi: React.FC = (props: IDesignerApiProps) => {
       updateAppContext({ ...data });
     };
     const receiveModel = data => {
-      updateModel(mergeObjects({}, model, data));
+      updateModel(merge(model, data));
     };
 
     messageBroker.subscribe(SUBSCRIPTION_EVENTS.MODEL_UPDATED, receiveModel);
