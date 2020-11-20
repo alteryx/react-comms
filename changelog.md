@@ -1,6 +1,6 @@
 ### November 19th, 2020
 #### @ayx/ayx-ui-sdk@0.0.5-alpha
-- Added support for multiple encryption types: `obfuscation`, `user`, and `machine`
+- Added support for different encryption modes: `obfuscation`, `user`, and `machine`
 ### November 9th, 2020
 #### @ayx/ayx-ui-sdk@0.0.4-alpha
 - Changes to sonarqube integration to correctly report numbers
