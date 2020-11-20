@@ -3,6 +3,7 @@
 /* eslint-disable no-console */
 /* eslint-disable react/forbid-prop-types */
 import React, { useEffect, useState, useCallback } from 'react';
+import merge from 'deepmerge';
 
 import DesignerMessageApi from '../DesignerMessageApi';
 import MicroAppMessageApi from '../MicroAppMessageApi';
@@ -26,41 +27,28 @@ declare global {
 
 const validUpdateKeys = ['Configuration', 'Annotation', 'Secrets'];
 
-let messageBroker;
+let messageBroker: DesignerMessageApi | MicroAppMessageApi;
 
 const DesignerApi: React.FC = (props: IDesignerApiProps) => {
-  const { messages = {}, defaultConfig } = props;
+  const { messages = {}, defaultConfig = {} } = props;
   if (!messageBroker) {
     messageBroker =
       window.Alteryx && window.Alteryx.AlteryxLanguageCode
         ? new DesignerMessageApi(props.ctx || window.Alteryx)
         : new MicroAppMessageApi();
   }
-  const [model, updateModel] = useState({ ...messageBroker.model, ...defaultConfig });
+  const mergedState = merge(messageBroker.model, defaultConfig);
+  const [model, updateModel] = useState(mergedState);
   const [appContext, updateAppContext] = useState(messageBroker.ayxAppContext);
 
-  const handleUpdateModel = updatedData => {
+  const handleUpdateModel = (updatedData: object) => {
     const updatedDataKeys = Object.keys(updatedData);
-    const newModel = { ...model };
     const badKeys = updatedDataKeys.filter(k => !validUpdateKeys.includes(k));
-
     if (badKeys.length) {
       console.warn('Only Configuration, Annotation, and Secrets support updates');
       return;
     }
-    if (updatedData.Secrets) {
-      Object.keys(updatedData.Secrets).forEach(k => {
-        if (typeof updatedData.Secrets[k] === 'object') {
-          delete updatedData.Secrets[k];
-          console.warn('The Secrets key does not support objects as values');
-        }
-      });
-    }
-    updatedDataKeys.forEach(k => {
-      if (Array.isArray(updatedData[k])) newModel[k] = [...newModel[k], ...updatedData[k]];
-      else if (typeof updatedData[k] === 'object') newModel[k] = { ...newModel[k], ...updatedData[k] };
-      else newModel[k] = updatedData[k];
-    });
+    const newModel = merge(model, updatedData);
     updateModel(newModel);
     messageBroker.model = newModel;
     if (messageBroker instanceof MicroAppMessageApi) {
@@ -73,7 +61,7 @@ const DesignerApi: React.FC = (props: IDesignerApiProps) => {
       updateAppContext({ ...data });
     };
     const receiveModel = data => {
-      updateModel(data);
+      updateModel(merge(model, data));
     };
 
     messageBroker.subscribe(SUBSCRIPTION_EVENTS.MODEL_UPDATED, receiveModel);

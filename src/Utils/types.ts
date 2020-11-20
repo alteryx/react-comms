@@ -16,6 +16,11 @@ export interface IAyxAppContext {
   locale: string;
 }
 
+export interface ISecretsShape {
+  text: string;
+  encryptionMode: string;
+}
+
 export interface IDesignerConfiguration {
   Configuration: {
     Configuration?: {
