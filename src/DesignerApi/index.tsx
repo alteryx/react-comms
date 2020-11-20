@@ -43,17 +43,12 @@ const DesignerApi: React.FC = (props: IDesignerApiProps) => {
 
   const handleUpdateModel = (updatedData: object) => {
     const updatedDataKeys = Object.keys(updatedData);
-    const newModel = { ...model };
     const badKeys = updatedDataKeys.filter(k => !validUpdateKeys.includes(k));
-
     if (badKeys.length) {
       console.warn('Only Configuration, Annotation, and Secrets support updates');
       return;
     }
-    updatedDataKeys.forEach(k => {
-      if (typeof updatedData[k] === 'object') newModel[k] = merge(newModel[k], updatedData[k]);
-      else newModel[k] = updatedData[k];
-    });
+    const newModel = merge(model, updatedData);
     updateModel(newModel);
     messageBroker.model = newModel;
     if (messageBroker instanceof MicroAppMessageApi) {
