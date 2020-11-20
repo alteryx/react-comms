@@ -3,7 +3,7 @@
 /* eslint-disable react/static-property-placement */
 import MessageApiBase from '../MessageApiBase';
 import * as callback from '../Utils/callback';
-import { IContext, IModel, IAyxAppContext, IDesignerConfiguration, IConfigShape } from '../Utils/types';
+import { IContext, IModel, IAyxAppContext, IDesignerConfiguration, IConfigShape, ISecretsShape } from '../Utils/types';
 import { MESSAGE_TYPES } from '../Utils/constants';
 import FieldListArray from '../MetaInfoHelpers/FieldListArray';
 
@@ -34,15 +34,10 @@ class DesignerMessageApi extends MessageApiBase<IContext, IModel, IAyxAppContext
       },
       GetConfiguration: () => {
         const keys = Object.keys(this.model.Secrets);
-        Promise.all(keys.map(this.encryptSecrets)).then(values => {
-          values.forEach(secret => {
-            keys.forEach(key => {
-              this.model.Secrets[key] = secret;
-            });
-          });
+        Promise.all(keys.map(this.encryptSecrets)).then(() => {
           const payload = {
             Configuration: {
-              Configuration: { ...this._model.Configuration, Secrets: this.model.Secrets },
+              Configuration: { ...this._model.Configuration, Secrets: { ...this.model.Secrets } },
               Annotation: this._model.Annotation
             }
           };
@@ -58,14 +53,30 @@ class DesignerMessageApi extends MessageApiBase<IContext, IModel, IAyxAppContext
   };
 
   encryptSecrets = (key: string): object => {
-    return Promise.resolve(this.sendMessage('Encrypt', { text: this.model.Secrets[key] })).then(res => {
-      return res;
+    if (!this.model.Secrets[key].text.length) {
+      // only send an encrypt call if a string is present
+      // protects against empty default config values
+      return { text: '', encryptionMode: '' };
+    }
+    return Promise.resolve(
+      this.sendMessage('Encrypt', {
+        text: this.model.Secrets[key].text,
+        encryptionMode: this.model.Secrets[key].encryptionMode || 'obfuscation'
+      })
+    ).then(res => {
+      this.model.Secrets[key] = {
+        text: res,
+        encryptionMode: this.model.Secrets[key].encryptionMode
+      };
     });
   };
 
-  decryptSecrets = (value: string): object => {
-    return Promise.resolve(this.sendMessage('Decrypt', { text: value })).then(res => {
-      return res;
+  decryptSecrets = (secret: ISecretsShape): object => {
+    if (!secret.text.length) {
+      return { text: '', encryptionMode: '' || 'obfuscation' };
+    }
+    return Promise.resolve(this.sendMessage('Decrypt', { text: secret.text })).then(res => {
+      return { text: res, encryptionMode: secret.encryptionMode };
     });
   };
 
@@ -99,13 +110,14 @@ class DesignerMessageApi extends MessageApiBase<IContext, IModel, IAyxAppContext
       currentToolConfiguration.Configuration.Configuration &&
       currentToolConfiguration.Configuration.Configuration.Secrets
     ) {
-      const encryptedValues = Object.values(currentToolConfiguration.Configuration.Configuration.Secrets);
-      const decryptedValues = await Promise.all(encryptedValues.map(this.decryptSecrets));
-      decryptedValues.forEach(secret => {
-        Object.keys(currentToolConfiguration.Configuration.Configuration.Secrets).forEach(key => {
-          decryptedSecrets[key] = secret;
-        });
-      });
+      const encryptedValueKeys = Object.keys(currentToolConfiguration.Configuration.Configuration.Secrets);
+      const valuesToDecrypt = encryptedValueKeys.map(
+        key => currentToolConfiguration.Configuration.Configuration.Secrets[key]
+      );
+      const decryptedValues = await Promise.all(valuesToDecrypt.map(this.decryptSecrets));
+      for (let i = 0; i < encryptedValueKeys.length; i++) {
+        decryptedSecrets[encryptedValueKeys[i]] = decryptedValues[i];
+      }
       delete currentToolConfiguration.Configuration.Configuration.Secrets;
     }
     return [decryptedSecrets, currentToolConfiguration];

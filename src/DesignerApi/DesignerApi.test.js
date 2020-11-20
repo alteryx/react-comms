@@ -169,20 +169,69 @@ describe('DesignerApi', () => {
     expect(wrapper.find('#child').text()).toEqual('foo');
   });
 
-  it('should fail to update the secrets key if it is passed an invalid secret', () => {
+  it('should handle updates to the secrets key for both the secret itself and its encryptionMode', () => {
     const Child = () => {
       const [model, handleUpdateModel] = React.useContext(UiSdkContext);
-      if (!model.Secrets.shouldSave) {
-        handleUpdateModel({ Secrets: { password: { noGood: 'no update' }, shouldSave: 'okay' } });
+      if (!model.Secrets.password1.text) {
+        handleUpdateModel({ Secrets: { password1: { text: 'secret', encryptionMode: 'machine' } } });
       }
-      return <div id="child">{model.Secrets.shouldSave}</div>;
+      return (
+        <div>
+          <div id="child-1">{model.Secrets.password1.text || ''}</div>
+          <div id="child-2">{model.Secrets.password1.encryptionMode || ''}</div>
+        </div>
+      );
     };
 
     const wrapper = mount(
-      <DesignerApi ctx={window.Alteryx}>
+      <DesignerApi
+        ctx={window.Alteryx}
+        defaultConfig={{ Secrets: { password1: { text: null, encryptionMode: 'obfuscation' } } }}
+      >
         <Child />
       </DesignerApi>
     );
-    expect(wrapper.find('#child').text()).toEqual('okay');
+    expect(wrapper.find('#child-1').text()).toEqual('secret');
+    expect(wrapper.find('#child-2').text()).toEqual('machine');
+  });
+
+  it('should handle updates to the correct secrets object if there are multiple secret keys for both the secret itself and its encryptionMode', () => {
+    const Child = () => {
+      const [model, handleUpdateModel] = React.useContext(UiSdkContext);
+      if (!model.Secrets.password2.text) {
+        handleUpdateModel({
+          Secrets: {
+            password2: { text: 'secret3', encryptionMode: 'user' },
+            password1: { text: 'secret2', encryptionMode: 'machine' }
+          }
+        });
+      }
+      return (
+        <div>
+          <div id="child-1">{model.Secrets.password2.text}</div>
+          <div id="child-2">{model.Secrets.password2.encryptionMode}</div>
+          <div id="child-3">{model.Secrets.password1.text}</div>
+          <div id="child-4">{model.Secrets.password1.encryptionMode}</div>
+        </div>
+      );
+    };
+
+    const wrapper = mount(
+      <DesignerApi
+        ctx={window.Alteryx}
+        defaultConfig={{
+          Secrets: {
+            password1: { text: null, encryptionMode: 'obfuscation' },
+            password2: { text: null, encryptionMode: 'obfuscation' }
+          }
+        }}
+      >
+        <Child />
+      </DesignerApi>
+    );
+    expect(wrapper.find('#child-1').text()).toEqual('secret3');
+    expect(wrapper.find('#child-2').text()).toEqual('user');
+    expect(wrapper.find('#child-3').text()).toEqual('secret2');
+    expect(wrapper.find('#child-4').text()).toEqual('machine');
   });
 });
