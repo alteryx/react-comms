@@ -186,7 +186,7 @@ describe('DesignerApi', () => {
     const wrapper = mount(
       <DesignerApi
         ctx={window.Alteryx}
-        defaultConfig={{ Secrets: { password1: { text: null, encryptionMode: 'hide' } } }}
+        defaultConfig={{ Secrets: { password1: { text: null, encryptionMode: 'obfuscation' } } }}
       >
         <Child />
       </DesignerApi>
@@ -221,8 +221,8 @@ describe('DesignerApi', () => {
         ctx={window.Alteryx}
         defaultConfig={{
           Secrets: {
-            password1: { text: null, encryptionMode: 'hide' },
-            password2: { text: null, encryptionMode: 'hide' }
+            password1: { text: null, encryptionMode: 'obfuscation' },
+            password2: { text: null, encryptionMode: 'obfuscation' }
           }
         }}
       >

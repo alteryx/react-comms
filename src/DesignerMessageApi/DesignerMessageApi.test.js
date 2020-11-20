@@ -86,7 +86,7 @@ describe('DesignerMessageApi', () => {
           Annotation: '',
           Count: 1,
           Secrets: {
-            Secret: { text: 'Secret', encryptionMode: 'hide' }
+            Secret: { text: 'Secret', encryptionMode: 'obfuscation' }
           }
         },
         MetaInfo: [{ data: 'some data' }],
@@ -102,10 +102,10 @@ describe('DesignerMessageApi', () => {
     const spyJsEvent = jest.spyOn(callback, 'JsEvent').mockImplementationOnce(() => 'secret');
 
     const messageBroker = new DesignerMessageApi(window.Alteryx);
-    messageBroker.model.Secrets = { secret: { text: 'secret', encryptionMode: 'hide' } };
+    messageBroker.model.Secrets = { secret: { text: 'secret', encryptionMode: 'obfuscation' } };
     const expected = {
       text: 'secret',
-      encryptionMode: 'hide'
+      encryptionMode: 'obfuscation'
     };
 
     messageBroker.context.Gui.GetConfiguration();
