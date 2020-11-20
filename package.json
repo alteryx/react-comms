@@ -40,7 +40,7 @@
     "start": "ayx-scripts start",
     "init": "ayx-scripts init",
     "build": "ayx-scripts build",
-    "test": "jest -u",
+    "test": "jest -u --silent",
     "apidocs": "ayx-scripts doc",
     "docs": "styleguidist server",
     "build:publish": "npm run build:copy-package-json && npm run build:es2015 && npm run build:es2015modules",
