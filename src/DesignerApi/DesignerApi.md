@@ -81,7 +81,7 @@ If your UI has password fields or other information that you'd consider sensitiv
 
     const handleChange = event => {
       handleUpdateModel({ Secrets: { password: { text: event.target.value, encryptionMode: 'obfuscation' }});
-    };
+    }; 
 
     return (
       <input value={Secrets.password.text} onChange={handleChange}/>
