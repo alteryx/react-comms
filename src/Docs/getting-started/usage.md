@@ -4,7 +4,7 @@ Once you fork the [Dev Harness](https://git.alteryx.com/ayx-ui-sdk/ui-sdk-dev-ha
 
 ## Make Changes
 
-When you develop in the Dev Harness, you make all your changes in the `childApp` directory of the Dev Harness project. In this directory, there is an `index.tsx` file where the sample code currently lives.
+When you develop in the Dev Harness, you make all your changes in the `src/src` directory of the Dev Harness project. In this directory, there is an `index.tsx` file where the sample code currently lives.
 
 While you can make changes here directly, we recommend that you structure your app for a production environment (with appropriate folder structures) and import your components as needed.
 
@@ -65,7 +65,7 @@ const SampleButton = () => {
   const updateModel = () => {
     const newModel = { ...model };
     newModel.count++;
-    handleUpdateModel({ model: { ...newModel } });
+    handleUpdateModel({ Configuration: { model: { ...newModel } } });
   };
   return <Button onClick={updateModel}> Click this to update my count </Button>;
 };
