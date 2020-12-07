@@ -46,7 +46,7 @@ The main roles of the DesignerApi are to expose model data and to update that mo
 
 The DesignerApi gives any child component access to a `handleUpdateModel` method as well as the model itself. You can leverage this via the `useContext` hook. The example below uses the `handleUpdateModel` callback to update the model data for the custom app (in this case, a simple incrementer).
 
-`handleUpdateModel` expects to be based on an object that contains one or both of these keys: `Configuration` and `Annotation`. Any other key causes the update to fail.
+`handleUpdateModel` expects to be based on an object that contains one or all of the following keys: `Configuration`, `Secrets` and `Annotation`. Any other key will cause the update to fail and changes won't be persisted.
 
 ```js { "file": "../basicDemo.js" }
 ```

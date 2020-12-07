@@ -61,17 +61,18 @@ import { Button } from '@ayx/ui-core';
 import { UiSdkContext } from '@ayx/ui-sdk';
 
 const SampleButton = () => {
-  const [model, handleUpdateModel] = useContext(UiSdkContext);
-  const updateModel = () => {
-    const newModel = { ...model };
-    newModel.count++;
-    handleUpdateModel({ Configuration: { model: { ...newModel } } });
-  };
+  const [model, handleUpdateModel] = React.useContext(UiSdkContext);
+
+  const incrementCount = () => {
+    let { count } = model.Configuration;
+    count++;
+    handleUpdateModel({ Configuration: { count } });
+  }
   return <Button onClick={updateModel}> Click this to update my count </Button>;
 };
 ```
 
-As a best practice, you should not override or manipulate your model directly. That's where the `newModel` const is useful.
+As a best practice, you should not override or manipulate your model directly. Additionally, `handleUpdateModel` only supports updates to the `Configuration`, `Secrets`, and `Annotation` keys. Sending your entire model back without specifying which of these keys you'd like to update will cause a failure and won't persist your changes.
 
 After you make a copy of your model and make any required updates, call the `handleUpdateModel` method provided to you by the `useContext` React hook. This updates the model state internal to your custom app and dispatches any relevant messages to the parent application.
 
