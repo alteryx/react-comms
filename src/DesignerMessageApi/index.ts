@@ -58,6 +58,9 @@ class DesignerMessageApi extends MessageApiBase<IContext, IModel, IAyxAppContext
       // protects against empty default config values
       return { text: '', encryptionMode: '' };
     }
+    if (this.model.Secrets[key].encrypted) {
+      return;
+    }
     return Promise.resolve(
       this.sendMessage('Encrypt', {
         text: this.model.Secrets[key].text,
@@ -66,7 +69,8 @@ class DesignerMessageApi extends MessageApiBase<IContext, IModel, IAyxAppContext
     ).then(res => {
       this.model.Secrets[key] = {
         text: res,
-        encryptionMode: this.model.Secrets[key].encryptionMode
+        encryptionMode: this.model.Secrets[key].encryptionMode,
+        encrypted: true
       };
     });
   };
