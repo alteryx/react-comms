@@ -1,6 +1,6 @@
 ## Start Up the Dev Harness
 
-Once you fork the [Dev Harness](https://git.alteryx.com/ayx-ui-sdk/ui-sdk-dev-harness) project and run `npm install` inside of the project, you're ready to go. From here, use the `npm run start` command from your terminal. You will see that the dev harness is now served from localhost:3000.
+Once you fork the [Dev Harness](https://git.alteryx.com/ayx-ui-sdk/ui-sdk-dev-harness) project and run `npm install` inside of the project, you're ready to go. From here, use the `npm run start` command from your terminal. You will see that the dev harness is now served from localhost:8080.
 
 ## Make Changes
 
