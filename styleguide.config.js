@@ -1,3 +1,5 @@
+/* eslint-disable global-require */
+
 const fs = require('fs');
 const path = require('path');
 
@@ -71,6 +73,7 @@ module.exports = {
     },
     Code: {
       code: {
+        fontSize: 14,
         paddingLeft: '.3rem',
         paddingRight: '.3rem',
         borderRadius: '.2rem',
@@ -94,11 +97,9 @@ module.exports = {
     },
     Blockquote: {
       blockquote: {
-        border: '1px solid rgba(128, 128, 128, 0.5)',
         borderRadius: 4,
         margin: '12px 12px 20px 12px',
         padding: 12,
-        backgroundColor: '#f7faff',
         '& p': {
           marginBottom: 0
         }
@@ -182,6 +183,7 @@ module.exports = {
     }
   ],
   pagePerSection: true,
+  version: require('./package.json').version,
   skipComponentsWithoutExample: true,
   getComponentPathLine(componentPath) {
     const name = path.basename(componentPath, '.tsx');

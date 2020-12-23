@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Collapse, List, ListItem, ListItemText, ListItemIcon, Divider, Box, makeStyles } from '@ayx/ui-core';
+import { Collapse, List, ListItem, ListItemText, ListItemIcon, Divider, Box, makeStyles, fade } from '@ayx/ui-core';
 import { Home, GridView, Layers, Settings, Layout, BookOpen, Aperture, Box as BoxIcon, GitMerge } from '@ayx/icons';
 import { getHash } from 'react-styleguidist/lib/client/utils/handleHash';
 
@@ -17,15 +17,40 @@ const iconLookup = {
   'utils': Settings
 };
 
-const useStyles = makeStyles(({ palette, spacing }) => ({
+const useStyles = makeStyles(({ spacing, typography, palette, direction }) => ({
   listItemSubHeader: {
-    paddingLeft: spacing(7)
+    paddingLeft: spacing(9)
+  },
+  listItemTextSelected: {
+    color: palette.common.white,
+    fontWeight: typography.fontWeightBold
+  },
+  listItem: {
+    height: 40,
+    paddingLeft: spacing(5.5),
+    color: palette.blueGrey[300],
+    borderLeft: '2px solid transparent', // For keyboard focus
+    borderTopRightRadius: direction === 'rtl' ? 0 : 20,
+    borderBottomRightRadius: direction === 'rtl' ? 0 : 20,
+    borderTopLeftRadius: direction === 'rtl' ? 20 : 0,
+    borderBottomLeftRadius: direction === 'rtl' ? 20 : 0,
+    '&:hover, &$focusVisible': {
+      background: 'transparent',
+      color: palette.common.white,
+      background: fade(palette.primary.main, 0.1)
+    }
+  },
+  listItemSelected: {
+    backgroundColor: palette.action.hover,
+    '&$focusVisible': {
+      background: palette.action.selected
+    }
+  },
+  focusVisible: {
+    borderColor: palette.success.main
   },
   listItemIcon: {
-    minWidth: spacing(7)
-  },
-  list: {
-    color: palette.type === 'dark' ? palette.primary.contrastText : 'inherit'
+    minWidth: spacing(7),
   }
 }));
 

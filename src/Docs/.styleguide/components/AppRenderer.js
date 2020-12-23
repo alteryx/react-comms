@@ -1,14 +1,16 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Grid, Box, makeStyles, useTheme, lighten, Typography } from "@ayx/ui-core";
+import { Grid, Typography, Box, Link, makeStyles, useTheme, lighten, AyxAppWrapper } from "@ayx/ui-core";
 import MainAppBar from "./MainAppBar";
 import MarkdownStyleOverrider from "./MarkdownStyleOverrider";
+
+const SIDE_BAR_WIDTH = 240;
 
 const useStyles = makeStyles(({ palette, spacing, direction }) => ({
   root: {
     minHeight: '100vh',
-    paddingLeft: direction === "ltr" ? 200 : 'unset',
-    paddingRight: direction === "ltr" ? 'unset' : 200,
+    paddingLeft: direction === "ltr" ? SIDE_BAR_WIDTH : 'unset',
+    paddingRight: direction === "ltr" ? 'unset' : SIDE_BAR_WIDTH,
     backgroundColor: lighten(palette.background.default, 0.04)
   },
   content: {
@@ -17,21 +19,40 @@ const useStyles = makeStyles(({ palette, spacing, direction }) => ({
     margin: '0 auto',
     display: 'block'
   },
+  logoWrapper: {
+    direction: 'ltr',
+    height: spacing(25)
+  },
+  logo: {
+    position: 'absolute',
+    margin: spacing(7.25, 0, 0, 3.5),
+    width: spacing(9)
+  },
+  logoText: {
+    position: 'absolute',
+    margin: spacing(7.25, 0, 0, 15)
+  },
+  core: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    lineHeight: 1
+  },
   version: {
-    textAlign: direction === "rtl" ? "left" : "right",
-    fontSize: 11,
-    margin: spacing(-8, 10, 6)
+    fontSize: 12,
+    color: palette.blueGrey[500],
+    marginTop: spacing(2)
   },
   sidebar: {
-    // color: palette.type === "dark" ? undefined : palette.background.paper, // Needed to avoid the collisions of body1 typography colors
-    // backgroundColor: palette.type === "dark" ? "#222" : "#142254",
+    color: 'rgba(255, 255, 255, 0.9)',
+    background: `linear-gradient(180deg, rgba(22,35,85,1) 0%, ${palette.brand.deepSpace} 35%)`,
     borderRight: `1px solid ${palette.divider}`,
     position: "fixed",
-    width: 220,
+    width: SIDE_BAR_WIDTH,
     left: direction === "ltr" ? 0 : 'unset',
     right: direction === "ltr" ? 'unset' : 0,
     height: "100vh",
-    overflow: "auto"
+    overflow: "auto",
+    paddingRight: spacing(4)
   }
 }));
 
@@ -46,16 +67,23 @@ const StyleGuideRenderer = ({
   productThemeName
 }) => {
   const classes = useStyles();
+  const theme = useTheme();
+  // Provide access to the theme directly on the window
+  window.theme = theme;
 
   return (
     <>
       <Grid container className={classes.root}>
         <Grid item className={classes.sidebar} component="nav">
-            <Box p={4}>
-              <Typography variant="h1">UI-SDK</Typography>
+          <AyxAppWrapper theme={{direction: theme.direction}} paletteType="dark">
+            <Box className={classes.logoWrapper}>
+              <Box className={classes.logoText}>
+                <Typography className={classes.core}>UI-SDK</Typography>
+                <Link className={classes.version} href="#/Releases/Versions">{`Version ${version}`}</Link>
+              </Box>
             </Box>
-            <Box marginLeft={6} className={classes.version}>{`VERSION 0.0.1`}</Box>
             <Box marginBottom={6}>{toc}</Box>
+          </AyxAppWrapper>
         </Grid>
         <MainAppBar
           productThemeName={productThemeName}
@@ -63,9 +91,12 @@ const StyleGuideRenderer = ({
           togglePaletteType={togglePaletteType}
           handleProductNameChange={handleProductNameChange}
         />
-        <Grid container className={classes.content} spacing={4}>
+        <Grid container className={classes.content} align="center" spacing={4}>
           <Grid item xs={12} component="main">
               <MarkdownStyleOverrider>{children}</MarkdownStyleOverrider>
+          </Grid>
+          <Grid item xs={12} component="footer">
+            {`UI-SDK Version ${version}`}
           </Grid>
         </Grid>
       </Grid>
