@@ -16,6 +16,7 @@
     "uuid": "^8.3.0"
   },
   "devDependencies": {
+    "@ayx/ayx-scripts": "^3.0.0",
     "@babel/plugin-syntax-dynamic-import": "^7.8.3",
     "@babel/plugin-transform-runtime": "^7.10.5",
     "babel-jest": "^26.1.0",
@@ -36,13 +37,18 @@
     "transform-imports": "^2.1.1"
   },
   "scripts": {
+    "start": "ayx-scripts start",
+    "init": "ayx-scripts init",
+    "build": "ayx-scripts build",
     "test": "jest -u --silent",
+    "apidocs": "ayx-scripts doc",
     "docs": "styleguidist server",
     "build:publish": "npm run build:copy-package-json && npm run build:es2015 && npm run build:es2015modules",
     "build:es2015": "NODE_ENV=production babel --config-file ./.babelrc.js --extensions '.ts' --extensions '.tsx' src --out-dir build",
     "build:copy-package-json": "NODE_ENV=production babel package.json --copy-files --out-dir ./build",
     "build:es2015modules": "NODE_ENV=production babel --config-file ./.babelrc.js src/index.ts --out-file build/index.js",
     "docs:build": "styleguidist build",
+    "analyze": "ayx-scripts analyze-bundle",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
   },
   "author": "",
