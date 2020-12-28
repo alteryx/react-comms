@@ -115,7 +115,7 @@ publish-sdk:
     - master
       
 pages:
-  stage: pages
+  stage: pages 
   tags:
     - linux-docker
   dependencies:
