@@ -15,7 +15,7 @@ const useStyles = makeStyles(({ palette, spacing, direction }) => ({
   },
   content: {
     maxWidth: 1000,
-    padding: spacing(20, 8, 2, 10),
+    padding: spacing(16, 8, 2, 10),
     margin: '0 auto',
     display: 'block'
   },

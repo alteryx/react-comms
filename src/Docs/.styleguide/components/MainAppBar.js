@@ -5,7 +5,6 @@ import {
   Toolbar,
   Grid,
   Hidden,
-  Select,
   Tooltip,
   IconButton,
   Divider,
@@ -20,7 +19,7 @@ import {
 
 } from '@ayx/icons';
 
-const useStyles = makeStyles(({ direction, spacing }) => ({
+const useStyles = makeStyles(({ direction }) => ({
   appBar: {
     width: "calc(100% - 240px)",
     right: direction === "ltr" ? 0 : 'unset',
@@ -30,14 +29,11 @@ const useStyles = makeStyles(({ direction, spacing }) => ({
 
 
 const MainAppBar = ({
-  productThemeName,
-  handleProductNameChange,
-  toggleDirection,
   togglePaletteType
 }) => {
 
 
-  const { palette, direction } = useTheme();
+  const { palette } = useTheme();
 
   const classes = useStyles();
 
@@ -51,7 +47,40 @@ const MainAppBar = ({
       >
         <Toolbar disableGutters>
           <Grid container alignItems="center">
-            <Grid item sm md="auto">
+            <Hidden smDown>
+              <Grid item xs>
+              {/* {mainAlertOpen ? (
+                  <Box ml={2} my={2}>
+                    <Alert
+                      severity="success"
+                      variant="filled"
+                      onClose={handleMainAlertClose}
+                      action={[
+                        <Divider key="divider1" orientation="vertical" role="presentation" />,
+                        <Button
+                          key="migration"
+                          size="small"
+                          color="inherit"
+                        >
+                        </Button>,
+                        <Divider key="divider2" orientation="vertical" role="presentation" />,
+                        <IconButton
+                          key="close"
+                          aria-label="Close"
+                          color="inherit"
+                          onClick={dismissMainAlertForever}
+                        >
+                          <X size={10} />
+                        </IconButton>
+                      ]}
+                    >
+                      UI-Core v5 is here!
+                    </Alert>
+                  </Box>
+                ) : null} */}
+              </Grid>
+            </Hidden>
+            <Grid item xs md="auto">
               <Box mx={2} my={2.5}>
                 <Tooltip arrow title="Toggle Dark Mode">
                   <IconButton onClick={togglePaletteType}>
@@ -69,35 +98,6 @@ const MainAppBar = ({
                 </Tooltip>
               </Box>
             </Grid>
-            <Hidden xsDown>
-              <Grid item>
-                <Box mr={2}>
-                  <Select
-                    messages={{
-                      noOptions: "No Results",
-                      placeholder: "Product Theme"
-                    }}
-                    options={[
-                      {
-                        value: `default`,
-                        primary: `Default Product Theme`
-                      },
-                      {
-                        value: `aep`,
-                        primary: `Server.Next`
-                      },
-                      {
-                        value: `d1`,
-                        primary: `Designer`
-                      },
-                    ]}
-                    disableClearable
-                    value={productThemeName}
-                    onChange={(e) => handleProductNameChange(e.target.value)}
-                  />
-                </Box>
-              </Grid>
-            </Hidden>
           </Grid>
         </Toolbar>
         <Divider />
