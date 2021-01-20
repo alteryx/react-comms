@@ -12,7 +12,93 @@ module.exports = {
   },
   title: 'UI-SDK',
   // eslint-disable-next-line global-require
-  webpackConfig: require('./node_modules/@ayx/ayx-scripts/config/webpack.prod'),
+  webpackConfig: {
+    module: {
+      rules: [
+        // Babel loader, will use your project’s .babelrc
+        {
+          test: /\.jsx?$/,
+          exclude: [/node_modules/],
+          include: [
+            path.join(__dirname, 'src'),
+            path.join(__dirname, 'public')
+          ],
+          loader: 'babel-loader',
+          options: {
+            babelrc: true,
+            plugins: [
+              [
+                'module-resolver',
+                {
+                  root: ['./src']
+                }
+              ]
+            ]
+          }
+        },
+        {
+          test: [/\.tsx?$/],
+          exclude: /node_modules/,
+          use: [
+            {
+              loader: 'babel-loader',
+              options: {
+                cacheDirectory: true,
+              }
+            },
+            {
+              loader: 'ts-loader',
+              options: {
+                transpileOnly: true
+              }
+            },
+          ]
+        },
+        // Other loaders that are needed for your components
+        {
+          test: /\.css$/,
+          use: [
+            {
+              loader: 'style-loader',
+              options: {
+                injectType: 'styleTag'
+              }
+            },
+            {
+              loader: 'css-loader',
+              options: {
+                esModule: false
+              }
+            }
+          ]
+        },
+        {
+          test: /\.(woff|woff2)(\?v=\d+\.\d+\.\d+)?$/,
+          use: {
+            loader: 'url-loader',
+            options: {
+              // Limit at 50k. Above that it emits separate files
+              limit: 50000,
+              // url-loader sets mimetype if it's passed.
+              // Without this it derives it from the file extension
+              mimetype: 'application/font-woff'
+              // Output below fonts directory
+            }
+          }
+        },
+        {
+          test: /\.jsx?$/,
+          include: /node_modules\/(?=(acorn-jsx|regexpu-core|unicode-match-property-ecmascript|estree-walker|react-spring|unicode-match-property-value-ecmascript|react-dev-utils|ansi-styles|ansi-regex|chalk|react-intl|strip-ansi)\/).*/,
+          use: {
+            loader: 'babel-loader',
+            options: {
+              babelrc: true
+            }
+          }
+        }
+      ]
+    }
+  },  
   theme: {
     borderRadius: 4,
     color: {
