@@ -29,7 +29,7 @@ const validUpdateKeys = ['Configuration', 'Annotation', 'Secrets'];
 
 let messageBroker: DesignerMessageApi | MicroAppMessageApi;
 
-const DesignerApi: React.FC = (props: IDesignerApiProps) => {
+const DesignerApi: React.FC<IDesignerApiProps> = (props: IDesignerApiProps) => {
   const { messages = {}, defaultConfig = {} } = props;
   if (!messageBroker) {
     messageBroker =
