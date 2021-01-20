@@ -10,7 +10,7 @@ import FieldListArray from '../MetaInfoHelpers/FieldListArray';
 class DesignerMessageApi extends MessageApiBase<IContext, IModel, IAyxAppContext> {
   constructor(ctx: IContext) {
     super(ctx);
-    this._model = {
+    this.model = {
       Configuration: {},
       Annotation: '',
       Meta: [],
@@ -19,7 +19,7 @@ class DesignerMessageApi extends MessageApiBase<IContext, IModel, IAyxAppContext
       ToolId: undefined,
       srcData: {}
     };
-    this._ayxAppContext = {
+    this.ayxAppContext = {
       darkMode: false,
       productTheme: {},
       locale: this.context.AlteryxLanguageCode
@@ -37,8 +37,8 @@ class DesignerMessageApi extends MessageApiBase<IContext, IModel, IAyxAppContext
         Promise.all(keys.map(this.encryptSecrets)).then(() => {
           const payload = {
             Configuration: {
-              Configuration: { ...this._model.Configuration, Secrets: { ...this.model.Secrets } },
-              Annotation: this._model.Annotation
+              Configuration: { ...this.model.Configuration, Secrets: { ...this.model.Secrets } },
+              Annotation: this.model.Annotation
             }
           };
           this.sendMessage(MESSAGE_TYPES.GET_CONFIGURATION, payload);

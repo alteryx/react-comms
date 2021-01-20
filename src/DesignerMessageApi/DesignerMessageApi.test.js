@@ -21,7 +21,7 @@ describe('DesignerMessageApi', () => {
 
   it('should instantiate itself with a _model, context, and subscriptions', () => {
     const messageBroker = new DesignerMessageApi(window.Alteryx);
-    expect(messageBroker._model).toMatchObject({});
+    expect(messageBroker.model).toMatchObject({});
     expect(messageBroker.context).toMatchObject(window.Alteryx);
     expect(messageBroker.subscriptions).toMatchObject(new Map());
   });
