@@ -75,7 +75,7 @@ build-docs-feature:
     - npm run docs:build
   artifacts:
     paths:
-      - styleguide
+      - packages/docs/styleguide
     expire_in: 1d
 
 publish_demo:
@@ -130,7 +130,7 @@ pages:
     - test-sdk
     - build-docs-feature
   script:
-    - mv styleguide public
+    - mv packages/docs/styleguide public
     - cp public/index.html public/404.html
   artifacts:
     paths:
