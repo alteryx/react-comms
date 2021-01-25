@@ -5,10 +5,10 @@ const path = require('path');
 
 module.exports = {
   styleguideComponents: {
-    Wrapper: path.join(__dirname, 'src/Docs/.styleguide/Wrapper.js'),
-    ComponentsListRenderer: path.join(__dirname, 'src/Docs/.styleguide/components/SidebarList.js'),
-    TableOfContentsRenderer: path.join(__dirname, 'src/Docs/.styleguide/components/Sidebar.js'),
-    StyleGuideRenderer: path.join(__dirname, 'src/Docs/.styleguide/App.js')
+    Wrapper: path.join(__dirname, './.styleguide/Wrapper.js'),
+    ComponentsListRenderer: path.join(__dirname, './.styleguide/components/SidebarList.js'),
+    TableOfContentsRenderer: path.join(__dirname, './.styleguide/components/Sidebar.js'),
+    StyleGuideRenderer: path.join(__dirname, './.styleguide/App.js')
   },
   title: 'UI-SDK',
   // eslint-disable-next-line global-require
@@ -20,20 +20,14 @@ module.exports = {
           test: /\.jsx?$/,
           exclude: [/node_modules/],
           include: [
-            path.join(__dirname, 'src'),
+            path.join(__dirname, '../src'),
+            path.join(__dirname, './.styleguide'),
+            path.join(__dirname, './components/DesignerApi'),
             path.join(__dirname, 'public')
           ],
           loader: 'babel-loader',
           options: {
-            babelrc: true,
-            plugins: [
-              [
-                'module-resolver',
-                {
-                  root: ['./src']
-                }
-              ]
-            ]
+            babelrc: true
           }
         },
         {
@@ -220,19 +214,19 @@ module.exports = {
   sections: [
     {
       name: 'Getting Started',
-      content: './src/Docs/index.md',
+      content: './index.md',
       sections: [
         {
           name: 'Installation',
-          content: './src/Docs/getting-started/index.md'
+          content: './getting-started/index.md'
         },
         {
           name: 'Usage',
-          content: './src/Docs/getting-started/usage.md'
+          content: './getting-started/usage.md'
         },
         {
           name: 'Linter',
-          content: './src/Docs/getting-started/linter.md'
+          content: './getting-started/linter.md'
         }
       ],
       exampleMode: 'collapse',
@@ -241,11 +235,11 @@ module.exports = {
     },
     {
       name: 'Releases',
-      content: './src/Docs/releases/index.md',
+      content: './releases/index.md',
       sections: [
         {
           name: 'Changelog',
-          content: './changelog.md'
+          content: './releases/changelog.md'
         }
       ],
       exampleMode: 'collapse',
@@ -253,15 +247,13 @@ module.exports = {
       sectionDepth: 1
     },
     {
-      name: 'UI-SDK Components',
-      components: './src/**/*.{js,jsx,ts,tsx}',
-      ignore: [
-        './src/**/basicDemo.js',
-        './src/**/advancedDemo.js',
-        './src/**/messages.js',
-        './src/Utils/*{js,jsx,ts,tsx}',
-        './src/MessageApiBase/*{js,jsx,ts,tsx}',
-        './src/DesignerMessageApi/*{js,jsx,ts,tsx}'
+      name: 'Designer Api',
+      content: './components/DesignerApi/index.md', 
+      sections: [
+        {
+          name: 'Usage',
+          content: './components/DesignerApi/DesignerApi.md',
+        }
       ],
       exampleMode: 'collapse',
       usageMode: 'collapse',
@@ -269,7 +261,7 @@ module.exports = {
     }
   ],
   pagePerSection: true,
-  version: require('./package.json').version,
+  version: require('../components/package.json').version,
   skipComponentsWithoutExample: true,
   getComponentPathLine(componentPath) {
     const name = path.basename(componentPath, '.tsx');

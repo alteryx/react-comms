@@ -1,3 +1,9 @@
+### Next release
+#### @ayx/ayx-ui-sdk@0.0.7-alpha
+
+- Removed getters and setters from MetaInfo helpers
+- Updated project structure
+
 ### December 11th, 2020
 #### @ayx/ayx-ui-sdk@0.0.6-alpha
 - Fixed an issue where secrets were encrypted multiple times in certain instances (e.g. dragging a another tool on the canvas)
