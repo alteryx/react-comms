@@ -8,9 +8,9 @@ abstract class MessageApiBase<T, TU, TV> {
 
   context: T;
 
-  _model: TU;
+  model: TU;
 
-  _ayxAppContext: TV;
+  ayxAppContext: TV;
 
   constructor(ctx: T) {
     this.context = ctx;
@@ -22,22 +22,6 @@ abstract class MessageApiBase<T, TU, TV> {
   subscribe = (messageType: string, cb: Function): void => {
     this.subscriptions.set(messageType, cb);
   };
-
-  get model(): TU {
-    return this._model;
-  }
-
-  set model(newModel: TU) {
-    this._model = newModel;
-  }
-
-  get ayxAppContext(): TV {
-    return this._ayxAppContext;
-  }
-
-  set ayxAppContext(newAppContext: TV) {
-    this._ayxAppContext = newAppContext;
-  }
 }
 
 export default MessageApiBase;

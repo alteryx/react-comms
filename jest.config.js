@@ -20,7 +20,11 @@ module.exports = {
     'src/Utils/types.ts',
     'src/DesignerApi/advancedDemo.js',
     'src/DesignerApi/basicDemo.js',
-    'src/DesignerApi/messages.js'
+    'src/DesignerApi/messages.js',
+    'src/index.d.ts',
+    'src/DesignerApi/DesignerApi.d.ts',
+    'src/index.d.ts',
+    'src/Utils/index.d.ts'
   ],
   transformIgnorePatterns: ['/node_modules/(?!lodash-es).+\\.js$']
 };

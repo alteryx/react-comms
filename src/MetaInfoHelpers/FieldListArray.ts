@@ -1,11 +1,11 @@
 import FieldList from './FieldList';
 
 export default class FieldListArray {
-  _fields: Array<Array<FieldList>>;
+  fields: Array<Array<FieldList>>;
 
   constructor(eIncomingMetaInfo: Array<any>) {
     // array of json objects
-    this._fields = [];
+    this.fields = [];
 
     if (eIncomingMetaInfo != null) {
       // if null return // TODO reractor to use !== and not !=
@@ -32,23 +32,23 @@ export default class FieldListArray {
           // single input
           listFieldList.push(new FieldList(eMetaInfo.MetaInfo.RecordInfo));
         }
-        this._fields.push(listFieldList);
+        this.fields.push(listFieldList);
       }
     }
   }
 
   getListAt = (nInput: number, nIndex: number | undefined = undefined): FieldList => {
-    if (this._fields.length === 0 || typeof this._fields[nInput] === 'undefined') return;
+    if (this.fields.length === 0 || typeof this.fields[nInput] === 'undefined') return;
     if (nIndex >= 0) {
-      return this._fields[nInput][nIndex];
+      return this.fields[nInput][nIndex];
     }
-    return this._fields[nInput][0];
+    return this.fields[nInput][0];
   };
 
   copyListAt = (nInput: number, nIndex: number | undefined = undefined): FieldList => {
-    if (this._fields.length === 0 || typeof this._fields[nInput] === 'undefined') return;
+    if (this.fields.length === 0 || typeof this.fields[nInput] === 'undefined') return;
     if (nIndex >= 0) {
-      const originalFieldList: FieldList = this._fields[nInput][nIndex];
+      const originalFieldList: FieldList = this.fields[nInput][nIndex];
       const newFieldsList = new FieldList();
       newFieldsList.connectionName = originalFieldList.connectionName;
       for (const field of originalFieldList.fields) {
@@ -57,18 +57,10 @@ export default class FieldListArray {
       return newFieldsList;
     }
 
-    return this._fields[nInput][0];
+    return this.fields[nInput][0];
   };
 
-  getCountMultiInputs = nInput => this._fields[nInput].length;
+  getCountMultiInputs = nInput => this.fields[nInput].length;
 
-  getMultiInputs = nInput => this._fields[nInput];
-
-  get fields(): Array<Array<FieldList>> {
-    return this._fields;
-  }
-
-  get count(): number {
-    return this._fields.length;
-  }
+  getMultiInputs = nInput => this.fields[nInput];
 }

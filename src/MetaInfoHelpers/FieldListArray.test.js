@@ -12,10 +12,6 @@ describe('FieldListArray', () => {
     expect(fieldListArray).toBeInstanceOf(FieldListArray);
   });
 
-  it('should be able to retrieve the count of field lists in the array', () => {
-    expect(fieldListArray.count).toEqual(3);
-  });
-
   it('should be able to retrieve its own fields via the getter', () => {
     expect(fieldListArray.fields).toBeInstanceOf(Array);
     expect(fieldListArray.fields.length).toEqual(3);

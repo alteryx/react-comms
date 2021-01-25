@@ -8,11 +8,11 @@ interface IHasField {
 type TRecordInfo = FieldList | IHasField | undefined;
 
 export default class FieldList {
-  _connectionName: string;
+  connectionName: string;
 
-  _fieldsByName: object;
+  fieldsByName: object;
 
-  _fields: Array<any>;
+  fields: Array<any>;
 
   // Type safety doesn't work here as the Field coming from Designer can be an object, an array, or a FieldInfo
   // The typing is not universal and can't be made so as fallback types expect all aspects of a
@@ -21,9 +21,8 @@ export default class FieldList {
 
   constructor(eRecordInfo?: TRecordInfo, connectionName?: string) {
     // ConnectionName is only populated when there is a named connection coming in (multiple input)
-    this._connectionName = connectionName || '';
-    this._fieldsByName = {};
-    this._fields = [];
+    this.connectionName = connectionName || '';
+    this.fields = [];
 
     if (eRecordInfo && eRecordInfo.Field) {
       if (eRecordInfo.Field.length) {
@@ -39,6 +38,11 @@ export default class FieldList {
       // Existing field list
       this.combineFields(eRecordInfo);
     }
+
+    this.fieldsByName = this.fields.reduce((acc, field) => {
+      acc[field.name.toLowerCase()] = field;
+      return acc;
+    }, {});
   }
 
   combineFields(recordInfo: FieldList): void {
@@ -55,23 +59,5 @@ export default class FieldList {
       throw new Error('Attempted to add a non-field to FieldList.');
     }
   };
-
-  get fieldsByName(): object {
-    return this.fields.reduce((acc, field) => {
-      acc[field.name.toLowerCase()] = field;
-      return acc;
-    }, {});
-  }
-
-  get connectionName(): string {
-    return this._connectionName;
-  }
-
-  set connectionName(name: string) {
-    this._connectionName = name;
-  }
-
-  get fields(): Array<any> {
-    return this._fields;
-  }
+  
 }
