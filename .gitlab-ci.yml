@@ -10,13 +10,15 @@ stages:
 
 cache:
   paths:
-    - node_modules/
+    - packages/components/node_modules/
+    - packages/docs/node_modules/
 
 test-sdk:
   stage: test-coverage
   tags:
     - linux-docker
   script:
+    - cd packages/components
     - npm i && npm run test
   coverage: /All files[^|]*\|[^|]*\s+([\d\.]+)/
   artifacts:
@@ -26,10 +28,12 @@ test-sdk:
       - coverage/
 
 build-ui-sdk:
+  needs: [test-sdk]
   stage: build
   tags:
     - linux-docker
   script:
+    - cd packages/components
     - npm i
     - npm run build:es2015 && npm run build:es2015modules
   artifacts:
@@ -61,10 +65,12 @@ sonarqube-check:
       - if: '$CI_COMMIT_REF_NAME  =~ /^release/'
 
 build-docs-feature:
+  needs: [test-sdk]
   stage: build-docs
   tags:
     - linux-docker
   script:
+    - cd packages/docs
     - npm i
     - npm run docs:build
   artifacts:
@@ -84,13 +90,15 @@ publish_demo:
   only:
     changes:
       - .gitlab-ci.yml
-      - src/**
+      - src/packages/docs/**
+      - src/packages/components/**
 
 publish-sdk:
   stage: publish
   tags:
     - linux-docker
   script:
+    - cd packages/components
     - git checkout $CI_COMMIT_REF_NAME
     - git config --global user.email $REMOTE_PUSH_EMAIL
     - git config --global user.name $REMOTE_PUSH_USER
@@ -110,7 +118,7 @@ publish-sdk:
   only:
     changes:
       - .gitlab-ci.yml
-      - src/**
+      - src/packages/components/**
   only:
     - master
       
@@ -118,7 +126,7 @@ pages:
   stage: pages 
   tags:
     - linux-docker
-  dependencies:
+  needs:
     - test-sdk
     - build-docs-feature
   script:
