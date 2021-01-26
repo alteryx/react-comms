@@ -86,7 +86,7 @@ publish_demo:
     - ls /etc/*release
     - "which sshpass || ( apt-get update -y && apt-get install sshpass -y )"
   script:
-    - sshpass -p "$DEMO_HOST_PASS" scp -o StrictHostKeyChecking=no -r styleguide $DEMO_HOST_USER@10.10.8.152:/home/$DEMO_HOST_USER/demo/public/sdk-$CI_COMMIT_REF_SLUG.$CI_PIPELINE_ID
+    - sshpass -p "$DEMO_HOST_PASS" scp -o StrictHostKeyChecking=no -r packages/docs/styleguide $DEMO_HOST_USER@10.10.8.152:/home/$DEMO_HOST_USER/demo/public/sdk-$CI_COMMIT_REF_SLUG.$CI_PIPELINE_ID
   only:
     changes:
       - .gitlab-ci.yml
