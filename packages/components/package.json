@@ -4,18 +4,14 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "@ayx/ui-core": "^5.3.4",
     "@types/jest": "^26.0.20",
     "@types/node": "^14.14.22",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
-    "deepmerge": "^4.2.2",
     "jss-rtl": "^0.3.0",
     "prop-types": "^15.7.2",
-    "react-frame-component": "^4.1.2",
     "ts-loader": "^8.0.14",
-    "uuid": "^8.3.0",
-    "webpack": "^4.39.2"
+    "uuid": "^8.3.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.10",

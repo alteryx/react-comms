@@ -1,4 +1,4 @@
-*.DS_Store
+.DS_Store
 .idea/
 node_modules/
 coverage/
@@ -9,12 +9,10 @@ dist-electron/
 artifacts
 .env.development
 .env.production
-styleguide
 .testcafe-electron-rc
 .ltk/log
 .yalc/
 yalc.lock
 npm-debug.log
 build/
-styleguide/
 report.*

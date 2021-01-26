@@ -10,10 +10,7 @@ import {
   Checkbox,
   InputLabel
 } from '@ayx/ui-core';
-
-import UiSdkContext from '../Context/index.tsx';
-
-import DesignerApi from './index.tsx';
+import { Context as UiSdkContext, DesignerApi } from '@ayx/ayx-ui-sdk';
 import messages from './messages';
 
 const initialModelState = {

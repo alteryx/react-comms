@@ -1,20 +1,13 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Collapse, List, ListItem, ListItemText, ListItemIcon, Divider, Box, makeStyles, fade } from '@ayx/ui-core';
-import { Home, GridView, Layers, Settings, Layout, BookOpen, Aperture, Box as BoxIcon, GitMerge } from '@ayx/icons';
+import { Home, Layers, Box as BoxIcon, GitMerge } from '@ayx/icons';
 import { getHash } from 'react-styleguidist/lib/client/utils/handleHash';
 
 const iconLookup = {
   'getting started': Home,
-  'guides': BookOpen,
   'releases': GitMerge,
-  'icons': GridView,
-  'colors': Aperture,
-  'layout': Layout,
-  'core components': BoxIcon,
-  'common': BoxIcon,
-  'lab': BoxIcon,
-  'utils': Settings
+  'designer api': BoxIcon,
 };
 
 const useStyles = makeStyles(({ spacing, typography, palette, direction }) => ({
@@ -70,13 +63,13 @@ const SidebarList = ({ items }) => {
   return (
     <List className={classes.list} disablePadding>
       {items.map(({ heading, visibleName, href, content, external }, index) => {
-        
         const firstReplace = href.replace('/#', '');
         const itemToCompare = firstReplace.replace('%20', ' ');
         const isItemSelected = windowHash === itemToCompare;
         const isActivePath = windowHash.indexOf(itemToCompare) > -1;
         const isItemOpen = isActivePath && !forceClose;
         const Icon = iconLookup[visibleName && visibleName.replace('%20', ' ').toLowerCase()] || Layers;
+
         if (visibleName && visibleName.toLowerCase() === "divide") {
           return (
             <Box my={2} key={`itemToCompare${index}`}>

@@ -1,13 +1,3 @@
-## Start Up the Dev Harness
-
-Once you fork the [Dev Harness](https://git.alteryx.com/ayx-ui-sdk/ui-sdk-dev-harness) project and run `npm install` inside of the project, you're ready to go. From here, use the `npm run start` command from your terminal. You will see that the dev harness is now served from localhost:8080.
-
-## Make Changes
-
-When you develop in the Dev Harness, you make all your changes in the `src/src` directory of the Dev Harness project. In this directory, there is an `index.tsx` file where the sample code currently lives.
-
-While you can make changes here directly, we recommend that you structure your app for a production environment (with appropriate folder structures) and import your components as needed.
-
 ## Use the DesignerApi
 
 The single most important component in the UI-SDK is the DesignerApi. It serves as the facilitator of communication between the Alteryx product you build for, and the custom app you create. The DesignerApi accomplishes much of this under the hood. The result is an easy experience for you to interface with. The DesignerApi requires only one prop: `messages`. The messages prop is an object that includes any internationalized messages that you expect your app to access. The DesignerApi also supports the `defaultConfig` prop, which is an optional prop that allows you to establish your default model state for your application.
@@ -80,6 +70,4 @@ To explore more advanced examples, visit our [DesignerApi docs](#/UI-SDK%20Compo
 
 ## Build Process
 
-Once you develop your custom tool, you can build it with our built-in `npm run build` command. This script bundles your custom app for you.
-
-From there, you need to install it into the Designer plugins directory. You can manually copy and paste the output of the `dist` directory.
+If you're building a custom tool for Designer, you'll need to bundle it and install it upon completion. If you're using the Dev Harness, you can use our built in `npm run build` command. From there, you can manually copy and paste the output of the `build` directory into the respective Plugin Folder in Designer. More [here](https://help.alteryx.com/current/developer-help/quick-start-custom-tools)
