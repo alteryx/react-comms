@@ -69,7 +69,7 @@ const SidebarList = ({ items }) => {
         const isActivePath = windowHash.indexOf(itemToCompare) > -1;
         const isItemOpen = isActivePath && !forceClose;
         const Icon = iconLookup[visibleName && visibleName.replace('%20', ' ').toLowerCase()] || Layers;
-        console.log({Icon})
+
         if (visibleName && visibleName.toLowerCase() === "divide") {
           return (
             <Box my={2} key={`itemToCompare${index}`}>
