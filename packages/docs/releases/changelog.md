@@ -1,8 +1,8 @@
-### Next release
+### January 28th, 2021
 #### @ayx/ayx-ui-sdk@0.0.7-alpha
 
 - Removed getters and setters from MetaInfo helpers
-- Updated project structure
+- Updated project structure to hold seperate packages for docs and components
 
 ### December 11th, 2020
 #### @ayx/ayx-ui-sdk@0.0.6-alpha
