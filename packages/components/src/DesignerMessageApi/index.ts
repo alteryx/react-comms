@@ -119,13 +119,17 @@ class DesignerMessageApi extends MessageApiBase<IContext, IModel, IAyxAppContext
         key => currentToolConfiguration.Configuration.Configuration.Secrets[key]
       );
       const decryptedValues = await Promise.all(valuesToDecrypt.map(this.decryptSecrets));
-      for (let i = 0; i < encryptedValueKeys.length; i++) {
-        decryptedSecrets[encryptedValueKeys[i]] = decryptedValues[i];
-      }
+      this.assignDecryptedSecrets(encryptedValueKeys, decryptedSecrets, decryptedValues)
       delete currentToolConfiguration.Configuration.Configuration.Secrets;
     }
     return [decryptedSecrets, currentToolConfiguration];
   };
+
+  assignDecryptedSecrets = (encryptedValueKeys, decryptedSecrets, decryptedValues) => {
+    for (let i = 0; i < encryptedValueKeys.length; i++) {
+      decryptedSecrets[encryptedValueKeys[i]] = decryptedValues[i];
+    }
+  }
 }
 
 export default DesignerMessageApi;

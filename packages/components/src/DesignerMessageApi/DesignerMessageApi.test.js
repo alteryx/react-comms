@@ -130,6 +130,31 @@ describe('DesignerMessageApi', () => {
     expect(spyJsEvent).toHaveBeenCalledWith(messageBroker.context, 'GetConfiguration', expected);
   });
 
+  it('should use assignDecryptedSecrets to update decrypted values', () => {
+    const messageBroker = new DesignerMessageApi(window.Alteryx);
+    const encryptedValueKeys = ['encryptedStuffKey']
+    const decryptedSecrets = { encryptedStuffKey: '' }
+    const decryptedValues = ['decryptedStuff']
+    messageBroker.assignDecryptedSecrets(encryptedValueKeys, decryptedSecrets, decryptedValues);
+
+    expect(decryptedSecrets).toEqual({ encryptedStuffKey: 'decryptedStuff' })
+  })
+
+  it('should use decryptSecrets to return an empty string if there is no text present', () => {
+    const messageBroker = new DesignerMessageApi(window.Alteryx);
+    const secret = { text: '', encryptionMode: 'obfuscation' }
+    const decryptedSecret = messageBroker.decryptSecrets(secret);
+    expect(secret).toEqual(decryptedSecret);
+  })
+
+  it('should use decryptSecrets to call decryption to engine if text is present', () => {
+    const messageBroker = new DesignerMessageApi(window.Alteryx);
+    const spyJsEvent = jest.spyOn(callback, 'JsEvent');
+    const secret = { text: 'stuff', encryptionMode: 'obfuscation' }
+    messageBroker.decryptSecrets(secret);
+    expect(spyJsEvent).toHaveBeenCalled();
+  })
+
   it('should use the getter for alteryxAppContext to return the contexts language code', () => {
     const messageBroker = new DesignerMessageApi(window.Alteryx);
     expect(messageBroker.ayxAppContext).toEqual({ darkMode: false, locale: 'US-EN', productTheme: {} });
