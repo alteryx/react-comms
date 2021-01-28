@@ -1,3 +1,3 @@
-declare const Context: React.ComponentType<any>;
+declare const Context: React.Context<[any, any]>;
 
 export default Context;
