@@ -1,0 +1,1 @@
+The DesignerApi is a required component when you create your custom application with the UI-SDK, and design the app for Alteryx Designer. Every custom application must be wrapped in a DesignerApi. This lets the app access and update the relevant information in the parent application from anywhere within the component hierarchy.
