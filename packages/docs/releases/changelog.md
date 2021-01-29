@@ -1,4 +1,4 @@
-### January 28th, 2021
+### January 29th, 2021
 #### @ayx/ayx-ui-sdk@0.0.7-alpha
 
 - Removed getters and setters from internal MetaInfo helpers
