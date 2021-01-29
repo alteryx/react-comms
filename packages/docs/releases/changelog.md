@@ -2,7 +2,7 @@
 #### @ayx/ayx-ui-sdk@0.0.7-alpha
 
 - Removed getters and setters from internal MetaInfo helpers
-- Updated project structure to hold seperate packages for docs and components
+- Updated project structure to hold separate packages for docs and components
 
 ### December 11th, 2020
 #### @ayx/ayx-ui-sdk@0.0.6-alpha
