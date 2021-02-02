@@ -9,7 +9,7 @@ const DesignerApiDemo = () => {
     const [model, handleUpdateModel] = React.useContext(UiSdkContext);
 
     const incrementCount = () => {
-      const newModel = { ...newModel }; 
+      const newModel = { ...model }; 
       newModel.Configuration.count++;
       handleUpdateModel(newModel);
     };
