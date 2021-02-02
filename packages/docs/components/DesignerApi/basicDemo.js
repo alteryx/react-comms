@@ -9,9 +9,9 @@ const DesignerApiDemo = () => {
     const [model, handleUpdateModel] = React.useContext(UiSdkContext);
 
     const incrementCount = () => {
-      let { count } = model.Configuration;
-      count++;
-      handleUpdateModel({ Configuration: { count } });
+      const newModel = { ...newModel }; 
+      newModel.Configuration.count++;
+      handleUpdateModel(newModel);
     };
     return (
       <AyxAppWrapper>

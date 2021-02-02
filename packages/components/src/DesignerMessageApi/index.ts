@@ -34,6 +34,7 @@ class DesignerMessageApi extends MessageApiBase<IContext, IModel, IAyxAppContext
       },
       GetConfiguration: () => {
         const keys = Object.keys(this.model.Secrets);
+        console.log(keys)
         Promise.all(keys.map(this.encryptSecrets)).then(() => {
           const payload = {
             Configuration: {

@@ -7,7 +7,7 @@ import merge from 'deepmerge';
 
 import DesignerMessageApi from '../DesignerMessageApi';
 import MicroAppMessageApi from '../MicroAppMessageApi';
-import { IContext } from '../Utils/types';
+import { IContext, IModel } from '../Utils/types';
 import { SUBSCRIPTION_EVENTS } from '../Utils/constants';
 import UiSdkContext, { IContextProviderProps } from '../Context';
 
@@ -25,8 +25,6 @@ declare global {
   }
 }
 
-const validUpdateKeys = ['Configuration', 'Annotation', 'Secrets'];
-
 let messageBroker: DesignerMessageApi | MicroAppMessageApi;
 
 const DesignerApi: React.FC<IDesignerApiProps> = (props: IDesignerApiProps) => {
@@ -37,22 +35,15 @@ const DesignerApi: React.FC<IDesignerApiProps> = (props: IDesignerApiProps) => {
         ? new DesignerMessageApi(props.ctx || window.Alteryx)
         : new MicroAppMessageApi();
   }
-  const mergedState = merge(messageBroker.model, defaultConfig);
+  const mergedState: IModel = merge(messageBroker.model, defaultConfig);
   const [model, updateModel] = useState(mergedState);
   const [appContext, updateAppContext] = useState(messageBroker.ayxAppContext);
 
-  const handleUpdateModel = (updatedData: object) => {
-    const updatedDataKeys = Object.keys(updatedData);
-    const badKeys = updatedDataKeys.filter(k => !validUpdateKeys.includes(k));
-    if (badKeys.length) {
-      console.warn('Only Configuration, Annotation, and Secrets support updates');
-      return;
-    }
-    const newModel = merge(model, updatedData);
-    updateModel(newModel);
-    messageBroker.model = newModel;
+  const handleUpdateModel = (updatedData: IModel) => {
+    updateModel(updatedData);
+    messageBroker.model = updatedData;
     if (messageBroker instanceof MicroAppMessageApi) {
-      messageBroker.sendMessage(SUBSCRIPTION_EVENTS.MODEL_UPDATED, newModel);
+      messageBroker.sendMessage(SUBSCRIPTION_EVENTS.MODEL_UPDATED, updatedData);
     }
   };
 

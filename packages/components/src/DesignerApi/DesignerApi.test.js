@@ -25,7 +25,11 @@ describe('DesignerApi', () => {
   it('should be able to render on the DOM', () => {
     const Child = () => {
       const [model, handleUpdateModel] = React.useContext(UiSdkContext);
-      if (model.Annotation !== 'foo') handleUpdateModel({ Annotation: 'foo' });
+      if (model.Annotation !== 'foo') {
+        const newModel = { ...model };
+        newModel.Annotation = 'foo';
+        handleUpdateModel(newModel);
+      }
       return <div id="child">{model.Annotation}</div>;
     };
     const wrapper = shallow(
@@ -64,7 +68,11 @@ describe('DesignerApi', () => {
   it('should render AyxAppWrapper with appropriate props if there is model data', () => {
     const Child = () => {
       const [model, handleUpdateModel] = React.useContext(UiSdkContext);
-      if (model.Annotation !== 'foo') handleUpdateModel({ Annotation: 'foo' });
+      if (model.Annotation !== 'foo') {
+        const newModel = { ...model };
+        newModel.Annotation = 'foo';
+        handleUpdateModel(newModel);
+      }
       return <div id="child">{model.Annotation}</div>;
     };
     const wrapper = shallow(
@@ -109,7 +117,9 @@ describe('DesignerApi', () => {
     const Child = () => {
       const [model, handleUpdateModel] = React.useContext(UiSdkContext);
       if (model.Annotation !== 'foo') {
-        handleUpdateModel({ Annotation: 'foo' });
+        const newModel = { ...model };
+        newModel.Annotation = 'foo';
+        handleUpdateModel(newModel);
       }
       return <div id="child">{model.Annotation}</div>;
     };
@@ -136,7 +146,9 @@ describe('DesignerApi', () => {
     const Child = () => {
       const [model, handleUpdateModel] = React.useContext(UiSdkContext);
       if (model && model.Annotation !== 'foo') {
-        handleUpdateModel({ Annotation: 'foo' });
+        const newModel = { ...model };
+        newModel.Annotation = 'foo';
+        handleUpdateModel(newModel);
       }
       return <div id="child">{model.Annotation}</div>;
     };
@@ -150,30 +162,13 @@ describe('DesignerApi', () => {
     expect(spyJsEvent).toHaveBeenCalledWith(window.Alteryx, 'GetConfiguration', expected);
   });
 
-  it('should fail to update if handleUpdateModel is passed a bad key', () => {
-    let rendered = false;
-    const Child = () => {
-      const [model, handleUpdateModel] = React.useContext(UiSdkContext);
-      if (!rendered) {
-        handleUpdateModel({ Annotation: 'not-foo', badStuff: 'okay' });
-        rendered = true;
-      }
-      return <div id="child">{model.Annotation}</div>;
-    };
-    const wrapper = mount(
-      <DesignerApi ctx={window.Alteryx}>
-        <Child />
-      </DesignerApi>
-    );
-
-    expect(wrapper.find('#child').text()).toEqual('foo');
-  });
-
   it('should handle updates to the secrets key for both the secret itself and its encryptionMode', () => {
     const Child = () => {
       const [model, handleUpdateModel] = React.useContext(UiSdkContext);
       if (!model.Secrets.password1.text) {
-        handleUpdateModel({ Secrets: { password1: { text: 'secret', encryptionMode: 'machine' } } });
+        const newModel = { ...model };
+        newModel.Secrets = { ...newModel.Secrets, password1: { text: 'secret', encryptionMode: 'machine' } };
+        handleUpdateModel(newModel);
       }
       return (
         <div>
@@ -199,12 +194,13 @@ describe('DesignerApi', () => {
     const Child = () => {
       const [model, handleUpdateModel] = React.useContext(UiSdkContext);
       if (!model.Secrets.password2.text) {
-        handleUpdateModel({
-          Secrets: {
-            password2: { text: 'secret3', encryptionMode: 'user' },
-            password1: { text: 'secret2', encryptionMode: 'machine' }
-          }
-        });
+        const newModel = { ...model };
+        newModel.Secrets = { 
+          ...newModel.Secrets, 
+          password2: { text: 'secret3', encryptionMode: 'user' },
+          password1: { text: 'secret2', encryptionMode: 'machine' }
+        }
+        handleUpdateModel(newModel);
       }
       return (
         <div>
