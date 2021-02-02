@@ -47,7 +47,7 @@ Once you've created your DesignerApi, you will likely want to send updates to an
 
 ```jsx static
 import React, { useContext } from 'react';
-import { Button } from '@ayx/ui-core';
+import { Button } from '@ayx/eclipse-components';
 import { UiSdkContext } from '@ayx/ui-sdk';
 
 const SampleButton = () => {

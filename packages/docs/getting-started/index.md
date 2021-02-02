@@ -1,4 +1,4 @@
-The UI-SDK is a software development kit built on top of our UI-Core library. The library is a suite of React components that use [Material-UI (MUI)](https://github.com/mui-org/material-ui) with a custom Alteryx theme.
+The UI-SDK is a software development kit built on top of our Eclipse Component library. The library is a suite of React components that use [Material-UI (MUI)](https://github.com/mui-org/material-ui) with a custom Alteryx theme.
 
 The UI-SDK provides global context, a DesignerApi component, and multiple messaging APIs. The messaging API that you use will depend on the Alteryx product where your custom app lives.
 
@@ -25,11 +25,3 @@ Both npm and yarn are good options. When you install node, npm is added by defau
 ### Visual Studio Code
 
 While technically you can use any integrated development environment (IDE), we recommend Visual Studio (VS) Code. We configured many of our linters and other tools to work best with VS Code. Additionally, TypeScript support is strongest in VS Code.
-
-## Use the Dev-Harness
-
-We built a development harness that lets you simulate custom app development in realtime.
-
-The harness gives you a sandboxed iframe where you can develop your custom application. The iframe is housed within a sample *product* that mocks some of the data contracts you can expect to interact with in an Alteryx product. Additionally, it provides you with all the build processes you need to deploy your tool to the Alteryx product of your choice. 
-
-To get started, clone this repo: [UI-SDK Dev Harness](https://git.alteryx.com/ayx-ui-sdk/ui-sdk-dev-harness).
