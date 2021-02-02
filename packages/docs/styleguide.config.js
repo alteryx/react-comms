@@ -236,6 +236,10 @@ module.exports = {
         {
           name: 'Changelog',
           content: './releases/changelog.md'
+        },
+        {
+          name: 'Beta Migration Guide',
+          content: './releases/alpha-beta-migration.md'
         }
       ],
       exampleMode: 'collapse',

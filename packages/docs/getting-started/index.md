@@ -20,13 +20,6 @@ To install node, go to https://nodejs.org/en/download/. We recommend the LTS ver
   
 Both npm and yarn are good options. When you install node, npm is added by default. If you prefer yarn, visit the installation documentation at [https://classic.yarnpkg.com/en/docs/install](https://classic.yarnpkg.com/en/docs/install#mac-stable).
 
-**Visual Studio Code**
-  
-While you can technically use any integrated development environment (IDE), we recommend Visual Studio (VS) Code. We configured many of our linters and other tools to work best with VS Code.
-</details>
+### Visual Studio Code
 
-----
-
-**Installing the Ayx UI-SDK**
-
-Run `npm install @ayx/ayx-ui-sdk` and you will have access to the SDK within your new project.
+While technically you can use any integrated development environment (IDE), we recommend Visual Studio (VS) Code. We configured many of our linters and other tools to work best with VS Code. Additionally, TypeScript support is strongest in VS Code.

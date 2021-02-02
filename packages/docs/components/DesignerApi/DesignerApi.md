@@ -78,7 +78,15 @@ If your UI has password fields or other information that you'd consider sensitiv
     const { Secrets } = model;
 
     const handleChange = event => {
-      handleUpdateModel({ Secrets: { password: { text: event.target.value, encryptionMode: 'obfuscation' }});
+      const newModel = { ...model };
+      newModel.Secrets = { 
+        ...newModel.Secrets, 
+        password: { 
+          text: event.target.value, 
+          encryptionMode: 'obfuscation' 
+        }
+      };
+      handleUpdateModel(newModel);
     }; 
 
     return (

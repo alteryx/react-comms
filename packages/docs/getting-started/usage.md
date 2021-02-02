@@ -43,7 +43,7 @@ From there, you can use the `FormattedMessage` component provided by `react-intl
 
 ## Context
 
-Once you've created your DesignerApi, you will likely want to send updates to and from your custom application. You can do this via `React.Context`. When you open the dev harness code, you will see a simple example for a button that increments a model count. The example looks something like this:
+Once you've created your DesignerApi, you will likely want to send updates to and from your custom application. You can do this via `React.Context`. An example could look something like this:
 
 ```jsx static
 import React, { useContext } from 'react';
@@ -54,15 +54,15 @@ const SampleButton = () => {
   const [model, handleUpdateModel] = React.useContext(UiSdkContext);
 
   const incrementCount = () => {
-    let { count } = model.Configuration;
-    count++;
-    handleUpdateModel({ Configuration: { count } });
+    const newModel = { ...model };
+    newModel.Configuration.count++
+    handleUpdateModel(newModel);
   }
   return <Button onClick={updateModel}> Click this to update my count </Button>;
 };
 ```
 
-As a best practice, you should not override or manipulate your model directly. Additionally, `handleUpdateModel` only supports updates to the `Configuration`, `Secrets`, and `Annotation` keys. Sending your entire model back without specifying which of these keys you'd like to update will cause a failure and won't persist your changes.
+As a best practice, you should not override or manipulate your model directly. In order to make updates to your model, the `handleUpdateModel` function is expecting to receive a new copy of your initial model object.
 
 After you make a copy of your model and make any required updates, call the `handleUpdateModel` method provided to you by the `useContext` React hook. This updates the model state internal to your custom app and dispatches any relevant messages to the parent application.
 
@@ -70,4 +70,4 @@ To explore more advanced examples, visit our [DesignerApi docs](#/UI-SDK%20Compo
 
 ## Build Process
 
-If you're building a custom tool for Designer, you'll need to bundle it and install it upon completion. If you're using the Dev Harness, you can use our built in `npm run build` command. From there, you can manually copy and paste the output of the `build` directory into the respective Plugin Folder in Designer. More [here](https://help.alteryx.com/current/developer-help/quick-start-custom-tools)
+If you're building a custom tool for Designer, you'll need to bundle it and install it upon completion. More [here](https://help.alteryx.com/current/developer-help/quick-start-custom-tools)
