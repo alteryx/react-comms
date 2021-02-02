@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { Grid, Typography, Box, Link, makeStyles, useTheme, lighten, AyxAppWrapper } from "@ayx/ui-core";
 import MainAppBar from "./MainAppBar";
 import MarkdownStyleOverrider from "./MarkdownStyleOverrider";
+import Logo from './Logo';
 
 const SIDE_BAR_WIDTH = 240;
 
@@ -77,6 +78,9 @@ const StyleGuideRenderer = ({
         <Grid item className={classes.sidebar} component="nav">
           <AyxAppWrapper theme={{direction: theme.direction}} paletteType="dark">
             <Box className={classes.logoWrapper}>
+              <Box className={classes.logo}>
+                <Logo />
+              </Box>
               <Box className={classes.logoText}>
                 <Typography className={classes.core}>UI-SDK</Typography>
                 <Link className={classes.version} href="#/Releases/Versions">{`Version ${version}`}</Link>

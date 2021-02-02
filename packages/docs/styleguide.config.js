@@ -223,10 +223,6 @@ module.exports = {
         {
           name: 'Usage',
           content: './getting-started/usage.md'
-        },
-        {
-          name: 'Linter',
-          content: './getting-started/linter.md'
         }
       ],
       exampleMode: 'collapse',
