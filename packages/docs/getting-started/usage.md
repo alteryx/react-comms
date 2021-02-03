@@ -43,7 +43,7 @@ From there, you can use the `FormattedMessage` component provided by `react-intl
 
 ## Context
 
-Once you've created your DesignerApi, you will likely want to send updates to and from your custom application. You can do this via `React.Context`. An example could look something like this:
+Once you've created your DesignerApi, you will likely want to send updates to and from your custom application. You can do this via `React.Context`. Your implementation could look something like this:
 
 ```jsx static
 import React, { useContext } from 'react';
@@ -54,7 +54,7 @@ const SampleButton = () => {
   const [model, handleUpdateModel] = React.useContext(UiSdkContext);
 
   const incrementCount = () => {
-    const newModel = { ...model };
+    const newModel = { ...model }; // copy your model
     newModel.Configuration.count++
     handleUpdateModel(newModel);
   }
@@ -62,7 +62,7 @@ const SampleButton = () => {
 };
 ```
 
-As a best practice, you should not override or manipulate your model directly. In order to make updates to your model, the `handleUpdateModel` function is expecting to receive a new copy of your initial model object.
+As a best practice, you should not override or manipulate your model directly. This can be accomplished as seen in the above example. If you are in need of more complicated or deeper cloning, we recommend checking out [deepmerge](https://lodash.com/docs/#cloneDeep) or [lodash.cloneDeep](https://lodash.com/docs/#cloneDeep) In order to make updates to your model, the `handleUpdateModel` function is expecting to receive your entire model object as a parameter.
 
 After you make a copy of your model and make any required updates, call the `handleUpdateModel` method provided to you by the `useContext` React hook. This updates the model state internal to your custom app and dispatches any relevant messages to the parent application.
 
