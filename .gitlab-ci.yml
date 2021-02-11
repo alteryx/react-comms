@@ -36,6 +36,12 @@ build-ui-sdk:
     - cd packages/components
     - npm i
     - npm run build:es2015 && npm run build:es2015modules
+    - echo registry = $ARTIFACTORY_PATH>>.npmrc
+    - echo _auth = $ARTIFACTORY_AUTH>>.npmrc
+    - echo email = $ARTIFACTORY_EMAIL>>.npmrc
+    - echo always-auth = true>>.npmrc
+    - npm version 0.0.$CI_PIPELINE_ID-$CI_COMMIT_REF_SLUG --no-git-tag-version
+    - npm publish build --tag $CI_COMMIT_REF_SLUG
   artifacts:
     when: always
     expire_in: 1h
@@ -108,6 +114,9 @@ publish-sdk:
     - git add . 
     - git commit -m "Bumping version for master build [ci skip]"
     - git pull origin master && git push && git push --tags
+    - echo _auth = $ARTIFACTORY_AUTH>>.npmrc
+    - echo email = $ARTIFACTORY_EMAIL>>.npmrc
+    - echo always-auth = true>>.npmrc
     - npm run build:publish && npm publish build --tag beta
   except:
     variables:
