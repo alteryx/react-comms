@@ -35,7 +35,7 @@ build-ui-sdk:
   script:
     - cd packages/components
     - npm i
-    - npm run build:es2015 && npm run build:es2015modules
+    - npm run build:publish
     - echo registry = $ARTIFACTORY_PATH>>.npmrc
     - echo _auth = $ARTIFACTORY_AUTH>>.npmrc
     - echo email = $ARTIFACTORY_EMAIL>>.npmrc
