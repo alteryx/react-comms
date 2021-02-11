@@ -41,7 +41,7 @@ build-ui-sdk:
     - echo email = $ARTIFACTORY_EMAIL>>.npmrc
     - echo always-auth = true>>.npmrc
     - npm version 0.0.$CI_PIPELINE_ID-$CI_COMMIT_REF_SLUG --no-git-tag-version
-    - npm publish build --tag $CI_COMMIT_REF_SLUG
+    - npm run build:copy-package-json && npm publish build --tag $CI_COMMIT_REF_SLUG
   artifacts:
     when: always
     expire_in: 1h
