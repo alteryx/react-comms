@@ -9,6 +9,7 @@ stages:
   - test-coverage
   - build
   - sonarscan
+  - veracode
   - build-docs
   - publish
   - pages
@@ -19,14 +20,12 @@ cache:
     - packages/docs/node_modules/
     
 veracode-portal-scan:
-  stage: test-coverage
+  stage: veracode
   extends: [.veracode-portal-scan]
   before_script:
-    - tar -czvf veracodeBall.tgz dist svc
+    - tar -czvf veracodeBall.tgz build svc
   variables:
     COMPRESSED_CODE: veracodeBall.tgz
-  rules:
-    - if: $CI_COMMIT_TAG
 
 test-sdk:
   stage: test-coverage
