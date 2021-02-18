@@ -23,7 +23,7 @@ veracode-portal-scan:
   stage: veracode
   extends: [.veracode-portal-scan]
   before_script:
-    - tar -czvf veracodeBall.tgz build svc
+    - tar -czvf veracodeBall.tgz packages/components/build svc
   variables:
     COMPRESSED_CODE: veracodeBall.tgz
 
