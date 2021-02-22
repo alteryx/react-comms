@@ -26,6 +26,8 @@ veracode-portal-scan:
     - tar -czvf veracodeBall.tgz packages/components/build
   variables:
     COMPRESSED_CODE: veracodeBall.tgz
+  only:
+    - master
 
 test-sdk:
   stage: test-coverage
@@ -128,6 +130,7 @@ publish-sdk:
     - git add . 
     - git commit -m "Bumping version for master build [ci skip]"
     - git pull origin master && git push && git push --tags
+    - echo registry = $ARTIFACTORY_PATH>>.npmrc
     - echo _auth = $ARTIFACTORY_AUTH>>.npmrc
     - echo email = $ARTIFACTORY_EMAIL>>.npmrc
     - echo always-auth = true>>.npmrc
