@@ -8,7 +8,7 @@ The DesignerApi expects you to provide your own translated messages for any lang
 
 ``` jsx static
   import React from 'react'
-  import { MessageAPI, DesignerApi } from '@ayx/ayx-ui-sdk'
+  import { MessageAPI, DesignerApi } from '@ayx/react-comms'
   import { AyxAppWrapper } from '@ayx/eclipse-components'
   const messages = {
     en: {

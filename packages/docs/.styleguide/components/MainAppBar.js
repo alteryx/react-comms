@@ -13,7 +13,6 @@ import {
   useTheme
 } from "@ayx/ui-core";
 import {
-  Gitlab,
   Sunrise,
   Sunset,
 
@@ -85,15 +84,6 @@ const MainAppBar = ({
                 <Tooltip arrow title="Toggle Dark Mode">
                   <IconButton onClick={togglePaletteType}>
                     {palette.type === "dark" ? <Sunrise size="large" /> : <Sunset size="large" />}
-                  </IconButton>
-                </Tooltip>
-                <Tooltip arrow title="GitLab">
-                  <IconButton
-                    onClick={() => {
-                      window.open("https://git.alteryx.com/ayx-ui-sdk/ui-sdk");
-                    }}
-                  >
-                    <Gitlab size="large" />
                   </IconButton>
                 </Tooltip>
               </Box>

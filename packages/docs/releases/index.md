@@ -1,1 +1,1 @@
-A new release is available every 2 weeks, on the first Thursday following the start of each iteration. The UI-SDK package adheres to semantic versioning: _Major.Minor.Patch_. [Release notes](#/Releases/Changelog).
+The UI-SDK package adheres to semantic versioning: _Major.Minor.Patch_. [Release notes](#/Releases/Changelog).

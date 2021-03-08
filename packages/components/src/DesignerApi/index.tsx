@@ -63,12 +63,11 @@ const DesignerApi: React.FC<IDesignerApiProps> = (props: IDesignerApiProps) => {
   }, []);
 
   const getContextValue = useCallback(() => [model, handleUpdateModel], [model, handleUpdateModel]);
-
   const contextProps: IContextProviderProps = {
     id: 'sdk-provider',
     value: getContextValue()
   };
-
+  
   const { darkMode, locale, productTheme } = appContext || {};
   const appPropsToSpread = { messages, paletteType: darkMode ? 'dark' : 'light', theme: productTheme, locale };
 

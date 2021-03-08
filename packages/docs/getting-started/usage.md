@@ -10,7 +10,7 @@ From there, you can use the `FormattedMessage` component provided by `react-intl
 
 ``` jsx static
   import React from 'react'
-  import { DesignerApi } from '@ayx/ayx-ui-sdk'
+  import { DesignerApi } from '@ayx/react-comms'
   import { FormattedMessage } from 'react-intl'
   const messages = {
     en: {
@@ -66,8 +66,11 @@ As a best practice, you should not override or manipulate your model directly. T
 
 After you make a copy of your model and make any required updates, call the `handleUpdateModel` method provided to you by the `useContext` React hook. This updates the model state internal to your custom app and dispatches any relevant messages to the parent application.
 
-To explore more advanced examples, visit our [DesignerApi docs](#/UI-SDK%20Components/DesignerApi).
+To explore more advanced examples, visit our DesignerApi docs located in the side bar to the left.
 
 ## Build Process
 
 If you're building a custom tool for Designer, you'll need to bundle it and install it upon completion. More [here](https://help.alteryx.com/current/developer-help/quick-start-custom-tools)
+
+https://alteryx.github.io/ayx-ui-sdk/comms-bridge/index.html#/UI-SDK%20Components/DesignerApi
+https://alteryx.github.io/ayx-ui-sdk/comms-bridge/index.html#/Designer%20Api/Usage

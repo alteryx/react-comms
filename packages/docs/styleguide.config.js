@@ -270,7 +270,7 @@ module.exports = {
     if (dir.includes('src')) {
       const delimiter = dir.includes('/') ? '/' : '\\';
       const componentName = dir.split(delimiter)[1];
-      const path = `import { ${componentName} } from '@ayx/ayx-ui-sdk';`;
+      const path = `import { ${componentName} } from '@ayx/react-comms';`;
 
       return path;
     }
