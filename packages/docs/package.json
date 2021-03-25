@@ -38,8 +38,6 @@
     "enzyme-adapter-react-16": "^1.15.2",
     "enzyme-react-intl": "^2.0.6",
     "enzyme-to-json": "^3.5.0",
-    "eslint-config-ui-core": "^1.0.11",
-    "eslint-config-ui-core-base": "^1.0.14",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-intl": "^4.7.6",
