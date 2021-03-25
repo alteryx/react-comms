@@ -55,7 +55,6 @@
     "build:copy-package-json": "NODE_ENV=production babel package.json --copy-files --out-dir ./build",
     "build:copy-ts-files": "babel-node --config-file ./.babelrc.js ./scripts/copy-files.js ../src/**/*.d.ts ../build",
     "build:es2015modules": "NODE_ENV=production babel --config-file ./.babelrc.js src/index.ts --out-file build/index.js",
-    "docs:build": "styleguidist build",
     "analyze": "ayx-scripts analyze-bundle",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
   },
