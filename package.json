@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "cd packages/components && npm run test",
-    "install:components": "cd packages/components && npm run install",
-    "install:docs": "cd packages/docs && npm run install",
+    "install:components": "cd packages/components && npm install",
+    "install:docs": "cd packages/docs && npm install",
     "build:components": "cd packages/components && npm run build:publish",
     "build:docs": "cd packages/docs && npm run docs:build",
     "docs": "cd packages/docs && npm run docs"
