@@ -49,7 +49,7 @@ class DesignerMessageApi extends MessageApiBase<IContext, IModel, IAyxAppContext
   }
 
   sendMessage = (type: string, payload: object): Promise<any> => {
-    return callback.JsEvent(this.context, type, payload);
+    return callback.JsEvent(type, payload, this.context);
   };
 
   encryptSecrets = (key: string): object => {
