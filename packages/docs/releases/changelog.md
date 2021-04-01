@@ -1,3 +1,9 @@
+### GA Date
+
+#### @ayx/react-comms@1.0.0
+
+- Updated JsEvent signature
+
 ### January 29th, 2021
 #### @ayx/ayx-ui-sdk@0.0.7-alpha
 
