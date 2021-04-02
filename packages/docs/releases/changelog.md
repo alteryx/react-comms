@@ -2,7 +2,7 @@
 
 #### @ayx/react-comms@1.0.0
 
-- Updated JsEvent signature
+- Updated JsEvent signature. Reordered the first parameter (context) to be the third and made it optional. 
 
 ### January 29th, 2021
 #### @ayx/ayx-ui-sdk@0.0.7-alpha
