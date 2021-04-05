@@ -31,7 +31,7 @@ describe('DesignerMessageApi', () => {
     const messageBroker = new DesignerMessageApi(window.Alteryx);
     messageBroker.sendMessage('Update_stuff', { data: { stuff: 'things' } });
 
-    expect(spyJsEvent).toHaveBeenCalledWith(messageBroker.context, 'Update_stuff', { data: { stuff: 'things' } });
+    expect(spyJsEvent).toHaveBeenCalledWith('Update_stuff', { data: { stuff: 'things' } }, messageBroker.context);
   });
 
   it('should set a new subscription in its subscriptions map when called', () => {
@@ -95,7 +95,7 @@ describe('DesignerMessageApi', () => {
       }
     });
 
-    expect(spyJsEvent).toHaveBeenCalledWith(messageBroker.context, 'Decrypt', expected);
+    expect(spyJsEvent).toHaveBeenCalledWith('Decrypt', expected, messageBroker.context);
   });
 
   it('should call JsEvent to Encrypt passwords on SetConfiguration if the Secrets key is present', () => {
@@ -110,7 +110,7 @@ describe('DesignerMessageApi', () => {
 
     messageBroker.context.Gui.GetConfiguration();
 
-    expect(spyJsEvent).toHaveBeenCalledWith(messageBroker.context, 'Encrypt', expected);
+    expect(spyJsEvent).toHaveBeenCalledWith('Encrypt', expected, messageBroker.context);
   });
 
   it('should use the context GetConfiguration to invoke a jsEvent with context, GetConfiguration, and model as params', async () => {
@@ -127,7 +127,7 @@ describe('DesignerMessageApi', () => {
 
     await messageBroker.context.Gui.GetConfiguration();
 
-    expect(spyJsEvent).toHaveBeenCalledWith(messageBroker.context, 'GetConfiguration', expected);
+    expect(spyJsEvent).toHaveBeenCalledWith('GetConfiguration', expected, messageBroker.context);
   });
 
   it('should use assignDecryptedSecrets to update decrypted values', () => {

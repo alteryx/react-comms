@@ -10,12 +10,12 @@ describe('JsEvent', () => {
     JsEvent: jest.fn()
   };
   it('should return a promise', () => {
-    const callbackPromise = JsEvent(window.Alteryx, 'test', { payload: 'data' });
+    const callbackPromise = JsEvent('test', { payload: 'data' }, window.Alteryx);
     expect(callbackPromise).toBeInstanceOf(Promise);
   });
 
   it('should call JsEvent on the window context', () => {
-    JsEvent(window.Alteryx, 'test', { payload: 'data' });
+    JsEvent('test', { payload: 'data' }, window.Alteryx);
     expect(window.Alteryx.JsEvent).toHaveBeenCalled();
   });
 });

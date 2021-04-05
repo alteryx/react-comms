@@ -159,7 +159,7 @@ describe('DesignerApi', () => {
     );
     wrapper.update();
     await window.Alteryx.Gui.GetConfiguration();
-    expect(spyJsEvent).toHaveBeenCalledWith(window.Alteryx, 'GetConfiguration', expected);
+    expect(spyJsEvent).toHaveBeenCalledWith('GetConfiguration', expected, window.Alteryx);
   });
 
   it('should handle updates to the secrets key for both the secret itself and its encryptionMode', () => {
