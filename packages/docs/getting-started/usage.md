@@ -10,7 +10,7 @@ From there, you can use the `FormattedMessage` component provided by `react-intl
 
 ``` jsx static
   import React from 'react'
-  import { DesignerApi } from '@ayx/react-comms'
+  import { DesignerApi } from '@alteryx/react-comms'
   import { FormattedMessage } from 'react-intl'
   const messages = {
     en: {
@@ -47,8 +47,8 @@ Once you've created your DesignerApi, you will likely want to send updates to an
 
 ```jsx static
 import React, { useContext } from 'react';
-import { Button } from '@ayx/eclipse-components';
-import { UiSdkContext } from '@ayx/ui-sdk';
+import { Button } from '@alteryx/ui';
+import { UiSdkContext } from '@alteryx/react-comms';
 
 const SampleButton = () => {
   const [model, handleUpdateModel] = React.useContext(UiSdkContext);

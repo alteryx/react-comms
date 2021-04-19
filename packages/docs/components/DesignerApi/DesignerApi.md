@@ -1,13 +1,13 @@
 ## Overview
-When you implement the DesignerApi, it requires only one prop: `messages`. The messages prop is an object that includes any internationalized messages that you expect your app to access. The example below shows this in more detail. It also supports the `defaultConfig` prop, which is optional. It allows you to ensure a particular default state for your application before you've received your current tool configuration from Designer. Additionally, if you plan to use Eclipse Components, you must wrap your custom app in an AyxAppWrapper.
+When you implement the DesignerApi, it requires only one prop: `messages`. The messages prop is an object that includes any internationalized messages that you expect your app to access. The example below shows this in more detail. It also supports the `defaultConfig` prop, which is optional. It allows you to ensure a particular default state for your application before you've received your current tool configuration from Designer. Additionally, if you plan to use Alteryx UI Components, you must wrap your custom app in an AyxAppWrapper.
 
 ## Props Example
 The DesignerApi expects you to provide your own translated messages for any languages you want to support, in the format shown below. It also supports a defaultConfig prop. This allows you to ensure a particular default state before you've received your current tool configuration from Designer.
 
 ``` jsx static
   import React from 'react'
-  import { MessageAPI, DesignerApi } from '@ayx/react-comms'
-  import { AyxAppWrapper } from '@ayx/eclipse-components'
+  import { MessageAPI, DesignerApi } from '@alteryx/react-comms'
+  import { AyxAppWrapper } from '@alteryx/ui'
   const messages = {
     en: {
       'example.label': 'Super awesome string.'
