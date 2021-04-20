@@ -5,10 +5,10 @@ const path = require('path');
 
 module.exports = {
   styleguideComponents: {
-    Wrapper: path.join(__dirname, './.styleguide/Wrapper.js'),
-    ComponentsListRenderer: path.join(__dirname, './.styleguide/components/SidebarList.js'),
-    TableOfContentsRenderer: path.join(__dirname, './.styleguide/components/Sidebar.js'),
-    StyleGuideRenderer: path.join(__dirname, './.styleguide/App.js')
+    Wrapper: path.join(__dirname, './public/.styleguide/Wrapper.js'),
+    ComponentsListRenderer: path.join(__dirname, './public/.styleguide/components/SidebarList.js'),
+    TableOfContentsRenderer: path.join(__dirname, './public/.styleguide/components/Sidebar.js'),
+    StyleGuideRenderer: path.join(__dirname, './public/.styleguide/App.js')
   },
   title: 'UI-SDK',
   // eslint-disable-next-line global-require
@@ -21,7 +21,8 @@ module.exports = {
           exclude: [/node_modules/],
           include: [
             path.join(__dirname, '../src'),
-            path.join(__dirname, './.styleguide'),
+            path.join(__dirname, './public/.styleguide'),
+            path.join(__dirname, './public/static'),
             path.join(__dirname, './components/DesignerApi'),
             path.join(__dirname, 'public')
           ],
