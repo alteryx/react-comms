@@ -82,7 +82,7 @@ const StyleGuideRenderer = ({
                 <Logo />
               </Box>
               <Box className={classes.logoText}>
-                <Typography className={classes.core}>UI-SDK</Typography>
+                <Typography className={classes.core}>React Comms</Typography>
                 <Link className={classes.version} href="#/Releases/Versions">{`Version ${version}`}</Link>
               </Box>
             </Box>
@@ -100,7 +100,7 @@ const StyleGuideRenderer = ({
               <MarkdownStyleOverrider>{children}</MarkdownStyleOverrider>
           </Grid>
           <Grid item xs={12} component="footer">
-            {`UI-SDK Version ${version}`}
+            {`React Comms Version ${version}`}
           </Grid>
         </Grid>
       </Grid>

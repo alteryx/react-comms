@@ -32,7 +32,7 @@ The DesignerApi expects you to provide your own translated messages for any lang
     }
   }
 
-  <DesignerApi defaultConfig={{ Configuration: { count: 0 } }} messages={messages}>
+  <DesignerApi defaultConfig={ { Configuration: { count: 0 } }} messages={messages}>
     <AyxAppWrapper>
       Hello World
     </AyxAppWrapper>

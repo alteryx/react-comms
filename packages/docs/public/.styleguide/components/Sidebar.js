@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Input, InputAdornment, Box, useTheme, makeStyles } from '@ayx/ui-core';
-import { Search } from '@ayx/icons';
+import { FormControl, IconButton, TextField, InputAdornment, Box, useTheme, makeStyles } from '@ayx/ui-core';
+import { Search, X } from '@ayx/icons';
 
 const useStyles = makeStyles(({palette}) => ({
   input: {
@@ -18,24 +18,44 @@ const useStyles = makeStyles(({palette}) => ({
 
 // Built from Styleguidist 'TableOfContentsRenderer' component
 const Sidebar = (props) => {
-  const { children, onSearchTermChange } = props;
+  const { children, onSearchTermChange, searchTerm } = props;
   const { palette } = useTheme()
   const classes = useStyles();
 
   return (
     <>
-      <Box m={3}>
-        <Input
-          className={classes.input}
-          fullWidth
-          placeholder="Filter"
-          onChange={event => onSearchTermChange(event.target.value)}
-          startAdornment={
-            <InputAdornment position="start">
-              <Search size={12} color={palette.text.secondary} />
-            </InputAdornment>
-          }
-        />
+      <Box ml={4} mb={3}>
+      <FormControl fullWidth>
+          <TextField
+            id="uic-demo-side-bar-search-term"
+            placeholder="Filter"
+            onChange={event => onSearchTermChange(event.target.value)}
+            InputProps={{
+              className: classes.input,
+              type: 'search',
+              startAdornment: (
+                <InputAdornment position="start">
+                  <Search
+                    color={palette.blueGrey[300]}
+                    size="small"
+                  />
+                </InputAdornment>
+              ),
+              endAdornment: 
+                searchTerm ? (
+                  <InputAdornment position="end">
+                    <IconButton
+                      onClick={() => onSearchTermChange('')}
+                    >
+                      <X size={10} />
+                    </IconButton>
+                  </InputAdornment>
+                ) : undefined
+            }}
+            value={searchTerm}
+            variant="filled"
+          />
+        </FormControl>
       </Box>
       {children}
     </>

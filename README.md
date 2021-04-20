@@ -1,5 +1,5 @@
-# UI-SDK
+# React Comms
 
 Check out our docs here:
 
-https://ayx-ui-sdk.pages.git.alteryx.com/ui-sdk
+https://alteryx.github.io/react-comms/
