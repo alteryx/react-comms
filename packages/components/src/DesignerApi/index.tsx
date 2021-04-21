@@ -42,9 +42,9 @@ const DesignerApi: React.FC<IDesignerApiProps> = (props: IDesignerApiProps) => {
   const handleUpdateModel = (updatedData: IModel) => {
     updateModel(updatedData);
     messageBroker.model = updatedData;
-    if (messageBroker instanceof MicroAppMessageApi) {
+    window.Alteryx && window.Alteryx.AlteryxLanguageCode ? 
+      window.Alteryx.model = updatedData :
       messageBroker.sendMessage(SUBSCRIPTION_EVENTS.MODEL_UPDATED, updatedData);
-    }
   };
 
   useEffect(() => {

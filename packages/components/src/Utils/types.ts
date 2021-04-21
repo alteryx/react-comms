@@ -8,6 +8,7 @@ export interface IContext {
   };
   AlteryxLanguageCode?: string;
   JsEvent?: Function;
+  model: IModel;
 }
 
 export interface IAyxAppContext {
