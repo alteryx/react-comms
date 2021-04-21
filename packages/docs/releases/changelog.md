@@ -2,6 +2,7 @@
 
 #### @alteryx/react-comms@1.0.0
 
+- Added support viewing the model in the CEF window developer tools. 
 - Updated JsEvent signature. Reordered the first parameter (context) to be the third and made it optional. 
 
 ### January 29th, 2021
