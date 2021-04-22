@@ -48,7 +48,7 @@
   },
   "scripts": {
     "docs": "styleguidist server",
-    "docs:build": "styleguidist build"
+    "docs:build": "styleguidist build && cp -R ./styleguide/* ../../docs/"
   },
   "author": "",
   "license": "ISC"
