@@ -29,6 +29,7 @@ class DesignerMessageApi extends MessageApiBase<IContext, IModel, IAyxAppContext
         if (this.subscriptions && this.subscriptions.has('MODEL_UPDATED')) {
           this.model = await this.generateConfigShape(currentToolConfiguration);
           this.subscriptions.get('MODEL_UPDATED')(this.model);
+          this.context.model = this.model;
         }
         this.context.JsEvent(JSON.stringify({ Event: MESSAGE_TYPES.SET_CONFIGURATION }));
       },
