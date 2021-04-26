@@ -1,25 +1,20 @@
 {
-  "name": "react-comms-root",
-  "version": "1.0.0",
+  "name": "react-comms",
+  "version": "0.0.0",
   "description": "Check out our docs here:",
   "main": "index.js",
   "scripts": {
+    "test": "cd packages/components && npm run test",
     "install:components": "cd packages/components && npm install",
     "install:docs": "cd packages/docs && npm install",
-    "install:all": "npm run install:components && npm run install:docs",
-    "test:components": "cd packages/components && npm run test",
     "build:components": "cd packages/components && npm run build:publish",
-    "build:docs": "cd packages/docs && npm run build",
-    "watch:docs": "cd packages/docs && npm run watch"
+    "build:docs": "cd packages/docs && npm run docs:build",
+    "docs": "cd packages/docs && npm run docs"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/alteryx/react-comms.git"
+    "url": "git@git.alteryx.com:ayx-ui-sdk/ui-sdk.git"
   },
   "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/alteryx/react-comms/issues"
-  },
-  "homepage": "https://github.com/alteryx/react-comms#readme"
+  "license": "ISC"
 }

@@ -1,11 +1,11 @@
 {
-  "name": "@ayx/ayx-ui-sdk-docs",
+  "name": "@alteryx/react-comms-docs",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "dependencies": {
     "@ayx/ayx-ui-sdk": "0.0.6-alpha",
-    "@ayx/ui-core": "^5.3.4",
+    "@ayx/ui-core": "^5.5.2",
     "@types/jest": "^26.0.20",
     "@types/node": "^14.14.22",
     "@types/react": "^17.0.0",
@@ -48,7 +48,7 @@
   },
   "scripts": {
     "docs": "styleguidist server",
-    "docs:build": "styleguidist build"
+    "docs:build": "styleguidist build && cp -R ./styleguide/* ../../docs/"
   },
   "author": "",
   "license": "ISC"

@@ -1,5 +1,5 @@
 import MessageApi from '../MessageApiBase';
-import { IMicroAppMessage, IAyxAppContext } from '../Utils/types';
+import { IMicroAppMessage, IAyxAppContext, IModel } from '../Utils/types';
 
 let initRes: any;
 
@@ -7,7 +7,7 @@ const initialized = new Promise(res => {
   initRes = res;
 });
 
-class MicroAppMessageApi extends MessageApi<object, object, IAyxAppContext> {
+class MicroAppMessageApi extends MessageApi<object, IModel, IAyxAppContext> {
   constructor() {
     super(window);
     window.addEventListener('message', this.receiveMessage);

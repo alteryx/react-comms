@@ -29,6 +29,7 @@ class DesignerMessageApi extends MessageApiBase<IContext, IModel, IAyxAppContext
         if (this.subscriptions && this.subscriptions.has('MODEL_UPDATED')) {
           this.model = await this.generateConfigShape(currentToolConfiguration);
           this.subscriptions.get('MODEL_UPDATED')(this.model);
+          this.context.model = this.model;
         }
         this.context.JsEvent(JSON.stringify({ Event: MESSAGE_TYPES.SET_CONFIGURATION }));
       },
@@ -49,7 +50,7 @@ class DesignerMessageApi extends MessageApiBase<IContext, IModel, IAyxAppContext
   }
 
   sendMessage = (type: string, payload: object): Promise<any> => {
-    return callback.JsEvent(this.context, type, payload);
+    return callback.JsEvent(type, payload, this.context);
   };
 
   encryptSecrets = (key: string): object => {

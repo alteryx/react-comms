@@ -10,7 +10,7 @@ From there, you can use the `FormattedMessage` component provided by `react-intl
 
 ``` jsx static
   import React from 'react'
-  import { DesignerApi } from '@ayx/ayx-ui-sdk'
+  import { DesignerApi } from '@alteryx/react-comms'
   import { FormattedMessage } from 'react-intl'
   const messages = {
     en: {
@@ -43,31 +43,34 @@ From there, you can use the `FormattedMessage` component provided by `react-intl
 
 ## Context
 
-Once you've created your DesignerApi, you will likely want to send updates to and from your custom application. You can do this via `React.Context`. When you open the dev harness code, you will see a simple example for a button that increments a model count. The example looks something like this:
+Once you've created your DesignerApi, you will likely want to send updates to and from your custom application. You can do this via `React.Context`. Your implementation could look something like this:
 
 ```jsx static
 import React, { useContext } from 'react';
-import { Button } from '@ayx/ui-core';
-import { UiSdkContext } from '@ayx/ui-sdk';
+import { Button } from '@alteryx/ui';
+import { UiSdkContext } from '@alteryx/react-comms';
 
 const SampleButton = () => {
   const [model, handleUpdateModel] = React.useContext(UiSdkContext);
 
   const incrementCount = () => {
-    let { count } = model.Configuration;
-    count++;
-    handleUpdateModel({ Configuration: { count } });
+    const newModel = { ...model }; // copy your model
+    newModel.Configuration.count++
+    handleUpdateModel(newModel);
   }
   return <Button onClick={updateModel}> Click this to update my count </Button>;
 };
 ```
 
-As a best practice, you should not override or manipulate your model directly. Additionally, `handleUpdateModel` only supports updates to the `Configuration`, `Secrets`, and `Annotation` keys. Sending your entire model back without specifying which of these keys you'd like to update will cause a failure and won't persist your changes.
+As a best practice, you should not override or manipulate your model directly. This can be accomplished as seen in the above example. If you are in need of more complicated or deeper cloning, we recommend checking out [deepmerge](https://lodash.com/docs/#cloneDeep) or [lodash.cloneDeep](https://lodash.com/docs/#cloneDeep) In order to make updates to your model, the `handleUpdateModel` function is expecting to receive your entire model object as a parameter.
 
 After you make a copy of your model and make any required updates, call the `handleUpdateModel` method provided to you by the `useContext` React hook. This updates the model state internal to your custom app and dispatches any relevant messages to the parent application.
 
-To explore more advanced examples, visit our [DesignerApi docs](#/UI-SDK%20Components/DesignerApi).
+To explore more advanced examples, visit our DesignerApi docs located in the side bar to the left.
 
 ## Build Process
 
-If you're building a custom tool for Designer, you'll need to bundle it and install it upon completion. If you're using the Dev Harness, you can use our built in `npm run build` command. From there, you can manually copy and paste the output of the `build` directory into the respective Plugin Folder in Designer. More [here](https://help.alteryx.com/current/developer-help/quick-start-custom-tools)
+If you're building a custom tool for Designer, you'll need to bundle it and install it upon completion. More [here](https://help.alteryx.com/current/developer-help/quick-start-custom-tools)
+
+https://alteryx.github.io/ayx-ui-sdk/comms-bridge/index.html#/UI-SDK%20Components/DesignerApi
+https://alteryx.github.io/ayx-ui-sdk/comms-bridge/index.html#/Designer%20Api/Usage
