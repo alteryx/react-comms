@@ -49,14 +49,15 @@
     "test": "jest -u --silent",
     "apidocs": "ayx-scripts doc",
     "docs": "styleguidist server",
-    "build:publish": "npm run build:copy-package-json && npm run build:es2015 && npm run build:es2015modules && npm run build:copy-ts-files",
+    "build:publish": "npm run build:copy-package-json && npm run build:copy-license && npm run build:es2015 && npm run build:es2015modules && npm run build:copy-ts-files",
     "build:es2015": "NODE_ENV=production babel --config-file ./.babelrc.js --extensions '.ts' --extensions '.tsx' --ignore 'src/**/*.d.ts' src --out-dir build",
     "build:copy-package-json": "NODE_ENV=production babel package.json --copy-files --out-dir ./build",
+    "build:copy-license": "NODE_ENV=production babel ../../LICENSE --copy-files --out-dir ./build",
     "build:copy-ts-files": "babel-node --config-file ./.babelrc.js ./scripts/copy-files.js ../src/**/*.d.ts ../build",
     "build:es2015modules": "NODE_ENV=production babel --config-file ./.babelrc.js src/index.ts --out-file build/index.js",
     "analyze": "ayx-scripts analyze-bundle",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
   },
   "author": "",
-  "license": "ISC"
+  "license": "MIT"
 }
