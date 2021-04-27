@@ -71,6 +71,3 @@ To explore more advanced examples, visit our DesignerApi docs located in the sid
 ## Build Process
 
 If you're building a custom tool for Designer, you'll need to bundle it and install it upon completion. More [here](https://help.alteryx.com/current/developer-help/quick-start-custom-tools)
-
-https://alteryx.github.io/ayx-ui-sdk/comms-bridge/index.html#/UI-SDK%20Components/DesignerApi
-https://alteryx.github.io/ayx-ui-sdk/comms-bridge/index.html#/Designer%20Api/Usage

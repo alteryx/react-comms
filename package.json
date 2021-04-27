@@ -1,5 +1,5 @@
 {
-  "name": "react-comms",
+  "name": "react-comms-root",
   "version": "0.0.0",
   "description": "Check out our docs here:",
   "main": "index.js",
@@ -13,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@git.alteryx.com:ayx-ui-sdk/ui-sdk.git"
+    "url": "git@github.com:alteryx/react-comms.git"
   },
   "author": "",
   "license": "MIT"
