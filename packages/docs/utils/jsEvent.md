@@ -1,4 +1,4 @@
-The most common utility function you may need to utilize is the `jsEvent` function that can imported from the React Comms library. This is a function that handles communciation with the C# side of Designer from the configuration panel and your tool UI. For a full list of supported jsEvents, check out window.Alteryx.SupportedJsEvents in the HTML Developer Tools in Designer.
+The most common utility function you may need to utilize is the `JsEvent` function that can imported from the React Comms library. This is a function that handles communciation with the C# side of Designer from the configuration panel and your tool UI. For a full list of supported JsEvents, check out window.Alteryx.SupportedJsEvents in the HTML Developer Tools in Designer.
 
 ### FileBrowse
 
@@ -10,7 +10,7 @@ const folderButton = () => {
   
   const onButtonClick = async () => {
     const newModel = { ...model };
-    const val = await JsEvent(window.Alteryx, 'FileBrowse', {});
+    const val = await JsEvent('FileBrowse', {});
     newModel.Configuration.fileNames = val;
     handleUpdateModel(newModel);
   };
