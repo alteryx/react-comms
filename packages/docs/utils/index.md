@@ -1,0 +1,1 @@
+The React Comms library provides various utility functions for interfacing with Designer directly.

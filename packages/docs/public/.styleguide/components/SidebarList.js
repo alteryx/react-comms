@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Collapse, List, ListItem, ListItemText, ListItemIcon, Divider, Box, useTheme, makeStyles, fade } from '@ayx/ui-core';
-import { Home, Layers, Box as BoxIcon, GitMerge } from '@ayx/icons';
+import { Home, Layers, Box as BoxIcon, GitMerge, Settings } from '@ayx/icons';
 import { getHash } from 'react-styleguidist/lib/client/utils/handleHash';
 import clsx from 'clsx';
 
@@ -9,6 +9,7 @@ const iconLookup = {
   'getting started': Home,
   'releases': GitMerge,
   'designer api': BoxIcon,
+  'utils': Settings,
 };
 
 const useStyles = makeStyles(({ spacing, typography, palette, direction }) => ({
