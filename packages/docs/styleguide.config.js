@@ -259,6 +259,19 @@ module.exports = {
       exampleMode: 'collapse',
       usageMode: 'collapse',
       sectionDepth: 1
+    },
+    {
+      name: 'Utils',
+      content: './utils/index.md', 
+      sections: [
+        {
+          name: 'JsEvent',
+          content: './utils/jsEvent.md',
+        }
+      ],
+      exampleMode: 'collapse',
+      usageMode: 'collapse',
+      sectionDepth: 1
     }
   ],
   pagePerSection: true,
