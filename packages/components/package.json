@@ -1,7 +1,7 @@
 {
   "name": "@alteryx/react-comms",
   "version": "1.0.0",
-  "description": "",
+  "description": "Communication bridge for the Alteryx UI-SDK",
   "main": "index.js",
   "dependencies": {
     "@types/jest": "^26.0.20",
