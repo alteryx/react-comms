@@ -14,5 +14,4 @@ artifacts
 .yalc/
 yalc.lock
 npm-debug.log
-build/
 report.*
