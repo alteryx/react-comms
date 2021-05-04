@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Collapse, List, ListItem, ListItemText, ListItemIcon, Divider, Box, useTheme, makeStyles, fade } from '@ayx/ui-core';
-import { Home, Layers, Box as BoxIcon, GitMerge, Settings } from '@ayx/icons';
+import { Collapse, List, ListItem, ListItemText, ListItemIcon, Divider, Box, useTheme, makeStyles, fade } from '@alteryx/ui';
+import { Home, Layers, Box as BoxIcon, GitMerge, Settings } from '@alteryx/icons';
 import { getHash } from 'react-styleguidist/lib/client/utils/handleHash';
 import clsx from 'clsx';
 

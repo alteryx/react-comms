@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import merge from "deepmerge";
-import { AyxAppWrapper } from "@ayx/ui-core";
+import { AyxAppWrapper } from "@alteryx/ui";
 import AppRenderer from "./components/AppRenderer";
 
 const LOCAL_STORAGE_KEYS = {

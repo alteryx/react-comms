@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormControl, IconButton, TextField, InputAdornment, Box, useTheme, makeStyles } from '@ayx/ui-core';
-import { Search, X } from '@ayx/icons';
+import { FormControl, IconButton, TextField, InputAdornment, Box, useTheme, makeStyles } from '@alteryx/ui';
+import { Search, X } from '@alteryx/icons';
 
 const useStyles = makeStyles(({palette}) => ({
   input: {

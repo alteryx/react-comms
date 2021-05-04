@@ -4,8 +4,9 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "@ayx/ayx-ui-sdk": "0.0.6-alpha",
-    "@ayx/ui-core": "^5.5.2",
+    "@alteryx/icons": "0.0.1",
+    "@alteryx/react-comms": "0.0.1",
+    "@alteryx/ui": "0.0.3",
     "@types/jest": "^26.0.20",
     "@types/node": "^14.14.22",
     "@types/react": "^17.0.0",

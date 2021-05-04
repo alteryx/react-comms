@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useTheme } from "@ayx/ui-core";
+import { useTheme } from "@alteryx/ui";
 
 const STYLEGUIDIST_CLASSES = [
   "rsg--sectionName",
