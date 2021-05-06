@@ -1,6 +1,6 @@
 import React from 'react';
-import { AyxAppWrapper, Button, Grid, Typography } from '@ayx/ui-core';
-import { Context as UiSdkContext, DesignerApi } from '@ayx/ayx-ui-sdk';
+import { AyxAppWrapper, Button, Grid, Typography } from '@alteryx/ui';
+import { Context as UiSdkContext, DesignerApi } from '@alteryx/react-comms';
 
 import messages from './messages';
 

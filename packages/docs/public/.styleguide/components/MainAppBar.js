@@ -11,12 +11,11 @@ import {
   Box,
   makeStyles,
   useTheme
-} from "@ayx/ui-core";
+} from "@alteryx/ui";
 import {
   Sunrise,
   Sunset,
-
-} from '@ayx/icons';
+} from '@alteryx/icons';
 
 const useStyles = makeStyles(({ direction }) => ({
   appBar: {

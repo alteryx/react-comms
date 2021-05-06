@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Grid, Typography, Box, Link, makeStyles, useTheme, lighten, AyxAppWrapper } from "@ayx/ui-core";
+import { Grid, Typography, Box, Link, makeStyles, useTheme, lighten, AyxAppWrapper } from "@alteryx/ui";
 import MainAppBar from "./MainAppBar";
 import MarkdownStyleOverrider from "./MarkdownStyleOverrider";
 import Logo from './Logo';

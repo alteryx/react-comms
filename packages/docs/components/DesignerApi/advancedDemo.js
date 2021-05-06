@@ -9,8 +9,8 @@ import {
   FormControlLabel,
   Checkbox,
   InputLabel
-} from '@ayx/ui-core';
-import { Context as UiSdkContext, DesignerApi } from '@ayx/ayx-ui-sdk';
+} from '@alteryx/ui';
+import { Context as UiSdkContext, DesignerApi } from '@alteryx/react-comms';
 import messages from './messages';
 
 const initialModelState = {

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { AyxAppWrapper } from '@ayx/ui-core';
+import { AyxAppWrapper } from '@alteryx/ui';
 import { create } from 'jss';
 import rtl from 'jss-rtl';
 import { StylesProvider, jssPreset } from '@material-ui/styles';
