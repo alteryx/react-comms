@@ -1,1 +1,1 @@
-The UI-SDK package adheres to semantic versioning: _Major.Minor.Patch_. [Release notes](#/Releases/Changelog).
+The React Comms package adheres to semantic versioning: _Major.Minor.Patch_. [Release notes](#/Releases/Changelog).
