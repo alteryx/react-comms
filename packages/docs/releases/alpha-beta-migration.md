@@ -1,6 +1,6 @@
 ### Introduction
 
-This is a guide to migrating from the UI-SDK communication bridge alpha to beta. While minimal, we did introduce a breaking change to the way the model is updated from alpha to beta. 
+This is a guide to migrating from the React Comms alpha to beta. While minimal, we did introduce a breaking change to the way the model is updated from alpha to beta. 
 
 ### Model Updates Migration Guide
 

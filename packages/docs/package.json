@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "@alteryx/icons": "0.0.1",
-    "@alteryx/react-comms": "0.0.1",
-    "@alteryx/ui": "0.0.3",
+    "@alteryx/icons": "^0.0.1",
+    "@alteryx/react-comms": "^0.0.1",
+    "@alteryx/ui": "^0.0.3",
     "@types/jest": "^26.0.20",
     "@types/node": "^14.14.22",
     "@types/react": "^17.0.0",
