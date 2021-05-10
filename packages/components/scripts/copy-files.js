@@ -6,7 +6,7 @@ const glob = require('glob');
 const [copySource, copyTarget, ...copySourceExclusions] = process.argv.slice(2);
 
 // to avoid iterating, structuring this as an object: { <folder name>: { <file1>: true, <file2>: true } }
-const blacklist = {
+const blocklist = {
   core: {
     'index.d.ts': true
   }
@@ -24,9 +24,9 @@ const parseFiles = file => {
   }
 }
 
-const removeBlacklisted = bl => ({parsed, folder}) => {
-  const blacklistMatch = bl[folder] && bl[folder][parsed.base] || false;
-  return !blacklistMatch
+const removeBlocklisted = bl => ({parsed, folder}) => {
+  const blocklistMatch = bl[folder] && bl[folder][parsed.base] || false;
+  return !blocklistMatch
 }
 
 const typescriptCopy = (from, to, exclusions) => {
@@ -41,7 +41,7 @@ const typescriptCopy = (from, to, exclusions) => {
     ignore: buildIgnore(exclusions),
     cwd: from
   }).map(parseFiles)
-    .filter(removeBlacklisted(blacklist));
+    .filter(removeBlocklisted(blocklist));
 
   const cmds = files.map(({ parsed, folder, fullPath }) => {
     const toFolder = folder === 'src' ? to : `${to}/${folder}`;
