@@ -1,4 +1,4 @@
-### GA Date
+### May 12th, 2021
 
 #### @alteryx/react-comms@1.0.0
 

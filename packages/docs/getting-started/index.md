@@ -1,6 +1,4 @@
-The UI-SDK is a software development kit built on top of our Eclipse Component library. The library is a suite of React components that use [Material-UI (MUI)](https://github.com/mui-org/material-ui) with a custom Alteryx theme.
-
-The UI-SDK provides global context, a DesignerApi component, and multiple messaging APIs. The messaging API that you use will depend on the Alteryx product where your custom app lives.
+The React Comms package provides global context, a DesignerApi component, and multiple messaging APIs. The messaging API that you use will depend on the Alteryx product where your custom app lives.
 
 <details>
   <summary>**Initial Setup**</summary>
