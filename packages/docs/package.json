@@ -51,7 +51,7 @@
   },
   "scripts": {
     "docs": "styleguidist server",
-    "docs:clean": "rimraf ../../docs/build && rimraf ../../docs/index.html",
+    "docs:clean": "rimraf ../../docs/*",
     "docs:build": "styleguidist build && cp -R ./styleguide/* ../../docs/",
     "docs:publish": "npm run docs:clean && npm run docs:build"
   },
