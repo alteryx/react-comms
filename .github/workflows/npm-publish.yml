@@ -25,9 +25,11 @@ jobs:
         with:
           node-version: 12
           registry-url: https://registry.npmjs.org/
-      - run: cd packages/alteryx-ui
+      - run: cd packages/components
       - run: npm install
       - run: npm run build
       - run: npm publish build --access public
+      - run: cd ../docs
+      - run: npm run docs:publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}
