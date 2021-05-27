@@ -59,6 +59,7 @@ We've provided many different `onChange` callback examples to help you decide wh
 ## Accessing Meta
 
 The `DesignerApi` does some really nice cleanup for you when it comes to accessing your meta data. Meta will always be an array. Each index of the array represents a different list of fields from an input anchor. Accessing model.Meta[0] will give you the list of fields from the first input. If you wanted to access the 2nd field in that list, you'd chain an index of 1 to the fields property on the Meta. See below for an example:
+
 ```jsx static
 const Child = () => {
   const [model, handleUpdateModel] = React.useContext(UiSdkContext);
@@ -66,7 +67,50 @@ const Child = () => {
 })
 ```
 
-If you'd like to debug the meta data in more depth as it comes to you from Designer, simply add a `console.log(model.Meta)` from any component in your application where the model is accessible via context.
+The below snippet is an example of the meta data that came in from a Text Input tool. In practice, most of your meta data will take this basic shape: 
+
+```jsx static
+[
+  [
+    {
+      connectionName:"",
+      fieldsByName: {
+        streetName: {
+          "name":"Street Name","type":"V_String","size":"21","source":"Formula: [_CurrentField_]"
+        },
+        city: {
+          "name":"City","type":"V_String","size":"27","source":"Formula: [_CurrentField_]"
+        },
+        state: {
+          "name":"State","type":"String","size":"16","source":"Formula: [_CurrentField_]"
+        },
+        country: {
+          "name":"Country","type":"V_String","size":"27","source":"Formula: [_CurrentField_]"
+        },
+        zipCode: {
+          "name":"Zip Code","type":"V_String","size":"27","source":"Formula: [_CurrentField_]"
+        },
+      },
+      fields:[
+        {"name":"Street Name","type":"V_String","size":"21","source":"Formula: [_CurrentField_]"},
+        {"name":"City","type":"V_String","size":"27","source":"Formula: [_CurrentField_]"},
+        {"name":"State","type":"String","size":"16","source":"Formula: [_CurrentField_]"},
+        {"name":"Country","type":"String","size":"16","source":"Formula: [_CurrentField_]"},
+        {"name":"Zip Code","type":"String","size":"16","source":"Formula: [_CurrentField_]"}
+      ]
+    }
+  ]
+]
+```
+
+Following that structure, in order to get the name of the first field, you'd access it with:
+
+```jsx static
+const [model, handleUpdateModel] = getContext(UiSdkContext);
+const field1Name = model.Meta.fields[0][0].fields[0].name;
+```
+
+If you'd like to debug the meta data in more depth as it comes to you from Designer, you can access the current state of your model and Meta directly on the HTML Developer Tools by typing `window.Alteryx.model` into the javascript console. Additionally, you can add a `console.log(model.Meta)` from any component in your application where the model is accessible via context to see the state of the Meta in that component. 
 
 ## Secrets
 
