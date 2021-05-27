@@ -1,5 +1,5 @@
 import { IContext } from './types';
 
-declare const JsEvent: (context: IContext, Event: string, item: object) => Promise<unknown>;
+declare const JsEvent: (Event: string, item: object, context?: IContext) => Promise<unknown>;
 
 export default JsEvent;
