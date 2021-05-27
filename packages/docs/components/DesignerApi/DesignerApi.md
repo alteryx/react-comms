@@ -39,6 +39,54 @@ The DesignerApi expects you to provide your own translated messages for any lang
   </DesignerApi>
 ```
 
+## Default Configuration
+
+In order to allow you to ensure a consistent state of the world on tool initialization, we've provided a defaultConfig prop. As mentioned above, this allows you to set a consistent starting configuration for your tool. You're able to provide data to the `Configuration`, `Annotation`, `Secrets`, and `Meta` keys. Beyond enabling a consistent starting experience, this also lets you avoid null checking or any type coalescing in your react renders. 
+
+```jsx static
+  import React from 'react'
+  import { MessageAPI, DesignerApi } from '@alteryx/react-comms'
+  import { AyxAppWrapper } from '@alteryx/ui'
+
+  const sampleMetaFields = [
+    [
+      [
+        {
+          connectionName:"",
+          fieldsByName: {
+            streetName: {
+              "name":"Street Name","type":"V_String","size":"21","source":"Formula: [_CurrentField_]"
+            }
+          },
+          fields:[
+            {"name":"Street Name","type":"V_String","size":"21","source":"Formula: [_CurrentField_]"},
+          ]
+        }
+      ]
+    ]
+  ]
+
+  const SampleDefaultConfig = () => {
+    <DesignerApi defaultConfig={{ 
+      Configuration: { 
+        count: 0 
+      }, 
+      Meta: { 
+        fields: sampleMetaFields 
+      },
+      Secrets: {
+        password1: {
+          text: event.target.value, 
+          encryptionMode: 'obfuscation' 
+        }
+      }
+    }}>
+      <AyxAppWrapper>
+        Hello World
+      </AyxAppWrapper>
+    </DesignerApi>
+  }
+```
 ## Update Your Data (Part 1)
 The main roles of the DesignerApi are to expose model data and to update that model in both your custom app and the parent app. To do this, the DesignerAPI leverages React Context.
 
