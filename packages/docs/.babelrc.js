@@ -26,6 +26,10 @@ module.exports = {
         "loose": true
       }
     ],
+    [
+      "@babel/plugin-proposal-private-methods", 
+      { "loose": true }
+    ],
     ['@babel/plugin-transform-classes'],
     ['@babel/transform-runtime'],
     [
