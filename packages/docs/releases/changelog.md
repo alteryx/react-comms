@@ -1,3 +1,10 @@
+### May 28th, 2021
+
+#### @alteryx/react-comms@1.0.1
+
+- Added additional examples for meta data and and default configuration.
+- Fixed typescript interface for JsEvent
+
 ### May 12th, 2021
 
 #### @alteryx/react-comms@1.0.0
