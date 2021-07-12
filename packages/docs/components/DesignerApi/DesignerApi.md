@@ -104,6 +104,41 @@ We've provided many different `onChange` callback examples to help you decide wh
 ```js { "file": "../advancedDemo.js" }
 ```
 
+## Boolean Values
+If you have something that is storing a Boolean value to your model (a checkbox or a switch, for instance), it will be parsed back out of the XML in Designer as a string. In order to get around this, you'll need to do a quick boolean conversion in your tool UI to ensure you're always dealing with Boolean values.
+
+```js static
+import React from 'react'; 
+import { FormControlLabel, Checkbox } from '@alteryx/ui';
+import { Context as UiSdkContext } from '@alteryx/react-comms';
+
+const BooleanExample = () => {
+  const [model, handleUpdateModel] = useContext(UiSdkContext);
+  const booleanValue = model.Configuration.someBooleanValue.toLowerCase() === 'true';
+  
+  const setChecked = (val) => {
+    const newModel = { ...model };
+    newModel.Configuration.someBooleanValue = val;
+    handleUpdateModel(newModel);
+  }
+  
+  return (
+    <FormControlLabel
+      control={
+        <Checkbox
+          checked={booleanValue}
+          color="primary"
+          onChange={() => setChecked(!booleanValue)}
+          tabIndex="0"
+          value="checkedB"
+        />
+      }
+      label="Primary"
+    />
+  )
+}
+```
+
 ## Accessing Meta
 
 The `DesignerApi` does some really nice cleanup for you when it comes to accessing your meta data. Meta will always be an array. Each index of the array represents a different list of fields from an input anchor. Accessing model.Meta[0] will give you the list of fields from the first input. If you wanted to access the 2nd field in that list, you'd chain an index of 1 to the fields property on the Meta. See below for an example:
