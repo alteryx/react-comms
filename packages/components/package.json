@@ -1,6 +1,6 @@
 {
   "name": "@alteryx/react-comms",
-  "version": "1.0.1",
+  "version": "1.0.2-alpha.1",
   "description": "Communication bridge for the Alteryx UI-SDK",
   "main": "index.js",
   "dependencies": {
@@ -29,6 +29,7 @@
     "babel-plugin-transform-imports": "^2.0.0",
     "babel-preset-react-app": "^9.1.2",
     "core-js": "^3.6.5",
+    "cross-env": "^7.0.3",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.2",
     "enzyme-react-intl": "^2.0.6",
@@ -49,11 +50,11 @@
     "apidocs": "ayx-scripts doc",
     "docs": "styleguidist server",
     "build:publish": "npm run build:copy-package-json && npm run build:copy-license && npm run build:es2015 && npm run build:es2015modules && npm run build:copy-ts-files",
-    "build:es2015": "NODE_ENV=production babel --config-file ./.babelrc.js --extensions '.ts' --extensions '.tsx' --ignore 'src/**/*.d.ts' src --out-dir build",
-    "build:copy-package-json": "NODE_ENV=production babel package.json --copy-files --out-dir ./build",
-    "build:copy-license": "NODE_ENV=production babel ../../LICENSE --copy-files --out-dir ./build",
-    "build:copy-ts-files": "babel-node --config-file ./.babelrc.js ./scripts/copy-files.js ../src/**/*.d.ts ../build",
-    "build:es2015modules": "NODE_ENV=production babel --config-file ./.babelrc.js src/index.ts --out-file build/index.js",
+    "build:es2015": "cross-env NODE_ENV=production babel --config-file ./.babelrc.js --extensions '.ts' --extensions '.tsx' --ignore 'src/**/*.d.ts' src --out-dir build",
+    "build:copy-package-json": "cross-env NODE_ENV=production babel package.json --copy-files --out-dir ./build",
+    "build:copy-license": "cross-env NODE_ENV=production babel ../../LICENSE --copy-files --out-dir ./build",
+    "build:copy-ts-files": "node ./scripts/copy-files.js ../src/**/*.d.ts ../build",
+    "build:es2015modules": "cross-env NODE_ENV=production babel --config-file ./.babelrc.js src/index.ts --out-file build/index.js",
     "analyze": "ayx-scripts analyze-bundle",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
   },
