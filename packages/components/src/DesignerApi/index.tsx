@@ -39,13 +39,13 @@ const DesignerApi: React.FC<IDesignerApiProps> = (props: IDesignerApiProps) => {
   const [model, updateModel] = useState(mergedState);
   const [appContext, updateAppContext] = useState(messageBroker.ayxAppContext);
 
-  const handleUpdateModel = (updatedData: IModel) => {
-    updateModel(updatedData);
-    messageBroker.model = updatedData;
-    messageBroker instanceof MicroAppMessageApi ? 
-    messageBroker.sendMessage(SUBSCRIPTION_EVENTS.MODEL_UPDATED, updatedData) :
-    window.Alteryx.model = updatedData;
-  };
+  useEffect(() => {
+    // Just update the messageBroker model whenever state updates.
+    messageBroker.model = model;
+    messageBroker instanceof MicroAppMessageApi
+      ? messageBroker.sendMessage(SUBSCRIPTION_EVENTS.MODEL_UPDATED, updatedData)
+      : window.Alteryx.model = model;
+  }, [model])
 
   useEffect(() => {
     const receiveAppContext = data => {
@@ -58,11 +58,11 @@ const DesignerApi: React.FC<IDesignerApiProps> = (props: IDesignerApiProps) => {
     messageBroker.subscribe(SUBSCRIPTION_EVENTS.MODEL_UPDATED, receiveModel);
     messageBroker.subscribe(SUBSCRIPTION_EVENTS.AYX_APP_CONTEXT_UPDATED, receiveAppContext);
     return function cleanUp() {
-      handleUpdateModel(messageBroker.model);
+      updateModel(messageBroker.model);
     };
   }, []);
 
-  const getContextValue = useCallback(() => [model, handleUpdateModel], [model, handleUpdateModel]);
+  const getContextValue = useCallback(() => [model, updateModel], [model, updateModel]);
   const contextProps: IContextProviderProps = {
     id: 'sdk-provider',
     value: getContextValue()
@@ -73,6 +73,7 @@ const DesignerApi: React.FC<IDesignerApiProps> = (props: IDesignerApiProps) => {
 
   return (
     <UiSdkContext.Provider {...contextProps}>
+      {console.log('DesignerApi', { context: React.useContext(UiSdkContext) })}
       {React.cloneElement(props.children, { ...appPropsToSpread })}
     </UiSdkContext.Provider>
   );
