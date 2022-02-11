@@ -73,7 +73,6 @@ const DesignerApi: React.FC<IDesignerApiProps> = (props: IDesignerApiProps) => {
 
   return (
     <UiSdkContext.Provider {...contextProps}>
-      {console.log('DesignerApi', { context: React.useContext(UiSdkContext) })}
       {React.cloneElement(props.children, { ...appPropsToSpread })}
     </UiSdkContext.Provider>
   );
