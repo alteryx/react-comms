@@ -43,7 +43,7 @@ const DesignerApi: React.FC<IDesignerApiProps> = (props: IDesignerApiProps) => {
     // Just update the messageBroker model whenever state updates.
     messageBroker.model = model;
     messageBroker instanceof MicroAppMessageApi
-      ? messageBroker.sendMessage(SUBSCRIPTION_EVENTS.MODEL_UPDATED, updatedData)
+      ? messageBroker.sendMessage(SUBSCRIPTION_EVENTS.MODEL_UPDATED, model)
       : window.Alteryx.model = model;
   }, [model])
 
