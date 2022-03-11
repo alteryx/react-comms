@@ -10,6 +10,7 @@ import MicroAppMessageApi from '../MicroAppMessageApi';
 import { IContext, IModel } from '../Utils/types';
 import { SUBSCRIPTION_EVENTS } from '../Utils/constants';
 import UiSdkContext, { IContextProviderProps } from '../Context';
+import deepEqual from 'deep-equal';
 
 interface IDesignerApiProps {
   messages: object;
@@ -40,11 +41,14 @@ const DesignerApi: React.FC<IDesignerApiProps> = (props: IDesignerApiProps) => {
   const [appContext, updateAppContext] = useState(messageBroker.ayxAppContext);
 
   useEffect(() => {
-    // Just update the messageBroker model whenever state updates.
-    messageBroker.model = model;
-    messageBroker instanceof MicroAppMessageApi
-      ? messageBroker.sendMessage(SUBSCRIPTION_EVENTS.MODEL_UPDATED, model)
-      : window.Alteryx.model = model;
+    const modelChanged = !deepEqual(messageBroker.model, model);
+    if (modelChanged) {
+      // Just update the messageBroker model whenever state updates.
+      messageBroker.model = model;
+      messageBroker instanceof MicroAppMessageApi
+        ? messageBroker.sendMessage(SUBSCRIPTION_EVENTS.MODEL_UPDATED, model)
+        : window.Alteryx.model = model;
+    }
   }, [model])
 
   useEffect(() => {
