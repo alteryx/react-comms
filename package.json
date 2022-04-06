@@ -7,7 +7,7 @@
     "test": "cd packages/components && npm run test",
     "install:components": "cd packages/components && npm install",
     "install:docs": "cd packages/docs && npm install",
-    "build:components": "cd packages/components && npm run build:publish",
+    "build:components": "cd packages/components && npm run build",
     "build:docs": "cd packages/docs && npm run docs:build",
     "docs": "cd packages/docs && npm run docs"
   },

@@ -50,7 +50,7 @@
     "test": "jest -u --silent",
     "apidocs": "ayx-scripts doc",
     "docs": "styleguidist server",
-    "build:publish": "npm run build:copy-package-json && npm run build:copy-license && npm run build:es2015 && npm run build:es2015modules && npm run build:copy-ts-files",
+    "build": "npm run build:copy-package-json && npm run build:copy-license && npm run build:es2015 && npm run build:es2015modules && npm run build:copy-ts-files",
     "build:es2015": "cross-env NODE_ENV=production babel --config-file ./.babelrc.js --extensions '.ts' --extensions '.tsx' --ignore 'src/**/*.d.ts' src --out-dir build",
     "build:copy-package-json": "cross-env NODE_ENV=production babel package.json --copy-files --out-dir ./build",
     "build:copy-license": "cross-env NODE_ENV=production babel ../../LICENSE --copy-files --out-dir ./build",
