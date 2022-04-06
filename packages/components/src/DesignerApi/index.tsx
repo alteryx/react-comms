@@ -4,13 +4,13 @@
 /* eslint-disable react/forbid-prop-types */
 import React, { useEffect, useState, useCallback } from 'react';
 import merge from 'deepmerge';
+import deepEqual from 'deep-equal';
 
 import DesignerMessageApi from '../DesignerMessageApi';
 import MicroAppMessageApi from '../MicroAppMessageApi';
 import { IContext, IModel } from '../Utils/types';
 import { SUBSCRIPTION_EVENTS } from '../Utils/constants';
 import UiSdkContext, { IContextProviderProps } from '../Context';
-import deepEqual from 'deep-equal';
 
 interface IDesignerApiProps {
   messages: object;
@@ -41,7 +41,7 @@ const DesignerApi: React.FC<IDesignerApiProps> = (props: IDesignerApiProps) => {
   const [appContext, updateAppContext] = useState(messageBroker.ayxAppContext);
 
   useEffect(() => {
-    const modelChanged = !deepEqual(messageBroker.model, model);
+    const modelChanged = !deepEqual(messageBroker.model, model, { strict: true });
     if (modelChanged) {
       // Just update the messageBroker model whenever state updates.
       messageBroker.model = model;
@@ -53,10 +53,10 @@ const DesignerApi: React.FC<IDesignerApiProps> = (props: IDesignerApiProps) => {
 
   useEffect(() => {
     const receiveAppContext = data => {
-      updateAppContext({ ...data });
+      updateAppContext(prevState => ({ ...prevState, ...data }));
     };
     const receiveModel = data => {
-      updateModel(merge(model, data));
+      updateModel(prevState => ({ ...prevState, ...merge(model, data) }));
     };
 
     messageBroker.subscribe(SUBSCRIPTION_EVENTS.MODEL_UPDATED, receiveModel);
