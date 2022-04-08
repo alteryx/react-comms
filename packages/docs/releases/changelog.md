@@ -1,3 +1,7 @@
+### February 17, 2022
+
+- Fixed a bug with using a function argument in the `handleUpdateModel` function.
+
 ### May 28th, 2021
 
 #### @alteryx/react-comms@1.0.1

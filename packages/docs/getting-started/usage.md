@@ -64,7 +64,7 @@ const SampleButton = () => {
 
 As a best practice, you should not override or manipulate your model directly. This can be accomplished as seen in the above example. If you are in need of more complicated or deeper cloning, we recommend checking out [deepmerge](https://lodash.com/docs/#cloneDeep) or [lodash.cloneDeep](https://lodash.com/docs/#cloneDeep) In order to make updates to your model, the `handleUpdateModel` function is expecting to receive your entire model object as a parameter.
 
-After you make a copy of your model and make any required updates, call the `handleUpdateModel` method provided to you by the `useContext` React hook. This updates the model state internal to your custom app and dispatches any relevant messages to the parent application.
+After you make a copy of your model and make any required updates, call the `handleUpdateModel` method provided to you by the `useContext` React hook. This updates the model state internal to your custom app and dispatches any relevant messages to the parent application. It supports the same [types of usage](https://reactjs.org/docs/hooks-reference.html#usestate) as the dispatch function provided by `React.useState()` (object and functional), since that is what is used under the hood.
 
 To explore more advanced examples, visit our DesignerApi docs located in the side bar to the left.
 
