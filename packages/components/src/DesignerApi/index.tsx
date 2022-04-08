@@ -53,10 +53,10 @@ const DesignerApi: React.FC<IDesignerApiProps> = (props: IDesignerApiProps) => {
 
   useEffect(() => {
     const receiveAppContext = data => {
-      updateAppContext(prevState => ({ ...prevState, ...data }));
+      updateAppContext({ ...data });
     };
     const receiveModel = data => {
-      updateModel(prevState => ({ ...prevState, ...merge(model, data) }));
+      updateModel(merge(model, data));
     };
 
     messageBroker.subscribe(SUBSCRIPTION_EVENTS.MODEL_UPDATED, receiveModel);
