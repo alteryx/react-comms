@@ -5,7 +5,8 @@ describe('JsEvent', () => {
     AlteryxLanguageCode: 'en',
     Gui: {
       SetConfiguration: jest.fn(),
-      GetConfiguration: jest.fn()
+      GetConfiguration: jest.fn(),
+      Callbacks: {}
     },
     JsEvent: jest.fn()
   };

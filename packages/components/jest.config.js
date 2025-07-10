@@ -1,13 +1,25 @@
+const baseConfig = require('@ayx/onyx-build-jest/config.browser');
+const { makeTransformIgnorePatterns } = require('@ayx/onyx-build-jest/utils');
+
 module.exports = {
+  ...baseConfig,
   roots: ['<rootDir>'],
   transform: {
-    '^.+\\.js$': 'babel-jest',
-    '^.+\\.tsx?$': 'ts-jest'
+    '^.+\\.(js|jsx|ts|tsx)$': 'babel-jest',
   },
   testMatch: ['**/__tests__/**/*.[jt]s?(x)', '**/?(*.)+(spec|test).[tj]s?(x)'],
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
-  snapshotSerializers: ['enzyme-to-json/serializer'],
-  setupFilesAfterEnv: ['<rootDir>/testSetup.js'],
+  moduleNameMapper: {
+    '^node:(.*)$': 'stream-browserify',
+    '\\.(css|scss)$': 'identity-obj-proxy',
+  },
+  setupFilesAfterEnv: ['<rootDir>/testSetup.ts'],
+  testEnvironment: require.resolve(
+    '@ayx/onyx-build-jest/node_modules/jest-environment-jsdom'
+  ),
+  testEnvironmentOptions: {
+    url: 'http://localhost/',
+  },
   collectCoverage: true,
   coverageDirectory: '<rootDir>/coverage',
   collectCoverageFrom: ['src/**/*.{js,jsx,ts,tsx}'],
@@ -26,5 +38,5 @@ module.exports = {
     'src/index.d.ts',
     'src/Utils/index.d.ts'
   ],
-  transformIgnorePatterns: ['/node_modules/(?!lodash-es).+\\.js$']
+  transformIgnorePatterns: makeTransformIgnorePatterns('lodash-es'),
 };
