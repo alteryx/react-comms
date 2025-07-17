@@ -1,7 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 import React, { useContext } from 'react';
 import { render, screen, act } from '@testing-library/react';
-// import '@testing-library/jest-dom';
 
 import UiSdkContext from '../Context/index.tsx';
 import * as callback from '../Utils/callback.ts';
