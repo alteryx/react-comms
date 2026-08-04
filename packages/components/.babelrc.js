@@ -32,6 +32,7 @@ module.exports = {
       }
     ],
     ['@babel/plugin-transform-classes'],
+    ["@babel/plugin-transform-private-property-in-object", { loose: true }],
     ['@babel/transform-runtime'],
     [
       'transform-imports',

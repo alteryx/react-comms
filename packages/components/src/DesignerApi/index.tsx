@@ -42,9 +42,9 @@ const DesignerApi: React.FC<IDesignerApiProps> = (props: IDesignerApiProps) => {
   const handleUpdateModel = (updatedData: IModel) => {
     updateModel(updatedData);
     messageBroker.model = updatedData;
-    messageBroker instanceof MicroAppMessageApi ? 
-    messageBroker.sendMessage(SUBSCRIPTION_EVENTS.MODEL_UPDATED, updatedData) :
-    window.Alteryx.model = updatedData;
+    messageBroker instanceof MicroAppMessageApi ?
+      messageBroker.sendMessage(SUBSCRIPTION_EVENTS.MODEL_UPDATED, updatedData) :
+      window.Alteryx.model = updatedData;
   };
 
   useEffect(() => {
@@ -67,7 +67,7 @@ const DesignerApi: React.FC<IDesignerApiProps> = (props: IDesignerApiProps) => {
     id: 'sdk-provider',
     value: getContextValue()
   };
-  
+
   const { darkMode, locale, productTheme } = appContext || {};
   const appPropsToSpread = { messages, paletteType: darkMode ? 'dark' : 'light', theme: productTheme, locale };
 

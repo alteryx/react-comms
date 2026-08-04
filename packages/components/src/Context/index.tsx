@@ -5,6 +5,6 @@ export interface IContextProviderProps {
   id: string;
 }
 
-const UiSdkContext = React.createContext(null);
+const UiSdkContext = React.createContext<[any, (newModel: any) => void] | null>(null);
 
 export default UiSdkContext;
