@@ -22,13 +22,7 @@ jobs:
 
       - name: Install components dependencies
         working-directory: packages/components
-        # If packages/components has a package-lock.json use `npm ci --include=dev`
-        # otherwise use npm install --include=dev to ensure devDependencies like cross-env are installed.
-        run: |
-          if [ -f package-lock.json ]; then
-            npm ci --include=dev
-          else
-            npm install --include=dev
+        run: npm install --include=dev
 
       - name: Build components
         working-directory: packages/components
