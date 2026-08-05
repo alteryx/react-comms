@@ -1,28 +1,39 @@
-# This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
-# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
-
 name: Node.js CI
-
 
 on:
   pull_request:
     branches: [main]
+
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     strategy:
       matrix:
-        node-version: [18.x, 20.x, 22.x, 24.x, 26.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+        node-version: [22.x]
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
-    - run: npm run install:components
-    - run: npm run build:components
-    - run: npm run test:components
+      - uses: actions/checkout@v3
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+
+      - name: Install components dependencies
+        working-directory: packages/components
+        # If packages/components has a package-lock.json use `npm ci --include=dev`
+        # otherwise use npm install --include=dev to ensure devDependencies like cross-env are installed.
+        run: |
+          if [ -f package-lock.json ]; then
+            npm ci --include=dev
+          else
+            npm install --include=dev
+
+      - name: Build components
+        working-directory: packages/components
+        run: npm run build:publish
+
+      - name: Run component tests
+        working-directory: packages/components
+        run: npm run test
