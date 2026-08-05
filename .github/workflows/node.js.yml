@@ -23,6 +23,6 @@ jobs:
       uses: actions/setup-node@v5
       with:
         node-version: ${{ matrix.node-version }}
-    - run: npm ci --prefix packages/components --no-audit --no-fund
-    - run: npm run build:publish
+    - run: npm ci --prefix packages/components --registry=https://registry.npmjs.org --no-audit --no-fund
+    - run: npm run build:components
     - run: npm test
