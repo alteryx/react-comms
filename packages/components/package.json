@@ -1,6 +1,6 @@
 {
   "name": "@alteryx/react-comms",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "Communication bridge for the Alteryx UI-SDK",
   "main": "index.js",
   "engines": {
