@@ -1,6 +1,6 @@
 ### August 14th, 2026
 
-#### @alteryx/react-comms@1.0.2
+#### @alteryx/react-comms@1.1.0
 
 - Updated to run with Node versions 18, 20, 22, 24, and 26.
 - Created Pull request template.
