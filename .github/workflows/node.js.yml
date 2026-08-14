@@ -3,7 +3,10 @@
 
 name: Node.js CI
 
-on: [push]
+
+on:
+  pull_request:
+    branches: [main]
 jobs:
   build:
 
@@ -11,14 +14,15 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [12.x, 14.x]
+        node-version: [22.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v5
     - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
+      uses: actions/setup-node@v5
       with:
         node-version: ${{ matrix.node-version }}
-    - run: npm run install:components
+    - run: npm ci --prefix packages/components --registry=https://registry.npmjs.org --no-audit --no-fund
     - run: npm run build:components
+    - run: npm test

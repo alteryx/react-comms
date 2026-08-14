@@ -1,13 +1,22 @@
 module.exports = {
   roots: ['<rootDir>'],
   transform: {
-    '^.+\\.js$': 'babel-jest',
-    '^.+\\.tsx?$': 'ts-jest'
+    '^.+\\.(js|jsx|ts|tsx)$': 'babel-jest',
   },
   testMatch: ['**/__tests__/**/*.[jt]s?(x)', '**/?(*.)+(spec|test).[tj]s?(x)'],
+  testPathIgnorePatterns: ['/node_modules/', '/build/'],
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
-  snapshotSerializers: ['enzyme-to-json/serializer'],
-  setupFilesAfterEnv: ['<rootDir>/testSetup.js'],
+  moduleNameMapper: {
+    '^node:(.*)$': 'stream-browserify',
+    '\\.(css|scss)$': 'identity-obj-proxy',
+  },
+  setupFilesAfterEnv: ['<rootDir>/testSetup.ts'],
+  testEnvironment: require.resolve(
+    'jest-environment-jsdom'
+  ),
+  testEnvironmentOptions: {
+    url: 'http://localhost/',
+  },
   collectCoverage: true,
   coverageDirectory: '<rootDir>/coverage',
   collectCoverageFrom: ['src/**/*.{js,jsx,ts,tsx}'],
@@ -26,5 +35,5 @@ module.exports = {
     'src/index.d.ts',
     'src/Utils/index.d.ts'
   ],
-  transformIgnorePatterns: ['/node_modules/(?!lodash-es).+\\.js$']
+  transformIgnorePatterns: ['node_modules/(?!lodash-es)'],
 };
